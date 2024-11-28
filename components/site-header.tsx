@@ -12,41 +12,109 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Code, Book, PieChart, DollarSign, Fingerprint, Bell, Menu } from "lucide-react";
+import {
+  DollarSign,
+  Bell,
+  Menu,
+  Users,
+  GraduationCap,
+  BookOpen,
+  MessageSquare,
+  ClipboardList,
+  Calendar,
+  BarChart2,
+  Shield,
+  FileText,
+  Globe,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import Logo from "./logo";
 
 const features = [
   {
-    icon: Code,
-    title: "Open source",
-    description: "This Pokemon's cry is very loud and distracting",
+    icon: Users,
+    title: "Student Management",
+    description:
+      "Comprehensive student information system for managing enrollments, profiles, academic records, and personalized learning paths",
+    href: "/features/student-management",
+  },
+  {
+    icon: GraduationCap,
+    title: "Academic Management",
+    description:
+      "Advanced curriculum planning, course management, lesson scheduling, academic progress tracking, and adaptive learning support",
+    href: "/features/academic-management",
+  },
+  {
+    icon: BookOpen,
+    title: "Learning Management System",
+    description:
+      "Integrated e-learning platform with online courses, interactive content, assignment submission, and digital learning resources",
+    href: "/features/learning-management",
+  },
+  {
+    icon: MessageSquare,
+    title: "Communication Portal",
+    description:
+      "Unified communication platform with instant messaging, parent-teacher interaction, group discussions, and real-time collaboration tools",
+    href: "/features/communication",
   },
   {
     icon: DollarSign,
-    title: "Free for everyone",
-    description: "The fluid of Smeargle's tail secretions changes",
+    title: "Financial Management",
+    description:
+      "Comprehensive financial ecosystem with tuition management, scholarship tracking, expense monitoring, and integrated payment gateways",
+    href: "/features/finance",
   },
   {
-    icon: Book,
-    title: "Documentation",
-    description: "Yanma is capable of seeing 360 degrees without",
+    icon: ClipboardList,
+    title: "Human Resource Management",
+    description:
+      "Advanced staff recruitment, performance tracking, professional development planning, and comprehensive HR workflow management",
+    href: "/features/staff-management",
   },
   {
-    icon: Fingerprint,
-    title: "Security",
-    description: "The shell's rounded shape and the grooves on its",
+    icon: Calendar,
+    title: "Academic Calendar",
+    description:
+      "Dynamic scheduling system for academic events, exam timetables, extracurricular activities, and institutional planning",
+    href: "/features/academic-calendar",
   },
   {
-    icon: PieChart,
-    title: "Analytics",
-    description: "This Pokémon uses its flying ability to quickly chase",
+    icon: BarChart2,
+    title: "Advanced Analytics",
+    description:
+      "Predictive analytics, student performance insights, institutional benchmarking, and comprehensive data visualization tools",
+    href: "/features/analytics",
+  },
+  {
+    icon: Shield,
+    title: "Compliance & Security",
+    description:
+      "Multi-layered security infrastructure with advanced access controls, data privacy protocols, and regulatory compliance management",
+    href: "/features/security",
+  },
+  {
+    icon: FileText,
+    title: "Examination Management",
+    description:
+      "End-to-end examination process management including digital exam creation, online proctoring, automated grading, and result analysis",
+    href: "/features/examinations",
   },
   {
     icon: Bell,
-    title: "Notifications",
-    description: "Combusken battles with the intensely hot flames it spews",
+    title: "Notification System",
+    description:
+      "Intelligent notification framework with personalized alerts, multi-channel communication, and customizable notification preferences",
+    href: "/features/notifications",
+  },
+  {
+    icon: Globe,
+    title: "Multi-campus Management",
+    description:
+      "Centralized management system for multiple institutional branches with standardized processes and cross-campus reporting",
+    href: "/features/multi-campus",
   },
 ];
 
@@ -74,14 +142,14 @@ export default function SiteHeader() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Features</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[600px] p-4">
+                    <div className="w-[800px] p-4">
                       <div className="flex items-center justify-between mb-4 pb-2 border-b">
                         <h4 className="text-lg font-medium">Features</h4>
                         <Link href="/features" className="text-sm text-blue-500 hover:underline">
                           View all
                         </Link>
                       </div>
-                      <div className="grid gap-4 md:grid-cols-2">
+                      <div className="grid gap-4 md:grid-cols-3">
                         {features.map((feature, index) => (
                           <Link
                             key={index}
@@ -94,7 +162,7 @@ export default function SiteHeader() {
                               </div>
                               <div>
                                 <h5 className="font-medium mb-1 group-hover:text-blue-500">{feature.title}</h5>
-                                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                                <p className="text-sm text-muted-foreground line-clamp-2">{feature.description}</p>
                               </div>
                             </div>
                           </Link>
@@ -108,7 +176,9 @@ export default function SiteHeader() {
                               Their food sources have decreased, and their numbers
                             </p>
                           </div>
-                          <Button variant="secondary">Get started</Button>
+                          <Button variant="secondary" asChild>
+                            <Link href="/contact-us">Get started</Link>
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -116,17 +186,17 @@ export default function SiteHeader() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/learn" legacyBehavior passHref>
+                  <Link href="/#pricing" legacyBehavior passHref>
                     <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">
-                      Learn
+                      Pricing
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/academy" legacyBehavior passHref>
+                  <Link href="/how-it-works" legacyBehavior passHref>
                     <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">
-                      Academy
+                      How it works
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -181,18 +251,18 @@ export default function SiteHeader() {
                   </div>
                 )}
                 <Link
-                  href="/learn"
+                  href="/#pricing"
                   className="px-4 py-2 text-lg font-medium hover:bg-accent"
                   onClick={() => setOpen(false)}
                 >
-                  Learn
+                  Pricing
                 </Link>
                 <Link
-                  href="/academy"
+                  href="/how-it-works"
                   className="px-4 py-2 text-lg font-medium hover:bg-accent"
                   onClick={() => setOpen(false)}
                 >
-                  Academy
+                  How it works
                 </Link>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-background">
