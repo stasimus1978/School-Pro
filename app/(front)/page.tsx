@@ -3,6 +3,7 @@ import GridFeatures from "@/components/frontend/grid-features";
 import HeroSection from "@/components/frontend/hero-section";
 import LogoCloud from "@/components/frontend/logo-cloud";
 import Pricing from "@/components/frontend/pricing";
+import TabbedFeature from "@/components/frontend/tabbed-features";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <LogoCloud />
       <DashboardPreview />
       <GridFeatures />
+      <TabbedFeature />
       <Pricing />
     </main>
   );
