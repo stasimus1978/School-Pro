@@ -1,7 +1,9 @@
+import HeroSection from "@/components/frontend/hero-section";
+
 export default function HomePage() {
   return (
-    <div className="">
-      <h2 className="">Front Home Page</h2>
-    </div>
+    <main className="">
+      <HeroSection />
+    </main>
   );
 }
