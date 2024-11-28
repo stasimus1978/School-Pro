@@ -15,6 +15,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Code, Book, PieChart, DollarSign, Fingerprint, Bell, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
+import Logo from "./logo";
 
 const features = [
   {
@@ -58,12 +59,7 @@ export default function SiteHeader() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-7xl mx-auto flex h-14 items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href={"/"} className="flex items-center space-x-2">
-              <div className="bg-blue-500 rounded-full p-1">
-                <span className="text-white font-bold text-xl">Σ</span>
-              </div>
-              <span className="font-bold text-xl">Mantine</span>
-            </Link>
+            <Logo />
 
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
