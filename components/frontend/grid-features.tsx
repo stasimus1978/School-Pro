@@ -100,24 +100,6 @@ export default function GridFeatures() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">{features[2].title}</CardTitle>
-                <p className="text-muted-foreground">{features[2].description}</p>
-              </CardHeader>
-              <CardContent className="">
-                <Image
-                  src={features[2].image}
-                  alt={features[2].title}
-                  width={600}
-                  height={400}
-                  className="rounded w-full"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="space-y-4">
-            <Card>
-              <CardHeader>
                 <CardTitle className="text-2xl">{features[1].title}</CardTitle>
                 <p className="text-muted-foreground">{features[1].description}</p>
               </CardHeader>
@@ -131,7 +113,9 @@ export default function GridFeatures() {
                 />
               </CardContent>
             </Card>
+          </div>
 
+          <div className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl">{features[2].title}</CardTitle>
@@ -141,6 +125,74 @@ export default function GridFeatures() {
                 <Image
                   src={features[2].image}
                   alt={features[2].title}
+                  width={600}
+                  height={400}
+                  className="rounded w-full"
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">{features[3].title}</CardTitle>
+                <p className="text-muted-foreground">{features[3].description}</p>
+              </CardHeader>
+              <CardContent className="">
+                <Image
+                  src={features[3].image}
+                  alt={features[3].title}
+                  width={600}
+                  height={400}
+                  className="rounded w-full"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">{features[4].title}</CardTitle>
+                <p className="text-muted-foreground">{features[4].description}</p>
+              </CardHeader>
+              <CardContent className="">
+                <Image
+                  src={features[4].image}
+                  alt={features[4].title}
+                  width={600}
+                  height={400}
+                  className="rounded w-full"
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">{features[5].title}</CardTitle>
+                <p className="text-muted-foreground">{features[5].description}</p>
+              </CardHeader>
+              <CardContent className="">
+                <Image
+                  src={features[5].image}
+                  alt={features[5].title}
+                  width={600}
+                  height={400}
+                  className="rounded w-full"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">{features[6].title}</CardTitle>
+                <p className="text-muted-foreground">{features[6].description}</p>
+              </CardHeader>
+              <CardContent className="">
+                <Image
+                  src={features[6].image}
+                  alt={features[6].title}
                   width={600}
                   height={400}
                   className="rounded w-full"
