@@ -7,3 +7,6 @@ II. Episode 2: Authentication & Dashboard Layout | School Management System with
 (https://www.youtube.com/watch?v=MaXWYRa1Ydc)
 
 1. 1:41:25 / 2:36:08
+
+III. Episode 3: Building a Contact Page & Important Course Update | School Management System with Next.js
+(https://www.youtube.com/watch?v=dgzAu7zA0fM&t=7518s)
