@@ -5,7 +5,7 @@ export default function SectionHeader({
   heading,
   description,
 }: {
-  title: string;
+  title?: string;
   heading: string;
   description: string;
 }) {

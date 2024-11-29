@@ -1,37 +1,36 @@
 "use client";
 
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Send } from "lucide-react";
+import SubmitButton from "../FormInputs/SubmitButton";
+import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
 
+export type RegisterInputProps = {
+  fullName: string;
+  email: string;
+  password: string;
+  phone: string;
+};
+
 const ContactUs: React.FC = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterInputProps>();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted: ", formData);
-  };
+  async function onSubmit(data: RegisterInputProps) {
+    console.log(data);
+  }
 
   return (
     <section className="bg-gray-100 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl lg:text-5xl font-bold text-green-900 mb-2">Get In Touch</h2>
-        <p className="text-gray-600 mb-8 pb-4">
-          Streamline your process and empower your team with our products. Effortlessly manage employee data and more.
-        </p>
-
+      <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="col-span-1 space-y-4">
             <div className="bg-green-800 text-white p-6 rounded-2xl">
@@ -61,67 +60,105 @@ const ContactUs: React.FC = () => {
             </div>
           </div>
           <div className="col-span-2 bg-white p-6 rounded-2xl shadow">
-            <h3 className="text-xl font-semibold mb-4">Send us a message</h3>
+            <h3 className="text-xl font-semibold">Tell us about your institution and requirements</h3>
+            <p className="text-muted-foreground text-sm text-center px-4 py-2 max-w-2xl mx-auto">
+              Our team will reach out within 24 hours to schedule a personalized demo and discuss your specific needs.
+            </p>
 
-            <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-2 gap-4 mb-2">
-                <Input
+            <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
+              <TextInput
+                label="Full Name"
+                register={register}
+                name="name"
+                type="text"
+                errors={errors}
+                placeholder="John Doe"
+              />
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput
+                  label="Email Address"
+                  register={register}
+                  name="email"
                   type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  className="p-2 border border-gray-300 rounded"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
+                  errors={errors}
+                  placeholder="Eg. johndoe@gmail.com"
                 />
 
-                <Input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  className="p-2 border border-gray-300 rounded"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
+                <TextInput
+                  label="Phone"
+                  register={register}
+                  name="phone"
+                  errors={errors}
+                  placeholder="Eg. johndoe@gmail.com"
                 />
               </div>
 
-              <Input
-                type="email"
-                name="emil"
-                placeholder="Email"
-                className="w-full border border-gray-300 p-2 rounded mb-2"
-                value={formData.email}
-                onChange={handleChange}
-                required
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput
+                  label="School Name"
+                  register={register}
+                  name="school"
+                  type="text"
+                  errors={errors}
+                  placeholder="Evernote High School"
+                />
+
+                <TextInput
+                  label="Country"
+                  register={register}
+                  name="country"
+                  errors={errors}
+                  placeholder="Eg. johndoe@gmail.com"
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput
+                  label="School Website/Social Media Page"
+                  register={register}
+                  name="schoolPage"
+                  type="text"
+                  errors={errors}
+                  placeholder="https://www.evernotehighschool.com"
+                />
+
+                <TextInput
+                  label="Number of Students"
+                  register={register}
+                  name="students"
+                  errors={errors}
+                  placeholder="300"
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput
+                  label="Your Role"
+                  register={register}
+                  name="role"
+                  type="text"
+                  errors={errors}
+                  placeholder="role"
+                />
+
+                <TextInput
+                  label="Product Interest (Which features are you looking for?)"
+                  register={register}
+                  name="phone"
+                  errors={errors}
+                  placeholder="Eg. johndoe@gmail.com"
+                />
+              </div>
+
+              <TextArea label="How did you here about Us?" register={register} name="phone" errors={errors} />
+
+              <SubmitButton
+                buttonIcon={Send}
+                title="Submit"
+                loading={isLoading}
+                loadingTitle="Signing in please wait..."
               />
-
-              <Input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                className="w-full border border-gray-300 p-2 rounded mb-2"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-              />
-
-              <textarea
-                name="message"
-                placeholder="Message"
-                rows={4}
-                className="w-full border border-gray-300 p-2 rounded mb-2"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
-
-              <Button
-                type="submit"
-                className="bg-green-800 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-green-700 transition duration-300"
-              >
-                Send Message
-              </Button>
             </form>
           </div>
         </div>
