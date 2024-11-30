@@ -12,3 +12,6 @@ III. Episode 3: Building a Contact Page & Important Course Update | School Manag
 (https://www.youtube.com/watch?v=dgzAu7zA0fM&t=7518s)
 
 1. 1:11:32 / 3:03:29
+
+IV. Episode 4: Building Dynamic Forms & Help Center | School Management System with Next.js
+(https://www.youtube.com/watch?v=GgRBvaUzTXU&t=10843s)
