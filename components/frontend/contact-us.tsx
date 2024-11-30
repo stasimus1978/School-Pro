@@ -7,6 +7,7 @@ import { Send } from "lucide-react";
 import SubmitButton from "../FormInputs/SubmitButton";
 import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
+import PhoneInput from "../FormInputs/PhoneInput";
 
 export type RegisterInputProps = {
   fullName: string;
@@ -67,7 +68,7 @@ const ContactUs: React.FC = () => {
 
             <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
               <TextInput
-                label="Full Name"
+                label="Your Full Name"
                 register={register}
                 name="name"
                 type="text"
@@ -85,12 +86,13 @@ const ContactUs: React.FC = () => {
                   placeholder="Eg. johndoe@gmail.com"
                 />
 
-                <TextInput
-                  label="Phone"
+                <PhoneInput
                   register={register}
-                  name="phone"
                   errors={errors}
-                  placeholder="Eg. johndoe@gmail.com"
+                  label="Phone"
+                  name="phone"
+                  toolTipText="Enter your phone number with country code"
+                  placeholder="Phone number"
                 />
               </div>
 

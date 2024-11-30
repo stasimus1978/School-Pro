@@ -1,64 +1,71 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import React, { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ChangeEvent, useState } from "react";
 import Select from "react-tailwindcss-select";
-import { CircleHelp } from "lucide-react";
-import { countries, Country } from "@/lib/countries";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { CircleHelp, Icon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { countries } from "@/lib/countries";
 
 type PhoneInputProps = {
   register: any;
   errors: any;
   label: string;
+  type?: string;
   name: string;
+  unit?: string;
+  icon?: any;
   toolTipText?: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
 };
 
 export default function PhoneInput({
   register,
   errors,
   label,
+  type = "text",
   name,
   toolTipText,
+  unit,
+  icon,
   placeholder,
-  onChange,
 }: PhoneInputProps) {
-  const initialCountryCode = "UA";
-  const modifiedCountries = countries.map((country) => ({
-    ...country,
-    label: `${country.countryCode} ${country.phoneCode}`,
-    value: country.countryCode,
-  }));
+  const Icon = icon;
 
-  const initialCountry = modifiedCountries.find((item) => item.countryCode === initialCountryCode);
+  const initialCountryCode = "UA";
+  const modifiedCountries = countries.map((country) => {
+    return {
+      value: country.value,
+      label: `${country.countryCode} ${country.phoneCode}`,
+      phoneCode: country.phoneCode,
+      currencyCode: country.currencyCode,
+      countryCode: country.countryCode,
+      flag: country.flag,
+    };
+  });
+
+  const initialCountry = modifiedCountries.find((country) => country.countryCode === initialCountryCode);
+
   const [selectedCountry, setSelectedCountry] = useState<any>(initialCountry);
+
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const handleCountryChange = (option: any) => {
-    console.log(option);
-
-    const country = countries.find((c) => c.countryCode === option.value);
-    if (country) {
-      setSelectedCountry(country);
-      const newValue = `${country.phoneCode}${phoneNumber.replace(/[^0-9]/g, "")}`;
-      onChange?.(newValue);
-    }
+  const handleCountryChange = (country: any) => {
+    setSelectedCountry(country);
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawNumber = e.target.value.replace(/[^0-9]/g, "");
-    setPhoneNumber(rawNumber);
-    const fullNumber = `${selectedCountry.phoneCode}${rawNumber}`;
-    onChange?.(fullNumber);
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const cleanValue = value.replace(/\D/g, "");
+    setPhoneNumber(cleanValue);
+    const fullNumber = `${selectedCountry.phoneCode}${cleanValue}`;
+    register(name).onChange({
+      target: {
+        name,
+        value: fullNumber,
+      },
+    });
   };
-
-  const countryOptions = countries.map((country) => ({
-    value: country.countryCode,
-    label: `${country.flag} ${country.phoneCode}`,
-  }));
 
   return (
     <div>
@@ -71,9 +78,10 @@ export default function PhoneInput({
             <Tooltip>
               <TooltipTrigger asChild>
                 <button>
-                  <CircleHelp className="w-4 h-4 text-slate-500" />
+                  <CircleHelp className="size-4 text-slate-500" />
                 </button>
               </TooltipTrigger>
+
               <TooltipContent>
                 <p>{toolTipText}</p>
               </TooltipContent>
@@ -97,29 +105,32 @@ export default function PhoneInput({
               </div>
             </div>
           </div>
-          <div className="relative flex-1">
+          <div className="flex-1 relative rounded-md">
+            {icon && (
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <Icon className="size-4 text-slate-400" />
+              </div>
+            )}
             <input
               id={name}
-              type="tel"
-              {...register(name, {
-                required: true,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e),
-              })}
+              type={type}
+              {...register(`${name}`, { required: true })}
+              // value={phoneNumber}
+              // onChange={handlePhoneChange}
               className={cn(
-                "block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
-                errors[name] && "ring-red-500 focus:ring-red-500"
+                "block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 sm:text-sm sm:leading-6 text-sm",
+                (errors[`${name}`] && "focus:ring-red-500 pl-8") || (icon && "pl-8")
               )}
-              placeholder={placeholder || "Phone number"}
+              placeholder={placeholder || label}
             />
-            {/* hidden input */}
-            <input
-              type="hidden"
-              {...register(name, { required: true })}
-              value={`${selectedCountry.phoneCode}${phoneNumber}`}
-            />
+            {unit && (
+              <p className="bg-white py-2 px-3 rounded-tr-md rounded-br-md absolute inset-y-0 right-1 my-[2px] flex items-center">
+                {unit}
+              </p>
+            )}
           </div>
         </div>
-        {errors[name] && <span className="text-xs text-red-600">{label} is required</span>}
+        {errors[name] && <p className="text-sm text-red-600">{label} is required</p>}
       </div>
     </div>
   );
