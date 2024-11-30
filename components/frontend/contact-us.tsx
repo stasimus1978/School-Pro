@@ -16,8 +16,20 @@ export type RegisterInputProps = {
   phone: string;
 };
 
+const removeLeadingZero = (phoneNumber: string) => {
+  const numberStr = phoneNumber.toString();
+
+  if (numberStr.startsWith("0")) {
+    return numberStr.substring(1);
+  }
+  return numberStr;
+};
+
 const ContactUs: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [phoneCode, setPhoneCode] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -26,7 +38,11 @@ const ContactUs: React.FC = () => {
   } = useForm<RegisterInputProps>();
 
   async function onSubmit(data: RegisterInputProps) {
-    console.log(data);
+    console.log(phoneCode);
+
+    data.phone = removeLeadingZero(data.phone);
+    const phoneNumber = `${phoneCode}${data.phone}`;
+    console.log(phoneNumber);
   }
 
   return (
@@ -89,10 +105,11 @@ const ContactUs: React.FC = () => {
                 <PhoneInput
                   register={register}
                   errors={errors}
-                  label="Phone"
+                  label="Phone (eg 0934150262)"
                   name="phone"
-                  toolTipText="Enter your phone number with country code"
+                  toolTipText="Select Code and write ur number"
                   placeholder="Phone number"
+                  setPhoneCode={setPhoneCode}
                 />
               </div>
 
@@ -147,13 +164,13 @@ const ContactUs: React.FC = () => {
                 <TextInput
                   label="Product Interest (Which features are you looking for?)"
                   register={register}
-                  name="phone"
+                  name="phone1"
                   errors={errors}
                   placeholder="Eg. johndoe@gmail.com"
                 />
               </div>
 
-              <TextArea label="How did you here about Us?" register={register} name="phone" errors={errors} />
+              <TextArea label="How did you here about Us?" register={register} name="phone2" errors={errors} />
 
               <SubmitButton
                 buttonIcon={Send}

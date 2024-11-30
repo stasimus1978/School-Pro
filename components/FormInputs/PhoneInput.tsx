@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Select from "react-tailwindcss-select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { CircleHelp, Icon } from "lucide-react";
@@ -17,17 +17,19 @@ type PhoneInputProps = {
   icon?: any;
   toolTipText?: string;
   placeholder?: string;
+  setPhoneCode?: (country: any) => void;
 };
 
 export default function PhoneInput({
   register,
   errors,
   label,
-  type = "text",
+  type = "number",
   name,
   toolTipText,
   unit,
   icon,
+  setPhoneCode,
   placeholder,
 }: PhoneInputProps) {
   const Icon = icon;
@@ -50,9 +52,14 @@ export default function PhoneInput({
 
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const handleCountryChange = (country: any) => {
+  const handleCountryChange = (country = selectedCountry) => {
     setSelectedCountry(country);
+    setPhoneCode(country.phoneCode);
   };
+
+  useEffect(() => {
+    setPhoneCode(selectedCountry.phoneCode);
+  }, []);
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
