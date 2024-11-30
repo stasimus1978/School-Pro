@@ -8,12 +8,21 @@ import SubmitButton from "../FormInputs/SubmitButton";
 import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
 import PhoneInput from "../FormInputs/PhoneInput";
+import FormSelectInput from "../FormInputs/FormSelectInput";
+import { countries } from "@/lib/countries";
 
-export type RegisterInputProps = {
+export type ContactProps = {
   fullName: string;
   email: string;
   password: string;
   phone: string;
+  school: string;
+  country: string;
+  schoolPage: string;
+  students: number;
+  role: string;
+  media: string;
+  message: string;
 };
 
 const removeLeadingZero = (phoneNumber: string) => {
@@ -28,6 +37,10 @@ const removeLeadingZero = (phoneNumber: string) => {
 const ContactUs: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const initialCountryCode = "UA";
+  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode);
+  const [selectedCountry, setSelectedCountry] = useState<any>(initialCountry);
+
   const [phoneCode, setPhoneCode] = useState("");
 
   const {
@@ -35,14 +48,32 @@ const ContactUs: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<RegisterInputProps>();
+  } = useForm<ContactProps>();
 
-  async function onSubmit(data: RegisterInputProps) {
-    console.log(phoneCode);
+  const roles = [
+    { label: "Principal/Leadership/Mgt", value: "Principal" },
+    { label: "School Administrator", value: "Administrator" },
+    { label: "Head Teacher", value: "Headteacher" },
+    { label: "Teacher/Parent/Student", value: "teacher/parent/student" },
+    { label: "Consultant/Reseller", value: "consultant/reseller" },
+    { label: "Other", value: "other" },
+  ];
 
+  const media = [
+    { label: "Blog", value: "blog" },
+    { label: "Google", value: "google" },
+    { label: "Friend", value: "friend" },
+    { label: "Other", value: "other" },
+  ];
+
+  const [selectedRole, setSelectedRole] = useState<any>(null);
+  const [selectedMedia, setSelectedMedia] = useState<any>(media[0]);
+
+  async function onSubmit(data: ContactProps) {
     data.phone = removeLeadingZero(data.phone);
     const phoneNumber = `${phoneCode}${data.phone}`;
-    console.log(phoneNumber);
+
+    console.log(data);
   }
 
   return (
@@ -123,12 +154,11 @@ const ContactUs: React.FC = () => {
                   placeholder="Evernote High School"
                 />
 
-                <TextInput
+                <FormSelectInput
                   label="Country"
-                  register={register}
-                  name="country"
-                  errors={errors}
-                  placeholder="Eg. johndoe@gmail.com"
+                  options={countries}
+                  option={selectedCountry}
+                  setOption={setSelectedCountry}
                 />
               </div>
 
@@ -145,6 +175,7 @@ const ContactUs: React.FC = () => {
                 <TextInput
                   label="Number of Students"
                   register={register}
+                  type="number"
                   name="students"
                   errors={errors}
                   placeholder="300"
@@ -152,25 +183,23 @@ const ContactUs: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <TextInput
-                  label="Your Role"
-                  register={register}
-                  name="role"
-                  type="text"
-                  errors={errors}
-                  placeholder="role"
-                />
+                <FormSelectInput label="Roles" options={roles} option={selectedRole} setOption={setSelectedRole} />
 
-                <TextInput
-                  label="Product Interest (Which features are you looking for?)"
-                  register={register}
-                  name="phone1"
-                  errors={errors}
-                  placeholder="Eg. johndoe@gmail.com"
+                <FormSelectInput
+                  label="Which Media did hear about Us?"
+                  options={media}
+                  option={selectedMedia}
+                  setOption={setSelectedMedia}
                 />
               </div>
 
-              <TextArea label="How did you here about Us?" register={register} name="phone2" errors={errors} />
+              <TextArea
+                label="Please share with us the key plan points you want to solve"
+                register={register}
+                name="message"
+                errors={errors}
+                // placeholder="300"
+              />
 
               <SubmitButton
                 buttonIcon={Send}
