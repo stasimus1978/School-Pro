@@ -6,7 +6,7 @@ import { UserPlus, Users } from "lucide-react";
 
 export default function AdmissionTabs() {
   return (
-    <div className="w-full max-w-4xl mx-auto p-6">
+    <div className="w-full max-w-5xl mx-auto p-6">
       <Tabs defaultValue="single" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger
@@ -14,7 +14,7 @@ export default function AdmissionTabs() {
             className="flex items-center justify-center space-x-2 py-3 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all duration-300 ease-in-out"
           >
             <UserPlus className="size-5" />
-            <span className="font-semibold">Single Admission</span>
+            <span className="font-semibold">Single Student Admission</span>
           </TabsTrigger>
 
           <TabsTrigger
@@ -23,11 +23,11 @@ export default function AdmissionTabs() {
             data-[state=active]:text-white transition-all duration-300 ease-in-out"
           >
             <Users className="size-5" />
-            <span className="font-semibold">Bulk Admission</span>
+            <span className="font-semibold">Bulk Student Admission</span>
           </TabsTrigger>
         </TabsList>
 
-        <Card className="border-t-4 border-blue-600 shadow-lg">
+        <Card className="border-t-4 border-blue-600 shadow">
           <CardContent className="p-6">
             <TabsContent value="single" className="mt-0">
               <SingleStudentForm />
