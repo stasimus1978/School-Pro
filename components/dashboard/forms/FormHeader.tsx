@@ -32,7 +32,9 @@ export default function FormHeader({ title, editingId, loading, href, parent }: 
         </h1>
       </div>
       <div className="flex items-center justify-center gap-2">
-        <CloseButton href={href} parent={parent} />
+        <div className="hidden md:block">
+          <CloseButton href={href} parent={parent} />
+        </div>
         <SubmitButton size={"sm"} title={editingId ? `Update ${title}` : `Save ${title}`} loading={loading} />
       </div>
     </div>

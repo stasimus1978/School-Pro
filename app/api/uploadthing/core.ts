@@ -6,12 +6,16 @@ const f = createUploadthing();
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
-  categoryImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
-    async ({ metadata, file }) => {
-      console.log("file url", file.url);
-      return { uploadedBy: "JB" };
-    }
-  ),
+  categoryImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(async ({ metadata, file }) => {
+    console.log("file url", file.url);
+    return { uploadedBy: "JB" };
+  }),
+
+  studentProfileImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(async ({ metadata, file }) => {
+    console.log("file url", file.url);
+    return { uploadedBy: "JB" };
+  }),
+
   fileUploads: f({
     image: { maxFileSize: "1MB", maxFileCount: 4 },
     pdf: { maxFileSize: "1MB", maxFileCount: 4 },
@@ -26,8 +30,10 @@ export const ourFileRouter = {
       maxFileCount: 4,
     }, // .xlsx
     "application/vnd.ms-powerpoint": { maxFileSize: "1MB", maxFileCount: 4 }, // .ppt
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      { maxFileSize: "1MB", maxFileCount: 4 }, // .pptx
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+      maxFileSize: "1MB",
+      maxFileCount: 4,
+    }, // .pptx
     "text/plain": { maxFileSize: "1MB", maxFileCount: 4 }, // .txt
 
     // Archive types
@@ -51,8 +57,10 @@ export const ourFileRouter = {
       maxFileCount: 4,
     }, // .xlsx
     "application/vnd.ms-powerpoint": { maxFileSize: "1MB", maxFileCount: 4 }, // .ppt
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      { maxFileSize: "1MB", maxFileCount: 4 }, // .pptx
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+      maxFileSize: "1MB",
+      maxFileCount: 4,
+    }, // .pptx
     "text/plain": { maxFileSize: "1MB", maxFileCount: 4 }, // .txt
 
     // Archive types

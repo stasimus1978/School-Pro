@@ -92,7 +92,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const initialImage = initialData?.imageUrl || "/placeholder.svg";
+  const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
   async function saveStudent(data: StudentProps) {
@@ -221,6 +221,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
                   imageUrl={imageUrl}
                   setImageUrl={setImageUrl}
                   endpoint="studentProfileImage"
+                  className="object-contain"
                 />
               </div>
             </div>
@@ -232,7 +233,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
           </div>
         </div> */}
       </div>
-      <FormFooter href="/categories" editingId={editingId} loading={loading} title="Category" parent="" />
+      <FormFooter href="/students" editingId={editingId} loading={loading} title="Student" parent="" />
     </form>
   );
 }

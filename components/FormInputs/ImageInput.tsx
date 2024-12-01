@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadButton } from "@/lib/uploadthing";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 type ImageInputProps = {
@@ -7,8 +8,9 @@ type ImageInputProps = {
   imageUrl: string;
   setImageUrl: any;
   endpoint: any;
+  className?: string;
 };
-export default function ImageInput({ title, imageUrl, setImageUrl, endpoint }: ImageInputProps) {
+export default function ImageInput({ title, imageUrl, setImageUrl, endpoint, className }: ImageInputProps) {
   return (
     <Card className="overflow-hidden">
       <CardHeader>
@@ -16,7 +18,13 @@ export default function ImageInput({ title, imageUrl, setImageUrl, endpoint }: I
       </CardHeader>
       <CardContent>
         <div className="grid gap-2">
-          <Image alt={title} className="h-40 w-full rounded-md object-cover" height="300" src={imageUrl} width="300" />
+          <Image
+            alt={title}
+            className={cn("h-40 w-full rounded-md object-cover", className)}
+            height="500"
+            src={imageUrl}
+            width="500"
+          />
           <UploadButton
             className="col-span-full"
             endpoint={endpoint}
