@@ -71,6 +71,17 @@ export default function AppSidebar() {
         { title: "Attendance", url: "/dashboard/students/attendance" },
       ],
     },
+
+    {
+      title: "Users",
+      url: "/dashboard/users",
+      icon: Users,
+      items: [
+        { title: "Parents", url: "/dashboard/users/parents" },
+        { title: "Secretary", url: "/dashboard/users/secretary" },
+      ],
+    },
+
     {
       title: "Academics",
       url: "/academics",
