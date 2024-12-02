@@ -143,18 +143,26 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
                 option={selectedParent}
                 setOption={setSelectedParent}
                 toolTipText="Add New Parent"
-                href="/dashboard/parents/new"
+                href="/dashboard/users/parents/new"
               />
 
               <FormSelectInput
-                label="Gender"
-                options={genders}
-                option={selectedGender}
-                setOption={setSelectedGender}
-                isSearchable={false}
+                label="Class"
+                options={classes}
+                option={selectedClass}
+                setOption={setSelectedClass}
+                toolTipText="Add New Class"
+                href="/dashboard/academics/classes/new"
               />
 
-              <TextInput register={register} errors={errors} label="Date of Birth" name="dob" type="date" />
+              <FormSelectInput
+                label="Streams"
+                options={streams}
+                option={selectedStream}
+                setOption={setSelectedStream}
+                toolTipText="Add New Stream"
+                href="/dashboard/academics/streams/new"
+              />
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -190,14 +198,15 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <FormSelectInput label="Class" options={classes} option={selectedClass} setOption={setSelectedClass} />
-
               <FormSelectInput
-                label="Streams"
-                options={streams}
-                option={selectedStream}
-                setOption={setSelectedStream}
+                label="Gender"
+                options={genders}
+                option={selectedGender}
+                setOption={setSelectedGender}
+                isSearchable={false}
               />
+
+              <TextInput register={register} errors={errors} label="Date of Birth" name="dob" type="date" />
 
               <TextInput register={register} errors={errors} label="Roll No." name="rollNo" />
             </div>
@@ -211,7 +220,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
                 </div>
 
                 <div className="grid gap-3">
-                  <TextArea register={register} errors={errors} label="Description" name="description" />
+                  <TextArea register={register} errors={errors} label="Address" name="address" />
                 </div>
               </div>
 
