@@ -54,6 +54,7 @@ export default function AppSidebar() {
 
   const sidebarLinks = [
     {
+      //Dashboard
       title: "Dashboard",
       url: "/dashboard",
       icon: LayoutDashboard,
@@ -61,6 +62,7 @@ export default function AppSidebar() {
       items: [{ title: "Overview", url: "/dashboard/overview" }],
     },
     {
+      // Student Management
       title: "Student Management",
       url: "/students",
       icon: Users,
@@ -71,8 +73,8 @@ export default function AppSidebar() {
         { title: "Attendance", url: "/dashboard/students/attendance" },
       ],
     },
-
     {
+      // Users
       title: "Users",
       url: "/dashboard/users",
       icon: Users,
@@ -81,18 +83,19 @@ export default function AppSidebar() {
         { title: "Secretary", url: "/dashboard/users/secretary" },
       ],
     },
-
     {
+      // Academics
       title: "Academics",
-      url: "/academics",
+      url: "/dashboard/academics",
       icon: GraduationCap,
       items: [
-        { title: "Curriculum", url: "/academics/curriculum" },
-        { title: "Temitable", url: "/academics/timetable" },
-        { title: "Assignment", url: "/academics/assignment" },
+        { title: "Classes and Streams", url: "/dashboard/academics/classes" },
+        { title: "Timetable", url: "/dashboard/academics/timetable" },
+        { title: "Assignment", url: "/dashboard/academics/assignment" },
       ],
     },
     {
+      // Staff Management
       title: "Staff Management",
       url: "/staff",
       icon: UserCog,
@@ -104,6 +107,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Communication
       title: "Communication",
       url: "/communication",
       icon: MessageSquare,
@@ -115,6 +119,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Finance
       title: "Finance",
       url: "/finance",
       icon: DollarSign,
@@ -126,6 +131,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Transport
       title: "Transport",
       url: "/transport",
       icon: Bus,
@@ -137,6 +143,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Resources
       title: "Resources",
       url: "/resources",
       icon: BookOpen,
@@ -148,6 +155,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Reports & Analytics
       title: "Report & Analytics",
       url: "/reports",
       icon: BarChart2,
@@ -159,6 +167,7 @@ export default function AppSidebar() {
       ],
     },
     {
+      // Settings
       title: "Settings",
       url: "/settings",
       icon: Settings2,

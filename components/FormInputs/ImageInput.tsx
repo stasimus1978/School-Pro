@@ -14,8 +14,9 @@ export default function ImageInput({ title, imageUrl, setImageUrl, endpoint, cla
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-center">{title}</CardTitle>
       </CardHeader>
+
       <CardContent>
         <div className="grid gap-2">
           <Image

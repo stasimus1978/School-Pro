@@ -1,5 +1,6 @@
 import BulkStudentForm from "@/components/dashboard/forms/students/bulk-student-form";
 import SingleStudentForm from "@/components/dashboard/forms/students/student-form";
+import InfoBanner from "@/components/info-banner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserPlus, Users } from "lucide-react";
@@ -30,6 +31,10 @@ export default function AdmissionTabs() {
         <Card className="border-t-4 border-blue-600 shadow">
           <CardContent className="p-6">
             <TabsContent value="single" className="mt-0">
+              <InfoBanner
+                message="Please Make sure you have already Created the Parent, Class and Stream for this student."
+                type="warning"
+              />
               <SingleStudentForm />
             </TabsContent>
 
