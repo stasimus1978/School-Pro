@@ -150,16 +150,16 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
                 option={selectedClass}
                 setOption={setSelectedClass}
                 toolTipText="Add New Class"
-                href="/dashboard/academics/classes/new"
+                href="/dashboard/academics/classes"
               />
 
               <FormSelectInput
-                label="Streams"
+                label="Stream/Section"
                 options={streams}
                 option={selectedStream}
                 setOption={setSelectedStream}
                 toolTipText="Add New Stream"
-                href="/dashboard/academics/streams/new"
+                href="/dashboard/academics/classes"
               />
             </div>
 
