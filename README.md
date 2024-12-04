@@ -19,3 +19,11 @@ IV. Episode 4: Building Dynamic Forms & Help Center | School Management System w
 1. 0:32:33 / 3:56:34
 2. 2:04:40 / 3:56:34
 3. 3:43:04 / 3:56:34
+
+V. Episode 5: School Onboarding & API Integration | Next.js 14, Express & Prisma
+(https://www.youtube.com/watch?v=UHgWILMmIoI&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=5)
+
+1. 1:54:39 / 2:36:32
+
+VI. Episode 6: Advanced Data Tables & API Management | School Management System
+(https://www.youtube.com/watch?v=CK1BJEglgM4&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=4)

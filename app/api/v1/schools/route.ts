@@ -36,3 +36,16 @@ export async function POST(request: NextRequest) {
     });
   }
 }
+
+export async function GET(request: NextRequest) {
+  try {
+    const schools = await prisma.school.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    return new Response(JSON.stringify({ data: schools, error: null }), {
+      status: 200,
+      // headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {}
+}
