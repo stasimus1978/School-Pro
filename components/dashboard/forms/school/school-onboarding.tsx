@@ -8,21 +8,11 @@ import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import { Send } from "lucide-react";
+import { createSchool } from "@/app/actions/school";
 
-export type SelectOptionProps = {
-  label: string;
-  value: string;
-};
-type SingleStudentFormProps = {
-  editingId?: string | undefined;
-  initialData?: any | undefined | null;
-};
-
-export type StudentProps = {
+export type SchoolProps = {
   name: string;
-  email: string;
-  password: string;
-  imageUrl: string;
+  logo: string;
 };
 
 export default function SchoolOnboardingForm() {
@@ -31,12 +21,9 @@ export default function SchoolOnboardingForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<StudentProps>({
+  } = useForm<SchoolProps>({
     defaultValues: {
       name: "",
-      email: "",
-      password: "",
-      imageUrl: "",
     },
   });
 
@@ -46,17 +33,17 @@ export default function SchoolOnboardingForm() {
   const initialImage = "/images/logo.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveStudent(data: StudentProps) {
+  async function saveStudent(data: SchoolProps) {
     try {
       setLoading(true);
-      data.imageUrl = imageUrl;
+      data.logo = imageUrl;
       console.log("Data: ", data);
-      // await updateCategoryById(editingId, data);
-      // setLoading(false);
-      // toast.success("Updated Successfully!");
+      const res = await createSchool(data);
+      console.log(res);
+      setLoading(false);
+      toast.success("Successfully Created!");
       // reset();
       // router.push("/dashboard/categories");
-      // setImageUrl("/placeholder.svg");
     } catch (error) {
       setLoading(false);
       console.log(error);

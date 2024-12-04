@@ -1,8 +1,10 @@
 import prisma from "@/lib/prisma";
+import { generateSlug } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { name, slug } = await request.json();
+  const { name, logo } = await request.json();
+  const slug = generateSlug(name);
 
   try {
     const existingSchool = await prisma.school.findUnique({
@@ -17,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const newSchool = await prisma.school.create({
-      data: { name, slug },
+      data: { name, slug, logo },
     });
 
     console.log(`School created successfully: ${newSchool.name} (${newSchool.id})`);
