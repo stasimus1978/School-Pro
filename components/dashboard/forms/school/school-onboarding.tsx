@@ -42,7 +42,7 @@ export default function SchoolOnboardingForm() {
       console.log(res);
       setLoading(false);
       toast.success("Successfully Created!");
-      // reset();
+      reset();
       // router.push("/dashboard/categories");
     } catch (error) {
       setLoading(false);

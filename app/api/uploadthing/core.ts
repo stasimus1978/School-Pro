@@ -21,6 +21,7 @@ export const ourFileRouter = {
     return { uploadedBy: "JB" };
   }),
 
+  // School logo
   schoolLogo: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(async ({ metadata, file }) => {
     console.log("file url", file.url);
     return { uploadedBy: "JB" };
