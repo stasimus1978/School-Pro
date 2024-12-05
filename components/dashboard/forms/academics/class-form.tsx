@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
@@ -8,34 +9,29 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import TextInput from "@/components/FormInputs/TextInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import { ClassCreateProps } from "@/types/types";
 
 export type ClassProps = {
-  name: string;
-};
-
-export default function ClassForm({
-  userId,
-  initialContent,
-  editingId,
-}: {
   userId?: string;
   initialContent?: string;
   editingId?: string;
-}) {
+};
+
+export default function ClassForm({ userId, initialContent, editingId }: ClassProps) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ClassProps>({
+  } = useForm<ClassCreateProps>({
     defaultValues: {
-      name: initialContent || "",
+      title: initialContent || "",
     },
   });
 
   const [loading, setLoading] = useState(false);
 
-  async function saveFolder(data: ClassProps) {
+  async function saveFolder(data: ClassCreateProps) {
     // data.userId = userId;
     try {
       setLoading(true);
@@ -82,11 +78,7 @@ export default function ClassForm({
               <div className="">
                 <div className="space-y-3">
                   <div className="grid gap-3">
-                    <TextInput register={register} errors={errors} label="" name="name" icon={Check} />
-                    {/* <IconInput
-                      onIconSelect={setSelectedIcon}
-                      selectedIcon={selectedIcon}
-                    /> */}
+                    <TextInput register={register} errors={errors} label="" name="title" icon={Check} />
                   </div>
                 </div>
                 <div className="py-3">
