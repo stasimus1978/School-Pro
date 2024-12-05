@@ -1,10 +1,9 @@
-import { ContactProps } from "@/components/frontend/contact-us";
 import { generateSlug } from "@/lib/generateSlug";
 import prisma from "@/lib/prisma";
 import { ClassCreateProps } from "@/types/types";
 import { NextRequest } from "next/server";
 
-// Create
+// Create Class
 export async function POST(request: NextRequest) {
   const data = (await request.json()) as ClassCreateProps;
 

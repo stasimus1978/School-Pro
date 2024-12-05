@@ -1,10 +1,22 @@
 import { Contact } from "@prisma/client";
-import { Briefcase, Building, Calendar, Globe, Mail, MapPin, Phone, Users } from "lucide-react";
+import {
+  Briefcase,
+  Building,
+  Calendar,
+  Globe,
+  LucideIcon,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Users,
+} from "lucide-react";
 import React, { ReactNode, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface ContactInfoModalProps {
   contact: Contact;
@@ -54,8 +66,44 @@ export default function ContactInfoModal({ contact, trigger }: ContactInfoModalP
             </div>
           </DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {infoCards.map((info) => (
+            <InfoCard key={info.label} icon={info.icon} title={info.label} content={info.value} />
+          ))}
+        </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function InfoCard({
+  icon: Icon,
+  title,
+  content,
+  isLink = false,
+}: {
+  icon: LucideIcon;
+  title: string;
+  content: string;
+  isLink?: boolean;
+}) {
+  return (
+    <Card>
+      <CardContent className="p-4">
+        <div className="flex items-center space-x-2">
+          <Icon className="size-6" />
+          <h3 className="font-semibold">{title}</h3>
+        </div>
+        <p className="mt-2 text-sm text-gray-600">
+          {isLink ? (
+            <a href={content} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+              {content}
+            </a>
+          ) : (
+            content
+          )}
+        </p>
+      </CardContent>
+    </Card>
   );
 }

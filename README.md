@@ -30,12 +30,4 @@ VI. Episode 6: Advanced Data Tables & API Management | School Management System
 
 1. 42:02 / 3:09:57
 2. 1:44:11 / 3:09:57
-
-<!--  -->
-<!--
- "School Pro"
- "Willison Sanderson School"
- "Cobra High School"
- "Kagunda Secondary School"
- "Ndekey Secondary School"
- -->
+3. 2:44:31 / 3:09:57
