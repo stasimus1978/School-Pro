@@ -93,7 +93,7 @@ const ContactUs: React.FC = () => {
       const res = await createContact(data);
       console.log(res);
       setLoading(false);
-      toast.success("Successfully Created!");
+      toast.success("Your Request has been Successfully Submitted!");
       reset();
       // router.push("/dashboard/categories");
     } catch (error) {

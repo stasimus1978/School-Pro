@@ -37,6 +37,7 @@ import {
   CreditCard,
   DollarSign,
   GraduationCap,
+  Key,
   LayoutDashboard,
   LogOut,
   MessageSquare,
@@ -177,6 +178,13 @@ export default function AppSidebar() {
         { title: "System Settings", url: "/settings/system" },
         { title: "Backup & Security", url: "/settings/security" },
       ],
+    },
+    {
+      // Admin only
+      title: "Admin Only",
+      url: "/dashboard/admin",
+      icon: Key,
+      items: [{ title: "Contacts", url: "/dashboard/admin/contacts" }],
     },
   ];
 
