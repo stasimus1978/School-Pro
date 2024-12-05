@@ -8,7 +8,7 @@ import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import { Send } from "lucide-react";
-import { createSchool } from "@/app/actions/school";
+import { createSchool } from "@/actions/school";
 
 export type SchoolProps = {
   name: string;

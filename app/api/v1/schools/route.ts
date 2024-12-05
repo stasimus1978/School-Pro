@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { generateSlug } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
+// Create a new school
 export async function POST(request: NextRequest) {
   const { name, logo } = await request.json();
   const slug = generateSlug(name);
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// Get all schools
 export async function GET(request: NextRequest) {
   try {
     const schools = await prisma.school.findMany({

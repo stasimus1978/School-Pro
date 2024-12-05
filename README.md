@@ -27,3 +27,14 @@ V. Episode 5: School Onboarding & API Integration | Next.js 14, Express & Prisma
 
 VI. Episode 6: Advanced Data Tables & API Management | School Management System
 (https://www.youtube.com/watch?v=CK1BJEglgM4&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=4)
+
+1. 42:02 / 3:09:57
+
+<!--  -->
+<!--
+ "School Pro"
+ "Willison Sanderson School"
+ "Cobra High School"
+ "Kagunda Secondary School"
+ "Ndekey Secondary School"
+ -->

@@ -9,7 +9,16 @@ import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
 import PhoneInput from "../FormInputs/PhoneInput";
 import FormSelectInput from "../FormInputs/FormSelectInput";
-import { countries } from "@/lib/countries";
+import { countries, Country } from "@/lib/countries";
+import toast from "react-hot-toast";
+import { createContact } from "@/actions/contacts";
+
+type Option = {
+  readonly label: string;
+  readonly value: string;
+};
+
+type Options = readonly Option[];
 
 export type ContactProps = {
   fullName: string;
@@ -35,11 +44,11 @@ const removeLeadingZero = (phoneNumber: string) => {
 };
 
 const ContactUs: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const initialCountryCode = "UA";
   const initialCountry = countries.find((country) => country.countryCode === initialCountryCode);
-  const [selectedCountry, setSelectedCountry] = useState<any>(initialCountry);
+  const [selectedCountry, setSelectedCountry] = useState<Country>(initialCountry as Country);
 
   const [phoneCode, setPhoneCode] = useState("");
 
@@ -50,7 +59,7 @@ const ContactUs: React.FC = () => {
     formState: { errors },
   } = useForm<ContactProps>();
 
-  const roles = [
+  const roles: Options = [
     { label: "Principal/Leadership/Mgt", value: "Principal" },
     { label: "School Administrator", value: "Administrator" },
     { label: "Head Teacher", value: "Headteacher" },
@@ -58,22 +67,39 @@ const ContactUs: React.FC = () => {
     { label: "Consultant/Reseller", value: "consultant/reseller" },
     { label: "Other", value: "other" },
   ];
+  const [selectedRole, setSelectedRole] = useState<Option>(roles[0]);
 
-  const media = [
+  const media: Options = [
     { label: "Blog", value: "blog" },
     { label: "Google", value: "google" },
     { label: "Friend", value: "friend" },
     { label: "Other", value: "other" },
   ];
-
-  const [selectedRole, setSelectedRole] = useState<any>(null);
-  const [selectedMedia, setSelectedMedia] = useState<any>(media[0]);
+  const [selectedMedia, setSelectedMedia] = useState<Option>(media[0]);
 
   async function onSubmit(data: ContactProps) {
     data.phone = removeLeadingZero(data.phone);
     const phoneNumber = `${phoneCode}${data.phone}`;
 
-    console.log(data);
+    data.phone = phoneNumber;
+    data.country = selectedCountry.label;
+    data.role = selectedRole.value;
+    data.media = selectedMedia.value;
+    data.students = Number(data.students);
+
+    try {
+      setLoading(true);
+      console.log("Data: ", data);
+      const res = await createContact(data);
+      console.log(res);
+      setLoading(false);
+      toast.success("Successfully Created!");
+      reset();
+      // router.push("/dashboard/categories");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   }
 
   return (
@@ -117,7 +143,7 @@ const ContactUs: React.FC = () => {
               <TextInput
                 label="Your Full Name"
                 register={register}
-                name="name"
+                name="fullName"
                 type="text"
                 errors={errors}
                 placeholder="John Doe"
@@ -204,7 +230,7 @@ const ContactUs: React.FC = () => {
               <SubmitButton
                 buttonIcon={Send}
                 title="Submit"
-                loading={isLoading}
+                loading={loading}
                 loadingTitle="Signing in please wait..."
               />
             </form>
