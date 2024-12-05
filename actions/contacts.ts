@@ -2,6 +2,7 @@
 
 import { ContactProps } from "@/components/frontend/contact-us";
 import api from "@/lib/api";
+import { Contact, Prisma } from "@prisma/client";
 import axios from "axios";
 
 export async function createContact(data: ContactProps) {
@@ -29,7 +30,9 @@ export async function deleteContact(id: string) {
 export async function getAllContacts() {
   try {
     const response = await api.get("/contacts");
-    return response.data;
+    const contacts = response.data.data;
+
+    return contacts as Contact[];
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to create contact!";

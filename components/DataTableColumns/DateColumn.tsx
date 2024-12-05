@@ -45,13 +45,7 @@ function timeAgo(createdAt: string): string {
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 }
 
-export default function DateColumn({
-  row,
-  accessorKey,
-}: {
-  row: any;
-  accessorKey: any;
-}) {
+export default function DateColumn({ row, accessorKey }: { row: any; accessorKey: any }) {
   const createdAt = row.getValue(`${accessorKey}`);
   const date = getNormalDate(createdAt);
   const originalDate = new Date(createdAt);

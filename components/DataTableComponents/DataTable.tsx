@@ -5,7 +5,6 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -70,6 +69,9 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
   // console.log(searchResults);
+  // console.log(table.getRowModel().rows);
+
+  console.log(data);
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center gap-8">
