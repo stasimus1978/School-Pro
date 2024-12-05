@@ -10,13 +10,14 @@ import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ClassForm from "./forms/academics/class-form";
 import StreamForm from "./forms/academics/stream-form";
+import { ClassItem } from "@/types/types";
 
-interface ClassItem {
-  id: number;
-  name: string;
-  sections: number;
-  totalStudent: number;
-}
+// interface ClassItem {
+//   id: number;
+//   name: string;
+//   sections: number;
+//   totalStudent: number;
+// }
 
 interface Section {
   name: string;
@@ -28,13 +29,13 @@ interface SectionsData {
   [key: number]: Section[];
 }
 
-const classes: ClassItem[] = [
-  { id: 1, name: "Class 5", sections: 3, totalStudent: 120 },
-  { id: 2, name: "Class 6", sections: 2, totalStudent: 80 },
-  { id: 3, name: "Class 7", sections: 4, totalStudent: 160 },
-  { id: 4, name: "Class 8", sections: 3, totalStudent: 115 },
-  { id: 5, name: "Class 9", sections: 2, totalStudent: 75 },
-];
+// const classes: ClassItem[] = [
+//   { id: 1, name: "Class 5", sections: 3, totalStudent: 120 },
+//   { id: 2, name: "Class 6", sections: 2, totalStudent: 80 },
+//   { id: 3, name: "Class 7", sections: 4, totalStudent: 160 },
+//   { id: 4, name: "Class 8", sections: 3, totalStudent: 115 },
+//   { id: 5, name: "Class 9", sections: 2, totalStudent: 75 },
+// ];
 
 const sections: SectionsData = {
   1: [
@@ -44,8 +45,12 @@ const sections: SectionsData = {
   ],
 };
 
-export default function ClassListing() {
-  const [selectedClass, setSelectedClass] = useState<number>(1);
+interface ClassListingProps {
+  classes: ClassItem[];
+}
+
+export default function ClassListing({ classes }: ClassListingProps) {
+  const [selectedClass, setSelectedClass] = useState<string>("");
 
   return (
     <div className="grid lg:grid-cols-[280px_1fr] h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] gap-2 p-4 pt-2">
@@ -80,14 +85,14 @@ export default function ClassListing() {
                   onClick={() => setSelectedClass(classItem.id)}
                   className="flex flex-col items-start gap-1 text-left"
                 >
-                  <div className="flex w-full items-center justify-between">
-                    <span className="font-medium">{classItem.name}</span>
-                    <span className="text-xs">{classItem.sections} sections</span>
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <span className="font-medium">{classItem.title}</span>
+                    <span className="text-xs">{classItem.streams.length} sections</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <User className="size-3" />
-                    {classItem.totalStudent} students
+                    40 students
                   </div>
                 </button>
                 <div className="flex items-center gap-1">
@@ -137,12 +142,12 @@ export default function ClassListing() {
             </Button>
 
             <div>
-              <h2 className="text-lg font-semibold">{classes.find((c) => c.id === selectedClass)?.name}</h2>
+              <h2 className="text-lg font-semibold">{classes.find((c) => c.id === selectedClass)?.title}</h2>
 
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <span>Classes</span>
                 <span>/</span>
-                <span>{classes.find((c) => c.id === selectedClass)?.name}</span>
+                <span>{classes.find((c) => c.id === selectedClass)?.title}</span>
               </div>
             </div>
           </div>
@@ -150,7 +155,7 @@ export default function ClassListing() {
           <StreamForm />
         </div>
 
-        <div className="p-4 grid gap-4 max-lg:grid-cols-2 lg:grid-cols-3">
+        {/* <div className="p-4 grid gap-4 max-lg:grid-cols-2 lg:grid-cols-3">
           {sections[selectedClass]?.map((section) => (
             <Card key={section.name}>
               <CardHeader className="pb-2">
@@ -166,7 +171,7 @@ export default function ClassListing() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

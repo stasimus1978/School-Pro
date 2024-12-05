@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import TextInput from "@/components/FormInputs/TextInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import { ClassCreateProps } from "@/types/types";
+import { createClass } from "@/actions/classes";
 
 export type ClassProps = {
   userId?: string;
@@ -31,7 +32,7 @@ export default function ClassForm({ userId, initialContent, editingId }: ClassPr
 
   const [loading, setLoading] = useState(false);
 
-  async function saveFolder(data: ClassCreateProps) {
+  async function saveClass(data: ClassCreateProps) {
     // data.userId = userId;
     try {
       setLoading(true);
@@ -40,9 +41,10 @@ export default function ClassForm({ userId, initialContent, editingId }: ClassPr
         // setLoading(false);
         // toast.success("Updated Successfully!");
       } else {
-        // await createFolder(data);
-        // setLoading(false);
-        // toast.success("Successfully Created!");
+        const res = await createClass(data);
+        setLoading(false);
+        toast.success("Successfully Created!");
+        reset();
       }
     } catch (error) {
       setLoading(false);
@@ -74,7 +76,7 @@ export default function ClassForm({ userId, initialContent, editingId }: ClassPr
                 Please Write your Comment here, with respect
               </DialogDescription> */}
             </DialogHeader>
-            <form className="" onSubmit={handleSubmit(saveFolder)}>
+            <form className="" onSubmit={handleSubmit(saveClass)}>
               <div className="">
                 <div className="space-y-3">
                   <div className="grid gap-3">

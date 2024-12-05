@@ -1,9 +1,12 @@
+import { getAllClasses } from "@/actions/classes";
 import ClassListing from "@/components/dashboard/class-listing";
 
-export default function AcademicsClassesPage() {
+export default async function AcademicsClassesPage() {
+  const classes = await getAllClasses();
+
   return (
     <div className="">
-      <ClassListing />
+      <ClassListing classes={classes} />
     </div>
   );
 }
