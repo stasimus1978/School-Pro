@@ -12,12 +12,14 @@ import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
+import { ClassItem } from "@/types/types";
 
 export type SelectOptionProps = {
   label: string;
   value: string;
 };
 type SingleStudentFormProps = {
+  classes: ClassItem[];
   editingId?: string | undefined;
   initialData?: any | undefined | null;
 };
@@ -29,7 +31,7 @@ export type StudentProps = {
   imageUrl: string;
 };
 
-export default function SingleStudentForm({ editingId, initialData }: SingleStudentFormProps) {
+export default function SingleStudentForm({ classes, editingId, initialData }: SingleStudentFormProps) {
   // Parents
   const parents = [
     { label: "John Doe", value: "1234556" },
@@ -38,19 +40,24 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
   const [selectedParent, setSelectedParent] = useState<any>(null);
 
   // Class
-  const classes = [
-    { label: "S1", value: "1234556" },
-    { label: "S2", value: "1233778" },
-  ];
-  const [selectedClass, setSelectedClass] = useState<any>(null);
+  const classOptions = classes.map((item) => {
+    return {
+      label: item.title,
+      value: item.id,
+    };
+  });
 
-  // Sections/Streams
-  const streams = [
-    { label: "S1A", value: "1234556" },
-    { label: "S1B", value: "1233778" },
-    { label: "S2A", value: "1233778" },
-    { label: "S2b", value: "1233778" },
-  ];
+  const [selectedClass, setSelectedClass] = useState<SelectOptionProps>(classOptions[0]);
+  const classId = selectedClass.value ?? "";
+
+  const streams = classes.find((item) => item.id === classId)?.streams || [];
+  const streamOptions = streams.map((item) => {
+    return {
+      label: item.title,
+      value: item.id,
+    };
+  });
+
   const [selectedStream, setSelectedStream] = useState<any>(null);
 
   // Gender
@@ -146,7 +153,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
 
               <FormSelectInput
                 label="Class"
-                options={classes}
+                options={classOptions}
                 option={selectedClass}
                 setOption={setSelectedClass}
                 toolTipText="Add New Class"
@@ -155,7 +162,7 @@ export default function SingleStudentForm({ editingId, initialData }: SingleStud
 
               <FormSelectInput
                 label="Stream/Section"
-                options={streams}
+                options={streamOptions}
                 option={selectedStream}
                 setOption={setSelectedStream}
                 toolTipText="Add New Stream"

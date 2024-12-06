@@ -14,3 +14,8 @@ export type StreamCreateProps = Pick<StreamItem, "title" | "slug" | "classId">;
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;
 export type StreamUpdateProps = Partial<StreamCreateProps>;
+
+//
+import { Option, Options } from "react-tailwindcss-select/dist/components/type";
+
+export type SelectOptionProps = Option;

@@ -12,13 +12,33 @@ import ContactInfoModal from "@/components/DataTableColumns/ContactCard";
 
 export const columns: ColumnDef<Contact>[] = [
   {
-    accessorKey: "fullName",
-    header: ({ column }) => <SortableColumn column={column} title="Name" />,
+    accessorKey: "user",
+    header: "Name/School",
+    cell: ({ row }) => {
+      const contact = row.original;
+      return (
+        <div className="" key={contact.id}>
+          <h2 className="font-medium capitalize">{contact.fullName.toLowerCase()}</h2>
+          <p className="text-xs text-muted-foreground">{contact.school}</p>
+        </div>
+      );
+    },
   },
 
-  { accessorKey: "email", header: "Email" },
-  { accessorKey: "phone", header: "Phone" },
-  { accessorKey: "school", header: "School" },
+  {
+    accessorKey: "email-phone",
+    header: "Email/Phone",
+    cell: ({ row }) => {
+      const contact = row.original;
+      return (
+        <div className="" key={contact.id}>
+          <h2 className="font-medium">{contact.email.toLowerCase()}</h2>
+          <p className="text-xs text-muted-foreground">{contact.phone}</p>
+        </div>
+      );
+    },
+  },
+
   { accessorKey: "country", header: "Country" },
 
   {
