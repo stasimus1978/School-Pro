@@ -11,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/
 import ClassForm from "./forms/academics/class-form";
 import StreamForm from "./forms/academics/stream-form";
 import { ClassItem } from "@/types/types";
+import Image from "next/image";
 
 // interface ClassItem {
 //   id: number;
@@ -52,6 +53,8 @@ interface ClassListingProps {
 export default function ClassListing({ classes }: ClassListingProps) {
   const [selectedClass, setSelectedClass] = useState<string>("");
 
+  const streams = classes.find((c) => c.id === selectedClass)?.streams || [];
+
   return (
     <div className="grid lg:grid-cols-[280px_1fr] h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] gap-2 p-4 pt-2">
       {/* Left Sidebar */}
@@ -87,7 +90,7 @@ export default function ClassListing({ classes }: ClassListingProps) {
                 >
                   <div className="flex w-full items-center justify-between gap-2">
                     <span className="font-medium">{classItem.title}</span>
-                    <span className="text-xs">{classItem.streams.length} sections</span>
+                    <span className="text-xs">{classItem.streams.length} streams</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -133,46 +136,94 @@ export default function ClassListing({ classes }: ClassListingProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-2 rounded-lg border bg-card">
-        <div className="flex items-center justify-between gap-2 px-4 py-2 border-b">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="size-8">
-              <ChevronLeft className="size-4" />
-              <span className="sr-only">Go Back</span>
-            </Button>
+      {selectedClass ? (
+        <div className="flex flex-col gap-2 rounded-lg border bg-card">
+          <div className="flex items-center justify-between gap-2 px-4 py-2 border-b">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" className="size-8">
+                <ChevronLeft className="size-4" />
+                <span className="sr-only">Go Back</span>
+              </Button>
 
-            <div>
-              <h2 className="text-lg font-semibold">{classes.find((c) => c.id === selectedClass)?.title}</h2>
+              <div>
+                <h2 className="text-lg font-semibold">{classes.find((c) => c.id === selectedClass)?.title}</h2>
 
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <span>Classes</span>
-                <span>/</span>
-                <span>{classes.find((c) => c.id === selectedClass)?.title}</span>
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <span>Classes</span>
+                  <span>/</span>
+                  <span>{classes.find((c) => c.id === selectedClass)?.title}</span>
+                </div>
               </div>
             </div>
+
+            <StreamForm classId={selectedClass} />
           </div>
 
-          <StreamForm />
+          {streams?.length > 0 ? (
+            <div className="p-4 grid gap-4 max-lg:grid-cols-2 lg:grid-cols-3">
+              {streams.map((section) => (
+                <Card key={section.title}>
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg">{section.title}</CardTitle>
+                      <div className="flex items-center gap-1">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button variant="ghost" size="icon" className="size-7">
+                                <Pencil className="size-2" />
+                                <span className="sr-only">Edit Stream</span>
+                              </Button>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                              <p>Edit Stream</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button variant="ghost" size="icon" className="size-7">
+                                <Trash2 className="size-2" />
+                                <span className="sr-only">Delete Stream</span>
+                              </Button>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                              <p>Delete Stream</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </div>
+                    <CardDescription>Class Teacher: Jb web developer</CardDescription>
+                  </CardHeader>
+
+                  <CardContent>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Users className="size-4" />
+                      40 students
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center min-h-96">
+              <div className="flex flex-col items-center justify-center">
+                <Image src={"/empty.png"} alt="empty" width={512} height={512} className="w-36" />
+                <p className="">No Streams</p>
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* <div className="p-4 grid gap-4 max-lg:grid-cols-2 lg:grid-cols-3">
-          {sections[selectedClass]?.map((section) => (
-            <Card key={section.name}>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">{section.name}</CardTitle>
-                <CardDescription>Class Teacher: {section.classTeacher}</CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="size-4" />
-                  {section.students} students
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div> */}
-      </div>
+      ) : (
+        <div className="">
+          <p className="">Select the Class to see the Details </p>
+        </div>
+      )}
     </div>
   );
 }

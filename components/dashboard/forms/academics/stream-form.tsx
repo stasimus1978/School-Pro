@@ -1,42 +1,41 @@
 "use client";
+
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-
 import { Check, Pencil, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import TextInput from "@/components/FormInputs/TextInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import { StreamCreateProps } from "@/types/types";
+import { createStream } from "@/actions/streams";
 
-export type ClassProps = {
-  name: string;
-};
-
-export default function StreamForm({
-  userId,
-  initialContent,
-  editingId,
-}: {
-  userId?: string;
+interface StreamFormProps {
+  classId: string;
   initialContent?: string;
   editingId?: string;
-}) {
+}
+
+export default function StreamForm({ classId, initialContent, editingId }: StreamFormProps) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ClassProps>({
+  } = useForm<StreamCreateProps>({
     defaultValues: {
-      name: initialContent || "",
+      title: initialContent || "",
     },
   });
 
   const [loading, setLoading] = useState(false);
 
-  async function saveFolder(data: ClassProps) {
-    // data.userId = userId;
+  async function saveStream(data: StreamCreateProps) {
+    data.classId = classId;
+
+    console.log(data);
+
     try {
       setLoading(true);
       if (editingId) {
@@ -44,9 +43,10 @@ export default function StreamForm({
         // setLoading(false);
         // toast.success("Updated Successfully!");
       } else {
-        // await createFolder(data);
-        // setLoading(false);
-        // toast.success("Successfully Created!");
+        const res = await createStream(data);
+        setLoading(false);
+        toast.success("Successfully Created!");
+        reset();
       }
     } catch (error) {
       setLoading(false);
@@ -78,11 +78,11 @@ export default function StreamForm({
                 Please Write your Comment here, with respect
               </DialogDescription> */}
             </DialogHeader>
-            <form className="" onSubmit={handleSubmit(saveFolder)}>
+            <form className="" onSubmit={handleSubmit(saveStream)}>
               <div className="">
                 <div className="space-y-3">
                   <div className="grid gap-3">
-                    <TextInput register={register} errors={errors} label="" name="name" icon={Check} />
+                    <TextInput register={register} errors={errors} label="" name="title" icon={Check} />
                   </div>
                 </div>
                 <div className="py-3">
