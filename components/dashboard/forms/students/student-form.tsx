@@ -30,7 +30,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       value: parent.id,
     };
   });
-  const [selectedParent, setSelectedParent] = useState<SelectOptionProps>(parentOptions[0]);
+  const [selectedParent, setSelectedParent] = useState<SelectOptionProps | null>(null);
 
   // Class Options
   const classOptions = classes.map((item) => {
@@ -50,7 +50,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       value: item.id,
     };
   });
-  const [selectedStream, setSelectedStream] = useState<SelectOptionProps>(streamOptions[0]);
+  const [selectedStream, setSelectedStream] = useState<SelectOptionProps | null>(null);
 
   // Gender
   const genders = [

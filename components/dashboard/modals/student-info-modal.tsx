@@ -16,6 +16,7 @@ import {
   HeartIcon,
   GlobeIcon,
   ClockIcon,
+  Hash,
 } from "lucide-react";
 
 import { StudentItem } from "@/types/types";
@@ -61,6 +62,10 @@ export function StudentInfoModal({ student }: StudentModalProps) {
           </div>
           <div className="grid gap-4">
             <div className="flex items-center space-x-2">
+              <Hash className="h-4 w-4 text-gray-500" />
+              <span className="font-semibold">Student ID: {student.id}</span>
+            </div>
+            <div className="flex items-center space-x-2">
               <UserIcon className="h-4 w-4 text-gray-500" />
               <span>Roll No: {student.rollNo}</span>
             </div>
@@ -86,19 +91,19 @@ export function StudentInfoModal({ student }: StudentModalProps) {
           <div className="flex items-center space-x-2">
             <BookIcon className="h-4 w-4 text-gray-500" />
             <span>
-              <strong>Class ID:</strong> {student.classId}
+              <strong>Class:</strong> {student?.classTitle || student.classId}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <GraduationCapIcon className="h-4 w-4 text-gray-500" />
             <span>
-              <strong>Stream ID:</strong> {student.streamId}
+              <strong>Stream:</strong> {student?.streamTitle || student.streamId}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <UsersIcon className="h-4 w-4 text-gray-500" />
             <span>
-              <strong>Parent ID:</strong> {student.parentId}
+              <strong>Parent:</strong> {student?.parentName || student.parentId}
             </span>
           </div>
           <div className="flex items-center space-x-2">
