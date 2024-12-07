@@ -1,7 +1,5 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { set, useForm } from "react-hook-form";
@@ -13,8 +11,9 @@ import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
-import { countries } from "@/lib/countries";
-import { title } from "process";
+import { countries, Country } from "@/lib/countries";
+import { ParentCreateProps } from "@/types/types";
+import { createParent } from "@/actions/parents";
 
 export type SelectOptionProps = {
   label: string;
@@ -25,13 +24,6 @@ type SingleStudentFormProps = {
   initialData?: any | undefined | null;
 };
 
-export type StudentProps = {
-  name: string;
-  email: string;
-  password: string;
-  imageUrl: string;
-};
-
 export default function ParentForm({ editingId, initialData }: SingleStudentFormProps) {
   // Parents
   const relationships = [
@@ -40,7 +32,7 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Guardian", value: "Guardian" },
     { label: "Other", value: "Other" },
   ];
-  const [selectedRelationship, setSelectedRelationship] = useState<any>(relationships[0]);
+  const [selectedRelationship, setSelectedRelationship] = useState<SelectOptionProps>(relationships[0]);
 
   // Titles
   const titles = [
@@ -50,7 +42,7 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Dr.", value: "Dr" },
     { label: "Prof.", value: "Prof." },
   ];
-  const [selectedTitle, setSelectedTitle] = useState<any>(titles[0]);
+  const [selectedTitle, setSelectedTitle] = useState<SelectOptionProps>(titles[0]);
 
   // Contact Method
   const contactMethod = [
@@ -58,7 +50,7 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Email", value: "Email" },
     { label: "Whatsap", value: "Whatsap" },
   ];
-  const [selectedContactMethod, setSelectedContactMethod] = useState<any>(null);
+  const [selectedContactMethod, setSelectedContactMethod] = useState<SelectOptionProps>(contactMethod[0]);
 
   // Sections/Streams
   const streams = [
@@ -67,52 +59,46 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "S2A", value: "1233778" },
     { label: "S2b", value: "1233778" },
   ];
-  const [selectedStream, setSelectedStream] = useState<any>(null);
+  const [selectedStream, setSelectedStream] = useState<SelectOptionProps>(streams[0]);
 
   // Gender
   const genders = [
     { label: "MALE", value: "MALE" },
     { label: "FEMALE", value: "FEMALE" },
   ];
-  const [selectedGender, setSelectedGender] = useState<any>(null);
+  const [selectedGender, setSelectedGender] = useState<SelectOptionProps>(genders[0]);
 
   // Nationality
   const initialCountryCode = "UA";
-  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode);
-  const [selectedNationality, setSelectedNationality] = useState<any>(initialCountry);
-
-  // Religion
-  const religions = [
-    { label: "Roman Catholic", value: "Catholic" },
-    { label: "Anglican", value: "Anglican" },
-    { label: "Islamic", value: "Islamic" },
-    { label: "Hindu", value: "Hindu" },
-  ];
-  const [selectedReligion, setSelectedReligion] = useState<any>(initialCountry);
+  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode) || countries[0];
+  const [selectedNationality, setSelectedNationality] = useState<Country>(initialCountry);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<StudentProps>({
+  } = useForm<ParentCreateProps>({
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      imageUrl: "",
+      firstName: "",
     },
   });
+
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveStudent(data: StudentProps) {
+  async function saveParent(data: ParentCreateProps) {
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
+      data.title = selectedTitle.value;
+      data.relationship = selectedRelationship.value;
+      data.gender = selectedGender.value;
+      data.nationality = selectedNationality?.label;
+      data.contactMethod = selectedContactMethod.value;
 
       console.log("Data: ", data);
 
@@ -124,10 +110,10 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
-        // await createCategory(data);
-        // setLoading(false);
-        // toast.success("Successfully Created!");
-        // reset();
+        const res = await createParent(data);
+        setLoading(false);
+        toast.success("Successfully Created!");
+        reset();
         // setImageUrl("/placeholder.svg");
         // router.push("/dashboard/categories");
       }
@@ -138,7 +124,7 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
   }
 
   return (
-    <form className="" onSubmit={handleSubmit(saveStudent)}>
+    <form className="" onSubmit={handleSubmit(saveParent)}>
       <FormHeader href="/parents" parent="users" title="Parents" editingId={editingId} loading={loading} />
 
       <div className="grid grid-cols-12 gap-6 py-8">
@@ -184,17 +170,17 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
               <FormSelectInput
                 label="Nationality"
                 options={countries}
-                option={selectedNationality}
+                option={selectedNationality as SelectOptionProps}
                 setOption={setSelectedNationality}
               />
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <TextInput register={register} errors={errors} label="Phone" name="phone" type="tel" />
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-3">
+              {/* <TextInput register={register} errors={errors} label="Phone" name="phone" type="tel" /> */}
 
               <TextInput register={register} errors={errors} label="Email" name="email" type="email" />
 
-              <TextInput register={register} errors={errors} label="Whatsap No." name="whatsapNo" />
+              <TextInput register={register} errors={errors} type="tel" label="Whatsap No." name="whatsapNo" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-3">

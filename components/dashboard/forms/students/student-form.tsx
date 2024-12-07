@@ -12,12 +12,12 @@ import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
-import { ClassItem } from "@/types/types";
+import { ClassItem, SelectOptionProps } from "@/types/types";
 
-export type SelectOptionProps = {
-  label: string;
-  value: string;
-};
+// export type SelectOptionProps = {
+//   label: string;
+//   value: string;
+// };
 type SingleStudentFormProps = {
   classes: ClassItem[];
   editingId?: string | undefined;

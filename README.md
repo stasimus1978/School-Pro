@@ -27,3 +27,5 @@
 3. 2:44:31 / 3:09:57
 
 #### VII. [Episode 7: Parents and Students API Create and Get Endpoints | School Management System](https://www.youtube.com/watch?v=BgIcAan2W_E&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=3)
+
+1. 1:29:58 / 3:18:36
