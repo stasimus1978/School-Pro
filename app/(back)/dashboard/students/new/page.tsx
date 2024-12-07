@@ -1,4 +1,5 @@
 import { getAllClasses } from "@/actions/classes";
+import { getAllParents } from "@/actions/parents";
 import BulkStudentForm from "@/components/dashboard/forms/students/bulk-student-form";
 import SingleStudentForm from "@/components/dashboard/forms/students/student-form";
 import InfoBanner from "@/components/info-banner";
@@ -8,6 +9,7 @@ import { UserPlus, Users } from "lucide-react";
 
 export default async function AdmissionTabs() {
   const classes = (await getAllClasses()) || [];
+  const parents = (await getAllParents()) || [];
 
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
@@ -38,7 +40,7 @@ export default async function AdmissionTabs() {
                 message="Please Make sure you have already Created the Parent, Class and Stream for this student."
                 type="warning"
               />
-              <SingleStudentForm classes={classes} />
+              <SingleStudentForm parents={parents} classes={classes} />
             </TabsContent>
 
             <TabsContent value="bulk" className="mt-0">

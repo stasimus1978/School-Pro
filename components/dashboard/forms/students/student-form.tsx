@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
-import { ClassItem, SelectOptionProps } from "@/types/types";
+import { ClassItem, ParentItem, SelectOptionProps } from "@/types/types";
 
 // export type SelectOptionProps = {
 //   label: string;
@@ -20,6 +20,7 @@ import { ClassItem, SelectOptionProps } from "@/types/types";
 // };
 type SingleStudentFormProps = {
   classes: ClassItem[];
+  parents: ParentItem[];
   editingId?: string | undefined;
   initialData?: any | undefined | null;
 };
@@ -31,13 +32,16 @@ export type StudentProps = {
   imageUrl: string;
 };
 
-export default function SingleStudentForm({ classes, editingId, initialData }: SingleStudentFormProps) {
+export default function SingleStudentForm({ classes, parents, editingId, initialData }: SingleStudentFormProps) {
   // Parents
-  const parents = [
-    { label: "John Doe", value: "1234556" },
-    { label: "Allan Smith", value: "1233778" },
-  ];
-  const [selectedParent, setSelectedParent] = useState<any>(null);
+  const parentOptions = parents.map((parent) => {
+    return {
+      label: `${parent.firstName} ${parent.lastName}`,
+      value: parent.id,
+    };
+  });
+
+  const [selectedParent, setSelectedParent] = useState<SelectOptionProps | null>(null);
 
   // Class
   const classOptions = classes.map((item) => {
@@ -144,7 +148,7 @@ export default function SingleStudentForm({ classes, editingId, initialData }: S
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
               <FormSelectInput
                 label="Parent"
-                options={parents}
+                options={parentOptions}
                 option={selectedParent}
                 setOption={setSelectedParent}
                 toolTipText="Add New Parent"
