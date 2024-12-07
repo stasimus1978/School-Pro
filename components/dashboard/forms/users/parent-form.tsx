@@ -115,7 +115,7 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
         toast.success("Successfully Created!");
         reset();
         // setImageUrl("/placeholder.svg");
-        // router.push("/dashboard/categories");
+        router.push("/dashboard/users/parents");
       }
     } catch (error) {
       setLoading(false);
