@@ -95,8 +95,11 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       data.imageUrl = imageUrl;
       data.name = `${data.firstName} ${data.lastName}`;
       data.parentId = selectedParent.value;
+      data.parentName = selectedParent.label;
       data.classId = selectedClass.value;
+      data.classTitle = selectedClass.label;
       data.streamId = selectedStream.value;
+      data.streamTitle = selectedStream.label;
       data.nationality = selectedNationality.value;
       data.religion = selectedReligion.value;
       data.gender = selectedGender.value;

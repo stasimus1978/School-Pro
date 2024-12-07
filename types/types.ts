@@ -14,7 +14,11 @@ export type StudentItem = Student;
 export type ClassCreateProps = Pick<ClassItem, "title">;
 export type StreamCreateProps = Pick<StreamItem, "title" | "slug" | "classId">;
 export type ParentCreateProps = Omit<ParentItem, "id">; //& { profileImage: string;};
-export type StudentCreateProps = Omit<StudentItem, "id">; //& { profileImage: string;};
+export type StudentCreateProps = Omit<StudentItem, "id"> & {
+  parentName?: string;
+  classTitle?: string;
+  streamTitle?: string;
+};
 
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;

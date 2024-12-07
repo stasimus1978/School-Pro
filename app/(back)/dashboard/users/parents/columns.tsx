@@ -1,15 +1,12 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
-
+import Image from "next/image";
 import DateColumn from "@/components/DataTableColumns/DateColumn";
-import ImageColumn from "@/components/DataTableColumns/ImageColumn";
-import SortableColumn from "@/components/DataTableColumns/SortableColumn";
-import { ColumnDef } from "@tanstack/react-table";
 import ActionColumn from "@/components/DataTableColumns/ActionColumn";
+
+import { ColumnDef } from "@tanstack/react-table";
 import { ParentItem } from "@/types/types";
 import { ParentInfoModal } from "@/components/dashboard/modals/parent-info-modal";
-import Image from "next/image";
 
 export const columns: ColumnDef<ParentItem>[] = [
   {
