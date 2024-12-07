@@ -103,6 +103,7 @@ model Student {
   email         String   @unique
   parentId      String
   classId       String
+  studentType   String?  @default("PS")
   streamId      String
   password      String
   imageUrl      String?

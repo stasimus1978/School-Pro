@@ -14,15 +14,24 @@ import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
 import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/types/types";
 import { createStudent } from "@/actions/students";
+import RadioInput from "@/components/FormInputs/RadioInput";
+import { generateRegistrationNumber } from "@/lib/generateRegNo";
 
 type SingleStudentFormProps = {
   classes: ClassItem[];
   parents: ParentItem[];
+  nextSeq: number;
   editingId?: string | undefined;
   initialData?: any | undefined | null;
 };
 
-export default function SingleStudentForm({ classes, parents, editingId, initialData }: SingleStudentFormProps) {
+export default function SingleStudentForm({
+  classes,
+  parents,
+  nextSeq,
+  editingId,
+  initialData,
+}: SingleStudentFormProps) {
   // Parents Options
   const parentOptions = parents.map((parent) => {
     return {
@@ -89,17 +98,22 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
+  const studentTypes = [
+    { label: "Private Student", id: "PS" },
+    { label: "Sponsored Student", id: "SS" },
+  ];
+
   async function saveStudent(data: StudentCreateProps) {
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
       data.name = `${data.firstName} ${data.lastName}`;
-      data.parentId = selectedParent.value;
-      data.parentName = selectedParent.label;
+      data.parentId = selectedParent?.value;
+      data.parentName = selectedParent?.label;
       data.classId = selectedClass.value;
       data.classTitle = selectedClass.label;
-      data.streamId = selectedStream.value;
-      data.streamTitle = selectedStream.label;
+      data.streamId = selectedStream?.value;
+      data.streamTitle = selectedStream?.label;
       data.nationality = selectedNationality.value;
       data.religion = selectedReligion.value;
       data.gender = selectedGender.value;
@@ -114,12 +128,15 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
-        const res = await createStudent(data);
+        const studentType = data.studentType as "PS" | "SS";
+        const regNo = generateRegistrationNumber("BU", studentType, nextSeq);
+        data.regNo = regNo;
+        // const res = await createStudent(data);
         setLoading(false);
-        toast.success("Student Successfully Created!");
-        reset();
+        // toast.success("Student Successfully Created!");
+        // reset();
         // setImageUrl("/placeholder.svg");
-        router.push("/dashboard/students");
+        // router.push("/dashboard/students");
       }
     } catch (error) {
       setLoading(false);
@@ -218,14 +235,22 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
             <div className="grid md:grid-cols-2 gap-3">
               <div className="">
                 <div className="grid gap-3">
-                  <TextInput register={register} errors={errors} label="Registration No." name="regNo" />
+                  {/* <TextInput register={register} errors={errors} label="Registration No." name="regNo" /> */}
 
-                  <TextInput
+                  {/* <TextInput
                     register={register}
                     errors={errors}
                     label="Admission Date"
                     type="date"
                     name="admissionDate"
+                  /> */}
+                  <RadioInput
+                    radioOptions={studentTypes}
+                    register={register}
+                    errors={errors}
+                    label="Student type"
+                    name="studentType"
+                    defaultValue="PS"
                   />
                 </div>
 

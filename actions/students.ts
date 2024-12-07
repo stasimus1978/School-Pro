@@ -42,3 +42,19 @@ export async function getAllStudents() {
     throw error;
   }
 }
+
+export async function getStudentNextSequence() {
+  try {
+    const response = await api.get("/students/seq");
+    const nextSeq = response.data.data;
+
+    return nextSeq as number;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Failed to create contact!";
+      throw new Error(message);
+    }
+
+    throw error;
+  }
+}

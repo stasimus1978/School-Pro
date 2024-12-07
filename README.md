@@ -30,3 +30,5 @@
 
 1. 1:29:58 / 3:18:36
 2. 2:03:58 / 3:18:36
+
+#### VIII. [Episode 8: Teachers Form | Relationships | School Management system with Next Js, Node Js](https://www.youtube.com/watch?v=_ojbI3iAZcE&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=2)
