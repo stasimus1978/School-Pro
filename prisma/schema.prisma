@@ -38,10 +38,13 @@ model Contact {
 }
 
 model Class {
-  id      String   @id @default(cuid())
-  title   String
-  slug    String   @unique
-  streams Stream[]
+  id    String @id @default(cuid())
+  title String
+  slug  String @unique
+
+  // Relationships
+  streams  Stream[]
+  students Student[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -54,7 +57,10 @@ model Stream {
   title   String
   slug    String @unique
   classId String
-  class   Class  @relation(fields: [classId], references: [id])
+
+  // Relationships
+  class    Class     @relation(fields: [classId], references: [id])
+  students Student[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -83,5 +89,41 @@ model Parent {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  // Relationships
+  students Student[]
+
   @@map("parents")
+}
+
+model Student {
+  id            String   @id @default(cuid())
+  name          String
+  firstName     String
+  lastName      String
+  email         String   @unique
+  parentId      String
+  classId       String
+  streamId      String
+  password      String
+  imageUrl      String?
+  phone         String?
+  state         String
+  BCN           String   @unique
+  nationality   String
+  religion      String
+  gender        String
+  dob           DateTime
+  rollNo        String   @unique
+  regNo         String   @unique
+  admissionDate DateTime
+  address       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relationships
+  parent Parent @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  class  Class  @relation(fields: [classId], references: [id])
+  stream Stream @relation(fields: [streamId], references: [id])
+
+  @@map("students")
 }

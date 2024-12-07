@@ -12,12 +12,8 @@ import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
-import { ClassItem, ParentItem, SelectOptionProps } from "@/types/types";
+import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/types/types";
 
-// export type SelectOptionProps = {
-//   label: string;
-//   value: string;
-// };
 type SingleStudentFormProps = {
   classes: ClassItem[];
   parents: ParentItem[];
@@ -25,35 +21,27 @@ type SingleStudentFormProps = {
   initialData?: any | undefined | null;
 };
 
-export type StudentProps = {
-  name: string;
-  email: string;
-  password: string;
-  imageUrl: string;
-};
-
 export default function SingleStudentForm({ classes, parents, editingId, initialData }: SingleStudentFormProps) {
-  // Parents
+  // Parents Options
   const parentOptions = parents.map((parent) => {
     return {
       label: `${parent.firstName} ${parent.lastName}`,
       value: parent.id,
     };
   });
-
   const [selectedParent, setSelectedParent] = useState<SelectOptionProps | null>(null);
 
-  // Class
+  // Class Options
   const classOptions = classes.map((item) => {
     return {
       label: item.title,
       value: item.id,
     };
   });
-
   const [selectedClass, setSelectedClass] = useState<SelectOptionProps>(classOptions[0]);
-  const classId = selectedClass.value ?? "";
 
+  // Stream Options
+  const classId = selectedClass.value ?? "";
   const streams = classes.find((item) => item.id === classId)?.streams || [];
   const streamOptions = streams.map((item) => {
     return {
@@ -61,7 +49,6 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       value: item.id,
     };
   });
-
   const [selectedStream, setSelectedStream] = useState<any>(null);
 
   // Gender
@@ -90,7 +77,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<StudentProps>({
+  } = useForm<StudentCreateProps>({
     defaultValues: {
       name: "",
       email: "",
@@ -104,7 +91,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveStudent(data: StudentProps) {
+  async function saveStudent(data: StudentCreateProps) {
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
@@ -225,7 +212,13 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
                 <div className="grid gap-3">
                   <TextInput register={register} errors={errors} label="Registration No." name="regNo" />
 
-                  <TextInput register={register} errors={errors} label="Admission Date" name="admissionDate" />
+                  <TextInput
+                    register={register}
+                    errors={errors}
+                    label="Admission Date"
+                    type="date"
+                    name="admissionDate"
+                  />
                 </div>
 
                 <div className="grid gap-3">
