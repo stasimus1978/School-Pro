@@ -1,12 +1,11 @@
 import { Contact, Parent, Prisma, Student } from "@prisma/client";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
-import { Option, Options } from "react-tailwindcss-select/dist/components/type";
+import { Option } from "react-tailwindcss-select/dist/components/type";
 
 // Base type
 export type ContactItem = Contact;
-export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true } }>;
-export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true } }>;
+export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true; students: true } }>;
+export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true; students: true } }>;
 export type ParentItem = Parent;
 export type StudentItem = Student;
 
@@ -30,4 +29,11 @@ export type SelectOptionProps = Option;
 
 export type TypedRequestBody<T> = Omit<NextRequest, "json"> & {
   json: () => Promise<T>;
+};
+
+//
+export type StreamWithCount = StreamItem & { _count: { students: number } };
+export type ClassWithCountAndStreams = ClassItem & {
+  streams: StreamWithCount[];
+  _count: { students: number };
 };

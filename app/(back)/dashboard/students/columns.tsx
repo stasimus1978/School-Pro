@@ -49,6 +49,20 @@ export const columns: ColumnDef<StudentItem>[] = [
     },
   },
 
+  {
+    accessorKey: "class-stream",
+    header: "Email/Phone",
+    cell: ({ row }) => {
+      const student = row.original;
+      return (
+        <div className="" key={student.id}>
+          <h2 className="font-medium">{student.classTitle ?? ""}</h2>
+          <p className="text-xs text-muted-foreground">{student.streamTitle ?? ""}</p>
+        </div>
+      );
+    },
+  },
+
   { accessorKey: "nationality", header: "Nationality" },
 
   {

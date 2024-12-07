@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ClassForm from "./forms/academics/class-form";
 import StreamForm from "./forms/academics/stream-form";
-import { ClassItem } from "@/types/types";
+import { ClassItem, ClassWithCountAndStreams } from "@/types/types";
 import Image from "next/image";
 
 // interface ClassItem {
@@ -47,7 +47,7 @@ const sections: SectionsData = {
 };
 
 interface ClassListingProps {
-  classes: ClassItem[];
+  classes: ClassWithCountAndStreams[];
 }
 
 export default function ClassListing({ classes }: ClassListingProps) {
@@ -95,7 +95,7 @@ export default function ClassListing({ classes }: ClassListingProps) {
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <User className="size-3" />
-                    40 students
+                    {classItem._count.students} students
                   </div>
                 </button>
                 <div className="flex items-center gap-1">
@@ -204,7 +204,7 @@ export default function ClassListing({ classes }: ClassListingProps) {
                   <CardContent>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Users className="size-4" />
-                      40 students
+                      {section._count.students} students
                     </div>
                   </CardContent>
                 </Card>

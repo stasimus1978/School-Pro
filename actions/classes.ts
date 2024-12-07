@@ -1,7 +1,7 @@
 "use server";
 
 import api from "@/lib/api";
-import { ClassCreateProps, ClassItem } from "@/types/types";
+import { ClassCreateProps, ClassItem, ClassWithCountAndStreams } from "@/types/types";
 import { Contact, Prisma } from "@prisma/client";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ export async function getAllClasses() {
     const response = await api.get("/classes");
     const classes = response.data.data;
 
-    return classes as ClassItem[];
+    return classes as ClassWithCountAndStreams[];
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to create contact!";

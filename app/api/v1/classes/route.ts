@@ -48,7 +48,18 @@ export async function GET(request: NextRequest) {
   try {
     const classes = await prisma.class.findMany({
       orderBy: { createdAt: "desc" },
-      include: { streams: true },
+      include: {
+        streams: {
+          include: {
+            _count: {
+              select: { students: true },
+            },
+          },
+        },
+        _count: {
+          select: { students: true },
+        },
+      },
     });
 
     return new Response(JSON.stringify({ data: classes, error: null }), {
