@@ -7,9 +7,10 @@ import { NextRequest } from "next/server";
 export async function POST(request: TypedRequestBody<StudentCreateProps>) {
   const data = await request.json();
 
-  const { BCN, regNo, email, rollNo, dob } = data;
+  const { BCN, regNo, email, rollNo, dob, admissionDate } = data;
 
   data.dob = new Date(convertDateToISO(dob?.toString()));
+  data.admissionDate = new Date(convertDateToISO(admissionDate?.toString()));
 
   try {
     const exitingEmail = await prisma.student.findUnique({

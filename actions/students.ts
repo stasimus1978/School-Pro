@@ -30,9 +30,9 @@ export async function deleteStudent(id: string) {
 export async function getAllStudents() {
   try {
     const response = await api.get("/students");
-    const parents = response.data.data;
+    const students = response.data.data;
 
-    return parents as StudentItem[];
+    return students as StudentItem[];
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to create contact!";

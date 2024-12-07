@@ -13,6 +13,7 @@ import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries } from "@/lib/countries";
 import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/types/types";
+import { createStudent } from "@/actions/students";
 
 type SingleStudentFormProps = {
   classes: ClassItem[];
@@ -29,7 +30,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       value: parent.id,
     };
   });
-  const [selectedParent, setSelectedParent] = useState<SelectOptionProps | null>(null);
+  const [selectedParent, setSelectedParent] = useState<SelectOptionProps>(parentOptions[0]);
 
   // Class Options
   const classOptions = classes.map((item) => {
@@ -49,14 +50,14 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
       value: item.id,
     };
   });
-  const [selectedStream, setSelectedStream] = useState<any>(null);
+  const [selectedStream, setSelectedStream] = useState<SelectOptionProps>(streamOptions[0]);
 
   // Gender
   const genders = [
     { label: "MALE", value: "MALE" },
     { label: "FEMALE", value: "FEMALE" },
   ];
-  const [selectedGender, setSelectedGender] = useState<any>(null);
+  const [selectedGender, setSelectedGender] = useState<SelectOptionProps>(genders[0]);
 
   // Nationality
   const initialCountryCode = "UA";
@@ -70,7 +71,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
     { label: "Islamic", value: "Islamic" },
     { label: "Hindu", value: "Hindu" },
   ];
-  const [selectedReligion, setSelectedReligion] = useState<any>(initialCountry);
+  const [selectedReligion, setSelectedReligion] = useState<SelectOptionProps>(religions[0]);
 
   const {
     register,
@@ -79,10 +80,7 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
     formState: { errors },
   } = useForm<StudentCreateProps>({
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      imageUrl: "",
+      firstName: "",
     },
   });
   const router = useRouter();
@@ -95,6 +93,13 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
+      data.name = `${data.firstName} ${data.lastName}`;
+      data.parentId = selectedParent.value;
+      data.classId = selectedClass.value;
+      data.streamId = selectedStream.value;
+      data.nationality = selectedNationality.value;
+      data.religion = selectedReligion.value;
+      data.gender = selectedGender.value;
 
       console.log("Data: ", data);
 
@@ -106,12 +111,12 @@ export default function SingleStudentForm({ classes, parents, editingId, initial
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
-        // await createCategory(data);
-        // setLoading(false);
-        // toast.success("Successfully Created!");
-        // reset();
+        const res = await createStudent(data);
+        setLoading(false);
+        toast.success("Student Successfully Created!");
+        reset();
         // setImageUrl("/placeholder.svg");
-        // router.push("/dashboard/categories");
+        router.push("/dashboard/students");
       }
     } catch (error) {
       setLoading(false);
