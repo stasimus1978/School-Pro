@@ -81,6 +81,7 @@ export default function AppSidebar() {
       icon: Users,
       items: [
         { title: "Parents", url: "/dashboard/users/parents" },
+        { title: "Teachers", url: "/dashboard/users/teachers" },
         { title: "Secretary", url: "/dashboard/users/secretary" },
       ],
     },

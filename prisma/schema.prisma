@@ -147,3 +147,243 @@ model Student {
 
   @@map("students")
 }
+
+model Teacher {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Personal Information
+  firstName   String
+  lastName    String
+  email       String    @unique
+  phone       String?
+  dateOfBirth DateTime?
+  gender      Gender
+  imageUrl    String?
+
+  // Authentication
+  password  String?
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+
+  // Professional Information
+  employeeId     String   @unique
+  dateOfJoining  DateTime
+  designation    String
+  specialization String?
+  qualification  String
+
+  // Department Information
+  departmentName String
+  departmentId   String
+  department     Department @relation(fields: [departmentId], references: [id])
+
+  // Teaching Information
+  subjects   String[]
+  classes    String[]
+  classesIds String[]
+
+  // Documents
+  documents TeacherDocument[]
+
+  // Contact Information
+  address    String?
+  city       String?
+  state      String?
+  country    String?
+  postalCode String?
+
+  // Emergency Contact
+  emergencyContactName     String?
+  emergencyContactPhone    String?
+  emergencyContactRelation String?
+
+  // Additional Information
+  experience Int?
+  bio        String? @db.Text
+  skills     String?
+
+  // Relationships
+  // schoolId String
+  // school   School @relation(fields: [schoolId], references: [id])
+
+  // Attendance & Leave
+  attendance TeacherAttendance[]
+  leaves     TeacherLeave[]
+
+  @@map("teachers")
+}
+
+model Department {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Basic Information
+  name String
+  slug String @unique
+
+  // School Relationship
+  // schoolId String
+  // school   School @relation(fields: [schoolId], references: [id])
+
+  // Head of Department
+  hodId        String?
+  hodStartDate DateTime?
+
+  // Members
+  teachers Teacher[]
+
+  // Academic Information
+  subjects Subject[]
+
+  // Financial Information
+  budget     Float?
+  budgetYear String?
+
+  @@map("departments")
+}
+
+model Subject {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Basic Information
+  name      String
+  slug      String  @unique
+  code      String
+  shortName String?
+
+  // Academic Information
+  category     SubjectCategory
+  type         SubjectType
+  passingMarks Int?
+  totalMarks   Int?
+
+  // Department Information
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  // Relationships
+  // schoolId String
+  // school   School @relation(fields: [schoolId], references: [id])
+
+  // Additional Settings
+  isActive     Boolean @default(true)
+  isOptional   Boolean @default(false)
+  hasTheory    Boolean @default(true)
+  hasPractical Boolean @default(false)
+
+  // If practical is enabled
+  labRequired Boolean @default(false)
+
+  @@map("subjects")
+}
+
+model TeacherDocument {
+  id String @id @default(cuid())
+
+  // Relationships
+  teacherId  String
+  teacher    Teacher      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  type       DocumentType
+  title      String
+  url        String
+  uploadedAt DateTime     @default(now())
+
+  @@index([teacherId])
+  @@map("teacher_documents")
+}
+
+model TeacherAttendance {
+  id String @id @default(cuid())
+
+  // Relationships
+  teacherId String
+  teacher   Teacher          @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  date      DateTime
+  status    AttendanceStatus
+  checkIn   DateTime?
+  checkOut  DateTime?
+  note      String?
+
+  @@unique([teacherId, date])
+  @@index([teacherId])
+  @@map("teacher_attendances")
+}
+
+model TeacherLeave {
+  id String @id @default(cuid())
+
+  // Relationships
+  teacherId String
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  startDate  DateTime
+  endDate    DateTime
+  type       LeaveType
+  reason     String
+  status     LeaveStatus @default(PENDING)
+  approvedBy String?
+  approvedAt DateTime?
+
+  @@index([teacherId])
+  @@map("teacher_leaves")
+}
+
+// All enums 
+enum SubjectCategory {
+  CORE
+  ELECTIVE
+  ADDITIONAL
+  VOCATIONAL
+  LANGUAGE
+  EXTRA_CURRICULAR
+}
+
+enum SubjectType {
+  THEORY
+  PRACTICAL
+  BOTH
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum DocumentType {
+  RESUME
+  CERTIFICATE
+  ID_PROOF
+  QUALIFICATION
+  CONTACT
+  OTHER
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  ON_LEAVE
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  VACATION
+  MATERNITY
+  PATERNITY
+  OTHER
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELED
+}
