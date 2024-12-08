@@ -11,7 +11,7 @@ import { StudentInfoModal } from "@/components/dashboard/modals/student-info-mod
 export const columns: ColumnDef<StudentItem>[] = [
   {
     accessorKey: "student",
-    header: "FullName/Relationship",
+    header: "Name",
     cell: ({ row }) => {
       const student = row.original;
       return (
@@ -37,12 +37,12 @@ export const columns: ColumnDef<StudentItem>[] = [
 
   {
     accessorKey: "email-phone",
-    header: "Email/Phone",
+    header: "Details",
     cell: ({ row }) => {
       const student = row.original;
       return (
         <div className="" key={student.id}>
-          <h2 className="font-medium">{student.email.toLowerCase()}</h2>
+          <h2 className="font-medium">{student.regNo.toUpperCase()}</h2>
           <p className="text-xs text-muted-foreground">{student.phone}</p>
         </div>
       );
@@ -51,7 +51,7 @@ export const columns: ColumnDef<StudentItem>[] = [
 
   {
     accessorKey: "class-stream",
-    header: "Email/Phone",
+    header: "Class",
     cell: ({ row }) => {
       const student = row.original;
       return (

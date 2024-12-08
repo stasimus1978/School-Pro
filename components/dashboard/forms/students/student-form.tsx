@@ -16,6 +16,7 @@ import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/
 import { createStudent } from "@/actions/students";
 import RadioInput from "@/components/FormInputs/RadioInput";
 import { generateRegistrationNumber } from "@/lib/generateRegNo";
+import { generateRollNumber } from "@/lib/generateRollNo";
 
 type SingleStudentFormProps = {
   classes: ClassItem[];
@@ -90,6 +91,7 @@ export default function SingleStudentForm({
   } = useForm<StudentCreateProps>({
     defaultValues: {
       firstName: "",
+      password: "Login@2024",
     },
   });
   const router = useRouter();
@@ -128,15 +130,18 @@ export default function SingleStudentForm({
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
+        const rollNo = generateRollNumber();
+        data.rollNo = rollNo;
+
         const studentType = data.studentType as "PS" | "SS";
         const regNo = generateRegistrationNumber("BU", studentType, nextSeq);
         data.regNo = regNo;
-        // const res = await createStudent(data);
+        const res = await createStudent(data);
         setLoading(false);
-        // toast.success("Student Successfully Created!");
-        // reset();
+        toast.success("Student Successfully Created!");
+        reset();
         // setImageUrl("/placeholder.svg");
-        // router.push("/dashboard/students");
+        router.push("/dashboard/students");
       }
     } catch (error) {
       setLoading(false);
@@ -229,21 +234,12 @@ export default function SingleStudentForm({
 
               <TextInput register={register} errors={errors} label="Date of Birth" name="dob" type="date" />
 
-              <TextInput register={register} errors={errors} label="Roll No." name="rollNo" />
+              <TextInput register={register} errors={errors} label="Admission Date" type="date" name="admissionDate" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-3">
               <div className="">
                 <div className="grid gap-3">
-                  {/* <TextInput register={register} errors={errors} label="Registration No." name="regNo" /> */}
-
-                  {/* <TextInput
-                    register={register}
-                    errors={errors}
-                    label="Admission Date"
-                    type="date"
-                    name="admissionDate"
-                  /> */}
                   <RadioInput
                     radioOptions={studentTypes}
                     register={register}

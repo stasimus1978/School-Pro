@@ -16,6 +16,12 @@ model School {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relationships
+  // students Student[] // One-to-many with Students
+  // classes  Class[] // One-to-many with Classes
+  // parents  Parent[] // One-to-many with Parents
+  // streams  Stream[] // One-to-many with Streams
+
   @@map("schools")
 }
 
@@ -43,24 +49,30 @@ model Class {
   slug  String @unique
 
   // Relationships
-  streams  Stream[]
-  students Student[]
+  streams  Stream[] // One-to-many with Streams
+  students Student[] // One-to-many with Students
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Add a relation to the School model
+  // schoolId String // Foreign key to the School model
+  // school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   @@map("classes")
 }
 
 model Stream {
-  id      String @id @default(cuid())
-  title   String
-  slug    String @unique
-  classId String
+  id    String @id @default(cuid())
+  title String
+  slug  String @unique
 
   // Relationships
-  class    Class     @relation(fields: [classId], references: [id])
+  classId  String
+  class    Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
   students Student[]
+  // schoolId String
+  // school   School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,6 +102,8 @@ model Parent {
   updatedAt     DateTime @updatedAt
 
   // Relationships
+  // schoolId String
+  // school   School    @relation(fields: [schoolId], references: [id])
   students Student[]
 
   @@map("parents")
@@ -101,10 +115,7 @@ model Student {
   firstName     String
   lastName      String
   email         String   @unique
-  parentId      String
-  classId       String
   studentType   String?  @default("PS")
-  streamId      String
   password      String
   imageUrl      String?
   phone         String?
@@ -125,9 +136,14 @@ model Student {
   updatedAt     DateTime @updatedAt
 
   // Relationships
-  parent Parent @relation(fields: [parentId], references: [id], onDelete: Cascade)
-  class  Class  @relation(fields: [classId], references: [id])
-  stream Stream @relation(fields: [streamId], references: [id])
+  parentId String
+  parent   Parent @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  classId  String
+  class    Class  @relation(fields: [classId], references: [id])
+  streamId String
+  stream   Stream @relation(fields: [streamId], references: [id])
+  // schoolId String
+  // school   School @relation(fields: [schoolId], references: [id])
 
   @@map("students")
 }
