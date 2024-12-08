@@ -16,6 +16,11 @@ export const ourFileRouter = {
     return { uploadedBy: "JB" };
   }),
 
+  teacherProfileImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(async ({ metadata, file }) => {
+    console.log("file url", file.url);
+    return { uploadedBy: "JB" };
+  }),
+
   parentProfileImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(async ({ metadata, file }) => {
     console.log("file url", file.url);
     return { uploadedBy: "JB" };

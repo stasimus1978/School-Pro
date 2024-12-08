@@ -8,7 +8,7 @@ import { Check, CloudUpload, Loader2, PlusCircle, X } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { RiFileExcel2Line } from "react-icons/ri";
-import { SiMicrosoftexcel } from "react-icons/si";
+import { PiMicrosoftExcelLogo } from "react-icons/pi";
 import { Options, SelectValue } from "react-tailwindcss-select/dist/components/type";
 import {
   Dialog,
@@ -155,7 +155,7 @@ export default function TableHeader({ title, href, linkTitle, data, model, showI
         </h2>
         <div className="ml-auto flex items-center gap-2">
           <Button onClick={handleExportData} size="sm" variant="outline" className="h-8 gap-1">
-            <SiMicrosoftexcel className="h-3.5 w-3.5" />
+            <PiMicrosoftExcelLogo className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
           </Button>
 

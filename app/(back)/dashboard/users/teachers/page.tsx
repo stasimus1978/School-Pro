@@ -13,7 +13,7 @@ export default async function TeachersPage() {
       <TableHeader
         title="Teachers"
         linkTitle="Add Teacher"
-        href="/dashboard/users/teacher/new"
+        href="/dashboard/users/teachers/new"
         data={teachers}
         model="teacher"
       />

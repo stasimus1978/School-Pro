@@ -154,13 +154,16 @@ model Teacher {
   updatedAt DateTime @updatedAt
 
   // Personal Information
+  title       String
   firstName   String
   lastName    String
   email       String    @unique
-  phone       String?
+  phone       String    @unique
+  whatsapNo   String?
   dateOfBirth DateTime?
   gender      Gender
   imageUrl    String?
+  NIN         String    @unique
 
   // Authentication
   password  String?
@@ -168,11 +171,12 @@ model Teacher {
   lastLogin DateTime?
 
   // Professional Information
-  employeeId     String   @unique
-  dateOfJoining  DateTime
-  designation    String
-  specialization String?
-  qualification  String
+  employeeId    String   @unique
+  dateOfJoining DateTime
+  designation   String
+  mainSubject   String?
+  mainSubjectId String?
+  qualification String
 
   // Department Information
   departmentName String
@@ -188,11 +192,8 @@ model Teacher {
   documents TeacherDocument[]
 
   // Contact Information
-  address    String?
-  city       String?
-  state      String?
-  country    String?
-  postalCode String?
+  address     String?
+  nationality String
 
   // Emergency Contact
   emergencyContactName     String?
