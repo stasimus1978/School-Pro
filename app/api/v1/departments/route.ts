@@ -10,27 +10,27 @@ export async function POST(request: NextRequest) {
   const slug = generateSlug(data.name);
 
   try {
-    const exitingClass = await prisma.class.findUnique({
+    const exitingDepartment = await prisma.department.findUnique({
       where: { slug },
     });
 
-    if (exitingClass) {
-      return new Response(JSON.stringify({ error: "Class Already exists", data: null }), {
+    if (exitingDepartment) {
+      return new Response(JSON.stringify({ error: "Department Already exists", data: null }), {
         status: 409,
         // headers: { "Content-Type": "application/json" },
       });
     }
 
-    const newClass = await prisma.class.create({
+    const newDepartment = await prisma.department.create({
       data: {
-        title: data.name,
+        name: data.name,
         slug: slug,
       },
     });
 
-    console.log(`Class created successfully: ${newClass.title} (${newClass.id})`);
+    console.log(`Department created successfully: ${newDepartment.name} (${newDepartment.id})`);
 
-    return new Response(JSON.stringify({ data: newClass, error: null }), {
+    return new Response(JSON.stringify({ data: newDepartment, error: null }), {
       status: 201,
       // headers: { "Content-Type": "application/json" },
     });
@@ -46,23 +46,15 @@ export async function POST(request: NextRequest) {
 //  Get
 export async function GET(request: NextRequest) {
   try {
-    const classes = await prisma.class.findMany({
+    const departments = await prisma.department.findMany({
       orderBy: { createdAt: "desc" },
       include: {
-        streams: {
-          include: {
-            _count: {
-              select: { students: true },
-            },
-          },
-        },
-        _count: {
-          select: { students: true },
-        },
+        teachers: true,
+        subjects: true,
       },
     });
 
-    return new Response(JSON.stringify({ data: classes, error: null }), {
+    return new Response(JSON.stringify({ data: departments, error: null }), {
       status: 200,
       // headers: { "Content-Type": "application/json" },
     });

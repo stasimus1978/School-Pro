@@ -35,3 +35,7 @@
 
 1. 1:27:04 / 3:07:08
 2. 2:37:48 / 3:07:08
+
+#### IX. [Episode 9: Building Teacher, Subject & Department Management | School Management System with Next Js](https://www.youtube.com/watch?v=ywLgs93myWw&list=PLDn5_2K0bUmdBYPLTbyba8vH7Wz7F87Qu&index=2)
+
+1. 56:57 / 4:11:25

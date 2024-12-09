@@ -6,7 +6,7 @@ import axios from "axios";
 
 export async function createDepartment(data: DepartmentCreateProps) {
   try {
-    const response = await api.post("/classes", data);
+    const response = await api.post("/departments", data);
 
     return response.data;
   } catch (error) {
@@ -27,9 +27,10 @@ export async function deleteDepartment(id: string) {
   };
 }
 
-export async function getAlldepartments() {
+export async function getAllDepartments() {
   try {
-    const response = await api.get("/classes");
+    const response = await api.get("/departments");
+
     const departments = response.data.data;
 
     return departments as DepartmentItem[];

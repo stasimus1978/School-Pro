@@ -1,9 +1,12 @@
+import { getAllDepartments } from "@/actions/departments";
 import DepartmentListing from "@/components/dashboard/department-listing";
 
-export default function DepartmentsPage() {
+export default async function DepartmentsPage() {
+  const departments = (await getAllDepartments()) || [];
+
   return (
     <div className="">
-      <DepartmentListing />
+      <DepartmentListing departments={departments} />
     </div>
   );
 }

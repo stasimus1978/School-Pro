@@ -8,7 +8,8 @@ export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true; stude
 export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true; students: true } }>;
 export type ParentItem = Parent;
 export type StudentItem = Student;
-export type DepartmentItem = Department;
+// export type DepartmentItem = Department;
+export type DepartmentItem = Prisma.DepartmentGetPayload<{ include: { teachers: true; subjects: true } }>;
 
 // Create types
 export type ClassCreateProps = Pick<ClassItem, "title">;
