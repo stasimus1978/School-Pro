@@ -12,8 +12,8 @@ import toast from "react-hot-toast";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries, Country } from "@/lib/countries";
-import { ParentCreateProps } from "@/types/types";
-import { createParent } from "@/actions/parents";
+import { GenderEnum, TeacherCreateProps } from "@/types/types";
+import { createTeacher } from "@/actions/teachers";
 
 export type SelectOptionProps = {
   label: string;
@@ -109,7 +109,7 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ParentCreateProps>({
+  } = useForm<TeacherCreateProps>({
     defaultValues: {
       firstName: "",
     },
@@ -121,15 +121,16 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveParent(data: ParentCreateProps) {
+  async function saveParent(data: TeacherCreateProps) {
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
       data.title = selectedTitle.value;
-      data.relationship = selectedRelationship.value;
-      data.gender = selectedGender.value;
+
+      data.gender = selectedGender.value as GenderEnum;
       data.nationality = selectedNationality?.label;
-      data.contactMethod = selectedContactMethod.value;
+      // data.contactMethod = selectedContactMethod.value;
+      data.experience = Number(data.experience);
 
       console.log("Data: ", data);
 
@@ -141,12 +142,12 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
-        const res = await createParent(data);
+        const res = await createTeacher(data);
         setLoading(false);
         toast.success("Successfully Created!");
         reset();
         // setImageUrl("/placeholder.svg");
-        router.push("/dashboard/users/parents");
+        router.push("/dashboard/users/teachers");
       }
     } catch (error) {
       setLoading(false);

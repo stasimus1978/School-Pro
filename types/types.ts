@@ -1,4 +1,4 @@
-import { Contact, Department, Parent, Prisma, Student, SubjectCategory, SubjectType } from "@prisma/client";
+import { Contact, Gender, Parent, Prisma, Student, SubjectCategory, SubjectType, Teacher } from "@prisma/client";
 import { NextRequest } from "next/server";
 import { Option } from "react-tailwindcss-select/dist/components/type";
 
@@ -13,6 +13,8 @@ export type DepartmentItem = Prisma.DepartmentGetPayload<{ include: { teachers: 
 export type SubjectItem = Prisma.SubjectGetPayload<{ include: { department: true } }>;
 export type SubjectCategoryEnum = SubjectCategory;
 export type SubjectTypeEnum = SubjectType;
+export type GenderEnum = Gender;
+export type TeacherItem = Teacher;
 // Brief types
 export type BriefDepartmentItem = Pick<DepartmentItem, "id" | "name">;
 export type BriefSubjectItem = Pick<SubjectItem, "id" | "name">;
@@ -31,6 +33,8 @@ export type SubjectCreateProps = Pick<
   SubjectItem,
   "name" | "code" | "shortName" | "category" | "type" | "departmentId" | "departmentName" | "slug"
 >;
+
+export type TeacherCreateProps = Omit<TeacherItem, "id">;
 
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;

@@ -157,13 +157,13 @@ model Teacher {
   title       String
   firstName   String
   lastName    String
-  email       String    @unique
-  phone       String    @unique
+  email       String   @unique
+  phone       String   @unique
   whatsapNo   String?
-  dateOfBirth DateTime?
+  dateOfBirth DateTime
   gender      Gender
   imageUrl    String?
-  NIN         String    @unique
+  NIN         String   @unique
 
   // Authentication
   password  String?
