@@ -4,10 +4,14 @@ import { ContactProps } from "@/components/frontend/contact-us";
 import api from "@/lib/api";
 import { Contact, Prisma } from "@prisma/client";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createContact(data: ContactProps) {
   try {
     const response = await api.post("/contacts", data);
+
+    revalidatePath("/dashboard/admin/contacts");
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

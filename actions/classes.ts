@@ -3,10 +3,14 @@
 import api from "@/lib/api";
 import { ClassCreateProps, ClassItem, ClassWithCountAndStreams } from "@/types/types";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createClass(data: ClassCreateProps) {
   try {
     const response = await api.post("/classes", data);
+
+    revalidatePath("/dashboard/academics/classes");
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

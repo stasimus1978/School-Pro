@@ -3,10 +3,13 @@
 import api from "@/lib/api";
 import { ParentCreateProps, ParentItem } from "@/types/types";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createParent(data: ParentCreateProps) {
   try {
     const response = await api.post("/parents", data);
+
+    revalidatePath("/dashboard/users/parents");
 
     return response.data;
   } catch (error) {

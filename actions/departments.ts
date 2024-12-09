@@ -3,10 +3,13 @@
 import api from "@/lib/api";
 import { DepartmentCreateProps, DepartmentItem } from "@/types/types";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createDepartment(data: DepartmentCreateProps) {
   try {
     const response = await api.post("/departments", data);
+
+    revalidatePath("/dashboard/academics/departments");
 
     return response.data;
   } catch (error) {

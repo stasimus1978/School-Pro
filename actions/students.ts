@@ -3,10 +3,13 @@
 import api from "@/lib/api";
 import { StudentCreateProps, StudentItem } from "@/types/types";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createStudent(data: StudentCreateProps) {
   try {
     const response = await api.post("/students", data);
+
+    revalidatePath("/dashboard/students");
 
     return response.data;
   } catch (error) {

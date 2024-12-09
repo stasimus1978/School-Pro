@@ -3,10 +3,14 @@
 import api from "@/lib/api";
 import { StreamCreateProps, StreamItem } from "@/types/types";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export async function createStream(data: StreamCreateProps) {
   try {
     const response = await api.post("/streams", data);
+
+    revalidatePath("/dashboard/academics/classes");
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
