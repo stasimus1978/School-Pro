@@ -265,8 +265,9 @@ model Subject {
   totalMarks   Int?
 
   // Department Information
-  departmentId String
-  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId   String
+  departmentName String
+  department     Department @relation(fields: [departmentId], references: [id])
 
   // Relationships
   // schoolId String

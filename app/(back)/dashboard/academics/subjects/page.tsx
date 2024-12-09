@@ -1,7 +1,18 @@
-export default function DepartmentsPage() {
+import { getBriefDepartments } from "@/actions/departments";
+import SubjectListing from "@/components/dashboard/subject-listing";
+
+export default async function DepartmentsPage() {
+  const departments = (await getBriefDepartments()) || [];
   return (
     <div className="">
-      <div className="">Subjects Page</div>
+      <SubjectListing
+        departments={departments.map((item) => {
+          return {
+            label: item.name,
+            value: item.id,
+          };
+        })}
+      />
     </div>
   );
 }
