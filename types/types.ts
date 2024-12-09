@@ -1,4 +1,4 @@
-import { Contact, Parent, Prisma, Student } from "@prisma/client";
+import { Contact, Department, Parent, Prisma, Student } from "@prisma/client";
 import { NextRequest } from "next/server";
 import { Option } from "react-tailwindcss-select/dist/components/type";
 
@@ -8,6 +8,7 @@ export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true; stude
 export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true; students: true } }>;
 export type ParentItem = Parent;
 export type StudentItem = Student;
+export type DepartmentItem = Department;
 
 // Create types
 export type ClassCreateProps = Pick<ClassItem, "title">;
@@ -18,6 +19,7 @@ export type StudentCreateProps = Omit<StudentItem, "id"> & {
   // classTitle?: string;
   // streamTitle?: string;
 };
+export type DepartmentCreateProps = Omit<DepartmentItem, "id">;
 
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;

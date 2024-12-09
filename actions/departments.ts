@@ -1,12 +1,13 @@
 "use server";
 
 import api from "@/lib/api";
-import { ClassCreateProps, ClassItem, ClassWithCountAndStreams } from "@/types/types";
+import { DepartmentCreateProps, DepartmentItem } from "@/types/types";
 import axios from "axios";
 
-export async function createClass(data: ClassCreateProps) {
+export async function createDepartment(data: DepartmentCreateProps) {
   try {
     const response = await api.post("/classes", data);
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -18,7 +19,7 @@ export async function createClass(data: ClassCreateProps) {
   }
 }
 
-export async function deleteClass(id: string) {
+export async function deleteDepartment(id: string) {
   console.log("deleted", id);
 
   return {
@@ -26,12 +27,12 @@ export async function deleteClass(id: string) {
   };
 }
 
-export async function getAllClasses() {
+export async function getAlldepartments() {
   try {
     const response = await api.get("/classes");
-    const classes = response.data.data;
+    const departments = response.data.data;
 
-    return classes as ClassWithCountAndStreams[];
+    return departments as DepartmentItem[];
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to create contact!";

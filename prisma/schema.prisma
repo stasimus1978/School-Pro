@@ -231,6 +231,7 @@ model Department {
 
   // Head of Department
   hodId        String?
+  hodName      String?
   hodStartDate DateTime?
 
   // Members
