@@ -15,6 +15,7 @@ export type SubjectCategoryEnum = SubjectCategory;
 export type SubjectTypeEnum = SubjectType;
 // Brief types
 export type BriefDepartmentItem = Pick<DepartmentItem, "id" | "name">;
+export type BriefSubjectItem = Pick<SubjectItem, "id" | "name">;
 
 // Create types
 export type ClassCreateProps = Pick<ClassItem, "title">;
@@ -26,7 +27,10 @@ export type StudentCreateProps = Omit<StudentItem, "id"> & {
   // streamTitle?: string;
 };
 export type DepartmentCreateProps = Omit<DepartmentItem, "id">;
-export type SubjectCreateProps = Omit<SubjectItem, "id">;
+export type SubjectCreateProps = Pick<
+  SubjectItem,
+  "name" | "code" | "shortName" | "category" | "type" | "departmentId" | "departmentName" | "slug"
+>;
 
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;

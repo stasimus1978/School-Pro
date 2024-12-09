@@ -10,49 +10,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { format, sub } from "date-fns";
 
-// const departments = [
-//   {
-//     id: "1",
-//     mane: "Mathematics Department",
-//     slug: "mathematics-department",
-//     createdAt: new Date("2023-01-15"),
-//     updatedAt: new Date("2023-12-20"),
-//     hodId: "hod1",
-//     hodName: "Dr. Alan Turing",
-//     hodStartDate: new Date("2023-01-15"),
-//     budget: 50000,
-//     budgetYear: "2023-2024",
-//   },
-// ];
-// const departments = [
-//   {
-//     id: "1",
-//     mane: "Mathematics Department",
-//     slug: "mathematics-department",
-//     createdAt: new Date("2023-01-15"),
-//     updatedAt: new Date("2023-12-20"),
-//     hodId: "hod1",
-//     hodName: "Dr. Alan Turing",
-//     hodStartDate: new Date("2023-01-15"),
-//     budget: 50000,
-//     budgetYear: "2023-2024",
-//   },
-// ];
-// const departments = [
-//   {
-//     id: "1",
-//     mane: "Mathematics Department",
-//     slug: "mathematics-department",
-//     createdAt: new Date("2023-01-15"),
-//     updatedAt: new Date("2023-12-20"),
-//     hodId: "hod1",
-//     hodName: "Dr. Alan Turing",
-//     hodStartDate: new Date("2023-01-15"),
-//     budget: 50000,
-//     budgetYear: "2023-2024",
-//   },
-// ];
-
 export default function DepartmentListing({ departments }: { departments: DepartmentItem[] }) {
   const [selectedDept, setSelectedDept] = useState(departments[0]);
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);

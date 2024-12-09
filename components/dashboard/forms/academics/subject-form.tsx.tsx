@@ -12,6 +12,7 @@ import SubmitButton from "@/components/FormInputs/SubmitButton";
 import { SelectOptionProps, SubjectCreateProps } from "@/types/types";
 import { createDepartment } from "@/actions/departments";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
+import { createSubjects } from "@/actions/subjects";
 
 export type SubjectProps = {
   userId?: string;
@@ -57,6 +58,11 @@ export default function SubjectForm({ userId, departments, initialContent, editi
 
   async function saveSubject(data: SubjectCreateProps) {
     // data.userId = userId;
+    data.departmentId = selectedDepartment.value;
+    data.departmentName = selectedDepartment.label;
+    data.category = selectedCategory.value as SubjectCreateProps["category"];
+    data.type = selectedType.value as SubjectCreateProps["type"];
+
     try {
       setLoading(true);
       if (editingId) {
@@ -64,7 +70,7 @@ export default function SubjectForm({ userId, departments, initialContent, editi
         // setLoading(false);
         // toast.success("Updated Successfully!");
       } else {
-        const res = await createDepartment(data);
+        const res = await createSubjects(data);
         setLoading(false);
         toast.success("Successfully Created!");
         reset();
@@ -148,6 +154,8 @@ export default function SubjectForm({ userId, departments, initialContent, editi
                       options={departments}
                       option={selectedDepartment}
                       setOption={setSelectedDepartment}
+                      toolTipText="Add Department"
+                      href="/dashboard/academics/departments"
                     />
                   </div>
                 </div>
