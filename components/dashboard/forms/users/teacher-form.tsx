@@ -14,6 +14,7 @@ import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries, Country } from "@/lib/countries";
 import { GenderEnum, TeacherCreateProps } from "@/types/types";
 import { createTeacher } from "@/actions/teachers";
+import FormMultipleSelectInput from "@/components/FormInputs/FormMultipleSelectInput";
 
 export type SelectOptionProps = {
   label: string;
@@ -22,9 +23,18 @@ export type SelectOptionProps = {
 type SingleStudentFormProps = {
   editingId?: string | undefined;
   initialData?: any | undefined | null;
+  classes: SelectOptionProps[];
+  subjects: SelectOptionProps[];
+  departments: SelectOptionProps[];
 };
 
-export default function TeacherForm({ editingId, initialData }: SingleStudentFormProps) {
+export default function TeacherForm({
+  editingId,
+  initialData,
+  classes,
+  departments,
+  subjects,
+}: SingleStudentFormProps) {
   // Parents
   const relationships = [
     { label: "Mother", value: "Mother" },
@@ -52,27 +62,14 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
   ];
   const [selectedContactMethod, setSelectedContactMethod] = useState<SelectOptionProps>(contactMethod[0]);
 
-  // Departments
-  const departments = [
-    { label: "Science", value: "12388" },
-    { label: "Chemistry", value: "77845" },
-  ];
   const [selectedDepartment, setSelectedDepartment] = useState<SelectOptionProps>(departments[0]);
 
-  // Subjects
-  const subjects = [
-    { label: "Science", value: "12388" },
-    { label: "Chemistry", value: "77845" },
-  ];
-  const [selectedSubject, setSelectedSubject] = useState<SelectOptionProps>(subjects[0]);
+  const [selectedSubjects, setSelectedSubjects] = useState<SelectOptionProps[] | []>([]);
+  console.log(selectedSubjects);
+
   const [mainSubject, setMainSubject] = useState<SelectOptionProps>(subjects[0]);
 
-  // Classes
-  const classes = [
-    { label: "S1", value: "12388" },
-    { label: "S2", value: "77845" },
-  ];
-  const [selectedClass, setSelectedClass] = useState<SelectOptionProps>(classes[0]);
+  const [selectedClasses, setSelectedClasses] = useState<SelectOptionProps[] | []>([]);
 
   // Qualification
   const qualifications = [
@@ -121,7 +118,7 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveParent(data: TeacherCreateProps) {
+  async function saveTeacher(data: TeacherCreateProps) {
     try {
       setLoading(true);
       data.imageUrl = imageUrl;
@@ -156,7 +153,7 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
   }
 
   return (
-    <form className="" onSubmit={handleSubmit(saveParent)}>
+    <form className="" onSubmit={handleSubmit(saveTeacher)}>
       <FormHeader href="/teachers" parent="teacher" title="Teacher" editingId={editingId} loading={loading} />
 
       <div className="grid grid-cols-12 gap-6 py-8">
@@ -262,11 +259,11 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
               />
 
               {/* Multi Select */}
-              <FormSelectInput
+              <FormMultipleSelectInput
                 label="Subject"
                 options={subjects}
-                option={selectedSubject}
-                setOption={setSelectedSubject}
+                option={selectedSubjects}
+                setOption={setSelectedSubjects}
                 href="/dashboard/academics/subjects/new"
                 toolTipText="Add New Subject"
               />
@@ -275,11 +272,11 @@ export default function TeacherForm({ editingId, initialData }: SingleStudentFor
             <div className="grid md:grid-cols-2 gap-3">
               <div className="space-y-3">
                 {/* Multi Select */}
-                <FormSelectInput
+                <FormMultipleSelectInput
                   label="Classes"
                   options={classes}
-                  option={selectedClass}
-                  setOption={setSelectedClass}
+                  option={selectedClasses}
+                  setOption={setSelectedClasses}
                   href="/dashboard/academics/classes"
                   toolTipText="Add New Class"
                 />

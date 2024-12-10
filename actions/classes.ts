@@ -45,3 +45,19 @@ export async function getAllClasses() {
     throw error;
   }
 }
+
+export async function getBriefClasses() {
+  try {
+    const response = await api.get("/classes/brief");
+    const classes = response.data.data;
+
+    return classes as { id: string; title: string }[];
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Failed to create contact!";
+      throw new Error(message);
+    }
+
+    throw error;
+  }
+}
