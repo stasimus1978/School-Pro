@@ -2,11 +2,12 @@ import { columns } from "./columns";
 import TableHeader from "@/components/dashboard/Tables/TableHeader";
 import DataTable from "@/components/DataTableComponents/DataTable";
 import { getAllParents } from "@/actions/parents";
+import { getAllTeachers } from "@/actions/teachers";
 
 export default async function TeachersPage() {
-  const teachers = (await getAllParents()) || [];
+  const teachers = (await getAllTeachers()) || [];
 
-  console.log("Parents: ", teachers);
+  console.log("Teachers: ", teachers);
 
   return (
     <div className="p-8">

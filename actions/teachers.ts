@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 
 export async function createTeacher(data: TeacherCreateProps) {
   try {
+    console.log(data);
+
     const response = await api.post("/teachers", data);
 
     revalidatePath("/dashboard/users/teachers");

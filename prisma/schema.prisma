@@ -166,9 +166,10 @@ model Teacher {
   NIN         String   @unique
 
   // Authentication
-  password  String?
-  isActive  Boolean   @default(true)
-  lastLogin DateTime?
+  password      String?
+  isActive      Boolean   @default(true)
+  lastLogin     DateTime?
+  contactMethod String
 
   // Professional Information
   employeeId    String   @unique

@@ -22,6 +22,8 @@ export async function POST(request: TypedRequestBody<TeacherCreateProps>) {
   data.dateOfBirth = new Date(convertDateToISO(dateOfBirth?.toString()));
   data.dateOfJoining = new Date(convertDateToISO(dateOfJoining?.toString()));
 
+  console.log(data);
+
   try {
     const exitingEmail = await prisma.teacher.findUnique({
       where: { email },
@@ -78,11 +80,11 @@ export async function POST(request: TypedRequestBody<TeacherCreateProps>) {
 //  Get
 export async function GET(request: NextRequest) {
   try {
-    const parents = await prisma.parent.findMany({
+    const teachers = await prisma.teacher.findMany({
       orderBy: { createdAt: "desc" },
     });
 
-    return new Response(JSON.stringify({ data: parents, error: null }), {
+    return new Response(JSON.stringify({ data: teachers, error: null }), {
       status: 200,
       // headers: { "Content-Type": "application/json" },
     });

@@ -15,6 +15,7 @@ import { countries, Country } from "@/lib/countries";
 import { GenderEnum, TeacherCreateProps } from "@/types/types";
 import { createTeacher } from "@/actions/teachers";
 import FormMultipleSelectInput from "@/components/FormInputs/FormMultipleSelectInput";
+import { generateRollNumber } from "@/lib/generateRollNo";
 
 export type SelectOptionProps = {
   label: string;
@@ -65,7 +66,6 @@ export default function TeacherForm({
   const [selectedDepartment, setSelectedDepartment] = useState<SelectOptionProps>(departments[0]);
 
   const [selectedSubjects, setSelectedSubjects] = useState<SelectOptionProps[] | []>([]);
-  console.log(selectedSubjects);
 
   const [mainSubject, setMainSubject] = useState<SelectOptionProps>(subjects[0]);
 
@@ -121,15 +121,21 @@ export default function TeacherForm({
   async function saveTeacher(data: TeacherCreateProps) {
     try {
       setLoading(true);
+      data.employeeId = generateRollNumber();
       data.imageUrl = imageUrl;
       data.title = selectedTitle.value;
-
       data.gender = selectedGender.value as GenderEnum;
       data.nationality = selectedNationality?.label;
-      // data.contactMethod = selectedContactMethod.value;
+      data.contactMethod = selectedContactMethod.value;
+      data.departmentId = selectedDepartment.value;
+      data.departmentName = selectedDepartment.label;
+      data.qualification = qualification.value;
+      data.mainSubject = mainSubject.label;
+      data.mainSubjectId = mainSubject.value;
+      data.subjects = selectedSubjects.map((item) => item.label);
+      data.classesIds = selectedClasses.map((item) => item.value);
+      data.classes = selectedClasses.map((item) => item.label);
       data.experience = Number(data.experience);
-
-      console.log("Data: ", data);
 
       if (editingId) {
         // await updateCategoryById(editingId, data);
@@ -139,6 +145,7 @@ export default function TeacherForm({
         // router.push("/dashboard/categories");
         // setImageUrl("/placeholder.svg");
       } else {
+        console.log("Data: ", data);
         const res = await createTeacher(data);
         setLoading(false);
         toast.success("Successfully Created!");
@@ -200,7 +207,7 @@ export default function TeacherForm({
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <TextInput register={register} errors={errors} label="Date of Birth" name="dob" type="date" />
+              <TextInput register={register} errors={errors} label="Date of Birth" name="dateOfBirth" type="date" />
 
               <FormSelectInput
                 label="Preferred Contact Method"
