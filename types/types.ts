@@ -15,6 +15,7 @@ export type SubjectCategoryEnum = SubjectCategory;
 export type SubjectTypeEnum = SubjectType;
 export type GenderEnum = Gender;
 export type TeacherItem = Teacher;
+export type UserItem = Prisma.UserGetPayload<{}>;
 // Brief types
 export type BriefDepartmentItem = Pick<DepartmentItem, "id" | "name">;
 export type BriefSubjectItem = Pick<SubjectItem, "id" | "name">;
@@ -35,6 +36,9 @@ export type SubjectCreateProps = Pick<
 >;
 
 export type TeacherCreateProps = Omit<TeacherItem, "id">;
+
+export type UserCreateProps = Omit<UserItem, "id" | "createdAt" | "updatedAt" | "teacherId" | "studentId" | "parentId">;
+export type UserLoginProps = Pick<UserItem, "email" | "password">;
 
 // Update types (all fields optional except ID)
 export type ClassUpdateProps = Partial<ClassCreateProps>;
