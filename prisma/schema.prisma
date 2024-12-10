@@ -96,18 +96,18 @@ model User {
   schoolName String?
 
   // One-to-one relationship
-  teacher Teacher?
-  student Student?
-  parent  Parent?
+  teacher       Teacher?
+  student       Student?
+  parent        Parent?
+  refreshTokens RefreshToken[]
 
   // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  teacherId     String?
-  studentId     String?
-  parentId      String?
-  refreshTokens RefreshToken[]
+  teacherId String?
+  studentId String?
+  parentId  String?
 
   @@map("users")
 }
@@ -454,6 +454,7 @@ enum LeaveStatus {
 }
 
 enum UserRole {
+  SUPER_ADMIN
   ADMIN
   TEACHER
   STUDENT
