@@ -46,3 +46,4 @@
 #### X. [Episode 10: Adding Authentication with Node Js API | School Management System with Next Js](https://www.youtube.com/watch?v=pHKvC5mYg_0)
 
 1. 1:55:50 / 2:56:44
+2. 2:52:28 / 2:56:44

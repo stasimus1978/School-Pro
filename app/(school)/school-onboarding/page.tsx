@@ -1,7 +1,16 @@
+import { getServerUser } from "@/actions/users";
 import SchoolOnboardingForm from "@/components/dashboard/forms/school/school-onboarding";
 import { Card, CardContent } from "@/components/ui/card";
+import { redirect } from "next/navigation";
 
-export default function SchoolOnboardingPage() {
+export default async function SchoolOnboardingPage() {
+  const user = await getServerUser();
+  const role = user?.role;
+
+  if (!user || role !== "SUPER_ADMIN") {
+    redirect("/login");
+  }
+
   return (
     <div className="">
       <div className="max-w-3xl mx-auto p-16">
