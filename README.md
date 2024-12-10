@@ -45,4 +45,7 @@
 
 #### X. [Episode 10: Adding Authentication with Node Js API | School Management System with Next Js](https://www.youtube.com/watch?v=pHKvC5mYg_0)
 
-1.
+1. 1:55:50 / 2:56:44
+
+ACCESS_TOKEN_SECRET="pHMGvgq5j2OEFXnmGO2vDXUuetGdKPvTmqwcoc0mocE="
+REFRESH_TOKEN_SECRET="JWm5FvPEI7r2Gy5p39MeNZ4DCTxECnFx6IwG2LebEHU="

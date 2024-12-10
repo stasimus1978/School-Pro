@@ -24,7 +24,13 @@ export async function createUser(data: UserCreateProps) {
 
 export async function loginUser(data: UserLoginProps) {
   try {
+    const { email, password } = data;
+
     const response = await api.post("/users/login", data);
+
+    const { user, accessToken, refreshToken } = response.data.data;
+
+    console.log("Answer: ", user, accessToken, refreshToken);
 
     // revalidatePath("/dashboard/users");
 
@@ -32,6 +38,8 @@ export async function loginUser(data: UserLoginProps) {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to login User!";
+      console.log(error.response?.data);
+
       throw new Error(message);
     }
 

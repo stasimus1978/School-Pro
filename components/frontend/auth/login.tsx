@@ -9,11 +9,9 @@ import CustomCarousel from "@/components/frontend/custom-carousel";
 import Logo from "@/components/logo";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import { Lock, LogIn, Mail } from "lucide-react";
+import { UserLoginProps } from "@/types/types";
+import { loginUser } from "@/actions/users";
 
-export type RegisterInputProps = {
-  email: string;
-  password: string;
-};
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -21,10 +19,21 @@ export default function Login() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<RegisterInputProps>();
+  } = useForm<UserLoginProps>();
   const router = useRouter();
-  async function onSubmit(data: RegisterInputProps) {
-    console.log(data);
+
+  async function onSubmit(data: UserLoginProps) {
+    try {
+      setIsLoading(true);
+      const res = await loginUser(data);
+      // Save the Data in Zustand
+      // Route to the User account to the role
+      setIsLoading(false);
+      console.log(res);
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
   }
   return (
     <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
@@ -47,7 +56,17 @@ export default function Login() {
               placeholder="Eg. johndoe@gmail.com"
             />
 
-            <PasswordInput
+            <TextInput
+              label="Temporary Password"
+              register={register}
+              name="password"
+              type="text"
+              errors={errors}
+              icon={Mail}
+              placeholder="*****************"
+            />
+
+            {/* <PasswordInput
               label="Password"
               register={register}
               name="password"
@@ -56,7 +75,7 @@ export default function Login() {
               placeholder="******"
               icon={Lock}
               forgotPasswordLink="/forgot-password"
-            />
+            /> */}
 
             <SubmitButton
               buttonIcon={LogIn}

@@ -13,6 +13,19 @@ export async function POST(request: TypedRequestBody<UserLoginProps>) {
   try {
     const exitingUser = await prisma.user.findUnique({
       where: { email },
+      select: {
+        createdAt: true,
+        email: true,
+        id: true,
+        image: true,
+        name: true,
+        phone: true,
+        role: true,
+        schoolId: true,
+        schoolName: true,
+        updatedAt: true,
+        password: true,
+      },
     });
 
     if (!exitingUser) {
