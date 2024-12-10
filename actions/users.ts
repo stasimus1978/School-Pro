@@ -44,7 +44,7 @@ export async function loginUser(data: UserLoginProps): Promise<SessionData> {
 
     // revalidatePath("/dashboard/users");
 
-    return response.data.data;
+    return response.data.data as SessionData;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to login User!";

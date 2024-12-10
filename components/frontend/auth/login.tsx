@@ -1,16 +1,15 @@
 "use client";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import TextInput from "@/components/FormInputs/TextInput";
+import { loginUser } from "@/actions/users";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextInput from "@/components/FormInputs/TextInput";
 import CustomCarousel from "@/components/frontend/custom-carousel";
 import Logo from "@/components/logo";
-import PasswordInput from "@/components/FormInputs/PasswordInput";
-import { Lock, LogIn, Mail } from "lucide-react";
-import { UserLoginProps } from "@/types/types";
-import { loginUser } from "@/actions/users";
+import { useUserSession } from "@/store/auth";
+import { UserItem, UserLoginProps } from "@/types/types";
+import { LogIn, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,16 +19,24 @@ export default function Login() {
     reset,
     formState: { errors },
   } = useForm<UserLoginProps>();
+  const { setUser } = useUserSession();
+
   const router = useRouter();
 
   async function onSubmit(data: UserLoginProps) {
     try {
       setIsLoading(true);
-      const res = await loginUser(data);
+      const sessionData = await loginUser(data);
       // Save the Data in Zustand
+      setUser(sessionData?.user as UserItem);
+      const role = sessionData?.user.role;
       // Route to the User account to the role
       setIsLoading(false);
-      console.log(res);
+      if (role === "SUPER_ADMIN") {
+        router.push("/school-onboarding");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (error) {
       setIsLoading(false);
       console.error(error);

@@ -13,7 +13,7 @@ export interface SessionData {
 
 interface UserSessionStore {
   user: User | null;
-  setUser: (sessionData: SessionData) => void;
+  setUser: (userData: UserItem) => void;
   clearSession: () => Promise<void>;
 }
 
@@ -23,9 +23,9 @@ export const useUserSession = create<UserSessionStore>()(
     set => ({
       user: null,
 
-      setUser: async sessionData => {
+      setUser: async userData => {
         try {
-          set({ user: sessionData.user });
+          set({ user: userData });
         } catch (error) {
           console.error("Session creation error", error);
         }
