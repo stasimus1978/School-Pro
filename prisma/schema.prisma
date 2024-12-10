@@ -16,11 +16,13 @@ model School {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relationships
-  // students Student[] // One-to-many with Students
-  // classes  Class[] // One-to-many with Classes
-  // parents  Parent[] // One-to-many with Parents
-  // streams  Stream[] // One-to-many with Streams
+  // One-to-many Relationships
+  students    Student[]
+  classes     Class[]
+  parents     Parent[]
+  departments Department[]
+  streams     Stream[]
+  teachers    Teacher[]
 
   @@map("schools")
 }
@@ -56,8 +58,8 @@ model Class {
   updatedAt DateTime @updatedAt
 
   // Add a relation to the School model
-  // schoolId String // Foreign key to the School model
-  // school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  schoolId String // Foreign key to the School model
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   @@map("classes")
 }
@@ -71,13 +73,57 @@ model Stream {
   classId  String
   class    Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
   students Student[]
-  // schoolId String
-  // school   School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  schoolId String
+  school   School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("streams")
+}
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  password String
+  role     UserRole
+  name     String
+  phone    String?
+  image    String?
+
+  // School-related fields
+  schoolId   String?
+  schoolName String?
+
+  // One-to-one relationship
+  teacher Teacher?
+  student Student?
+  parent  Parent?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherId     String?
+  studentId     String?
+  parentId      String?
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("refresh_tokens")
 }
 
 model Parent {
@@ -102,9 +148,12 @@ model Parent {
   updatedAt     DateTime @updatedAt
 
   // Relationships
-  // schoolId String
-  // school   School    @relation(fields: [schoolId], references: [id])
+  schoolId String
+  school   School    @relation(fields: [schoolId], references: [id])
   students Student[]
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("parents")
 }
@@ -138,12 +187,18 @@ model Student {
   // Relationships
   parentId String
   parent   Parent @relation(fields: [parentId], references: [id], onDelete: Cascade)
-  classId  String
-  class    Class  @relation(fields: [classId], references: [id])
+
+  classId String
+  class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+
   streamId String
-  stream   Stream @relation(fields: [streamId], references: [id])
-  // schoolId String
-  // school   School @relation(fields: [schoolId], references: [id])
+  stream   Stream @relation(fields: [streamId], references: [id], onDelete: Cascade)
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("students")
 }
@@ -182,7 +237,7 @@ model Teacher {
   // Department Information
   departmentName String
   departmentId   String
-  department     Department @relation(fields: [departmentId], references: [id])
+  department     Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
 
   // Teaching Information
   subjects   String[]
@@ -207,12 +262,15 @@ model Teacher {
   skills     String?
 
   // Relationships
-  // schoolId String
-  // school   School @relation(fields: [schoolId], references: [id])
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id])
 
   // Attendance & Leave
   attendance TeacherAttendance[]
   leaves     TeacherLeave[]
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("teachers")
 }
@@ -244,6 +302,9 @@ model Department {
   // Financial Information
   budget     Float?
   budgetYear String?
+
+  school   School? @relation(fields: [schoolId], references: [id])
+  schoolId String?
 
   @@map("departments")
 }
@@ -390,4 +451,11 @@ enum LeaveStatus {
   APPROVED
   REJECTED
   CANCELED
+}
+
+enum UserRole {
+  ADMIN
+  TEACHER
+  STUDENT
+  PARENT
 }

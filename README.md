@@ -42,3 +42,7 @@
 2. 2:43:24 / 4:11:25
 3. 3:46:42 / 4:11:25
 4. 4:04:00 / 4:11:25
+
+#### X. [Episode 10: Adding Authentication with Node Js API | School Management System with Next Js](https://www.youtube.com/watch?v=pHKvC5mYg_0)
+
+1.
