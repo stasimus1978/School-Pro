@@ -1,7 +1,11 @@
 // import { convertDateToISO } from "@/lib/convertDateToIso";
 import prisma from "@/lib/prisma";
-import { generateAccessToken, generateRefreshToken, TokenPayload } from "@/lib/tokens";
-import { TypedRequestBody, UserCreateProps, UserLoginProps } from "@/types/types";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  TokenPayload,
+} from "@/lib/tokens";
+import { TypedRequestBody, UserLoginProps } from "@/types/types";
 import bcrypt from "bcryptjs";
 
 // Create
@@ -29,20 +33,29 @@ export async function POST(request: TypedRequestBody<UserLoginProps>) {
     });
 
     if (!exitingUser) {
-      return new Response(JSON.stringify({ error: "Invalid credentials!", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid credentials!", data: null }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Verify the password
-    const isValidPassword = await bcrypt.compare(password, exitingUser.password);
+    const isValidPassword = await bcrypt.compare(
+      password,
+      exitingUser.password
+    );
 
     if (!isValidPassword) {
-      return new Response(JSON.stringify({ error: "Invalid credentials!", data: null }), {
-        status: 401,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid credentials!", data: null }),
+        {
+          status: 401,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Generate tokens
@@ -78,9 +91,12 @@ export async function POST(request: TypedRequestBody<UserLoginProps>) {
     });
   } catch (error) {
     console.log(error);
-    return new Response(JSON.stringify({ error: "Something went wrong", data: null }), {
-      status: 500,
-      // headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Something went wrong", data: null }),
+      {
+        status: 500,
+        // headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
