@@ -1,4 +1,14 @@
-import { Contact, Gender, Parent, Prisma, Student, SubjectCategory, SubjectType, Teacher } from "@prisma/client";
+import {
+  Contact,
+  Gender,
+  Parent,
+  Prisma,
+  School,
+  Student,
+  SubjectCategory,
+  SubjectType,
+  Teacher,
+} from "@prisma/client";
 import { NextRequest } from "next/server";
 import { Option } from "react-tailwindcss-select/dist/components/type";
 
@@ -8,6 +18,7 @@ export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true; stude
 export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true; students: true } }>;
 export type ParentItem = Parent;
 export type StudentItem = Student;
+export type SchoolItem = School;
 // export type DepartmentItem = Department;
 export type DepartmentItem = Prisma.DepartmentGetPayload<{ include: { teachers: true; subjects: true } }>;
 export type SubjectItem = Prisma.SubjectGetPayload<{ include: { department: true } }>;
@@ -58,3 +69,5 @@ export type ClassWithCountAndStreams = ClassItem & {
   streams: StreamWithCount[];
   _count: { students: number };
 };
+
+export type SchoolResponse = Omit<SchoolItem, "createdAt" | "updatedAt">;

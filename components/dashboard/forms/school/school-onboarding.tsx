@@ -43,7 +43,7 @@ export default function SchoolOnboardingForm() {
       setLoading(false);
       toast.success("Successfully Created!");
       reset();
-      // router.push("/dashboard/categories");
+      router.push(`/school/${res.id}?name=${res.name}`);
     } catch (error) {
       setLoading(false);
       console.log(error);

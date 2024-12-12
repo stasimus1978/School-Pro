@@ -25,7 +25,9 @@ export async function POST(request: NextRequest) {
 
     console.log(`School created successfully: ${newSchool.name} (${newSchool.id})`);
 
-    return new Response(JSON.stringify({ data: newSchool, error: null }), {
+    const { createdAt, updatedAt, ...others } = newSchool;
+
+    return new Response(JSON.stringify({ data: others, error: null }), {
       status: 201,
       // headers: { "Content-Type": "application/json" },
     });
