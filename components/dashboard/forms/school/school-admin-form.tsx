@@ -1,11 +1,12 @@
 "use client";
 
-import { createSchool } from "@/actions/school";
+import { createUser } from "@/actions/users";
 import PasswordInput from "@/components/FormInputs/PasswordInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInput from "@/components/FormInputs/TextInput";
 import { UserCreateProps } from "@/types/types";
 import { Lock, Mail, Phone, Send, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -29,10 +30,9 @@ export default function SchoolAdminForm({ schoolId, schoolName }: { schoolId: st
     },
   });
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const initialImage = "/images/logo.png";
 
   async function saveStudent(data: UserCreateProps) {
     try {
@@ -43,12 +43,12 @@ export default function SchoolAdminForm({ schoolId, schoolName }: { schoolId: st
 
       console.log("Data: ", data);
 
-      const res = await createSchool(data);
+      const res = await createUser(data);
       console.log(res);
       setLoading(false);
       toast.success("Successfully Created!");
-      // reset();
-      // router.push(`/school-admin/${res.id}?name=${res.name}`);
+      reset();
+      router.push("/dashboard");
     } catch (error) {
       setLoading(false);
       console.log(error);
