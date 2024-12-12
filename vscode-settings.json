@@ -1,0 +1,217 @@
+// https://www.youtube.com/watch?v=zR9AwQMaQWE    35.00
+{
+  // Main editor settings
+  "window.openFilesInNewWindow": "off",
+  "editor.tabSize": 2,
+  "editor.folding": false,
+  "editor.insertSpaces": true,
+  "editor.smoothScrolling": true,
+  "editor.minimap.enabled": false,
+  "editor.detectIndentation": false,
+  "editor.suggestSelection": "first",
+  "window.zoomLevel": 1,
+  "editor.renderWhitespace": "all",
+
+  // Wrapping
+  // "editor.wordWrap": "bounded",
+  "editor.wrappingIndent": "same",
+  "editor.wordWrapColumn": 80,
+
+  //
+  "editor.scrollBeyondLastLine": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+
+  // Rename tags
+  "editor.linkedEditing": true,
+
+  // Auto closing tags
+  "html.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  "typescript.autoClosingTags": true,
+
+  //
+  "editor.renderControlCharacters": false,
+
+  //
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+
+  //
+  "editor.quickSuggestionsDelay": 0,
+
+  //
+  "html.completion.attributeDefaultValue": "singlequotes",
+
+  // Windows settings
+  "editor.bracketPairColorization.enabled": false,
+  "editor.glyphMargin": false,
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "workbench.productIconTheme": "fluent-icons",
+  "window.density.editorTabHeight": "compact",
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Cobalt Next Dark",
+  "editor.accessibilitySupport": "off",
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.iconTheme": "catppuccin-perfect-sequoia",
+
+  // Cursor
+  "editor.cursorBlinking": "expand",
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorSmoothCaretAnimation": "explicit",
+
+  // Font
+  "editor.fontSize": 18,
+  // "editor.lineHeight": 32,
+  "editor.fontLigatures": true,
+  "chat.editor.fontFamily": "Ubuntu Mono,Iosevka NFM, Monaspace Neon, Maple Mono, MonoLisa,  Fira Code, monoki, Hasklig, PragmataPro, Roboto Mono, monospace",
+  // "editor.inlayHints.fontFamily": "PragmataPro",
+
+  // Terminal
+  "terminal.integrated.fontFamily": "CaskaydiaCove NF",
+  "terminal.integrated.fontSize": 15,
+
+  // Explorer
+  "explorer.confirmDelete": false,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.startupEditor": "newUntitledFile",
+
+  // Debuging - off
+  "debug.toolBarLocation": "hidden",
+  "debug.focusWindowOnBreak": false,
+  "debug.showInlineBreakpointCandidates": false,
+  "debug.showBreakpointsInOverviewRuler": false,
+
+  // Emmet
+  "emmet.includeLanguages": {
+    "blade": "html",
+    "javascript": "javascriptreact"
+  },
+  "emmet.triggerExpansionOnTab": true,
+
+  // Format
+  "prettier.semi": true,
+  "prettier.useTabs": false,
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": false,
+  "prettier.jsxSingleQuote": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "prettier.arrowParens": "avoid",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.inlineSuggest.enabled": true,
+
+  // Laravel
+  "[blade]": {
+    "editor.defaultFormatter": "onecentlin.laravel-blade"
+  },
+  "[php]": {
+    "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
+  // Breadcrumbs
+  "breadcrumbs.icons": false,
+  "breadcrumbs.showKeys": false,
+  "breadcrumbs.showFiles": false,
+  "breadcrumbs.symbolPath": "off",
+  "breadcrumbs.showArrays": false,
+  "breadcrumbs.showEvents": false,
+  "breadcrumbs.showFields": false,
+  "breadcrumbs.showClasses": false,
+  "breadcrumbs.showMethods": false,
+  "breadcrumbs.showBooleans": false,
+  "breadcrumbs.showFunctions": false,
+  "breadcrumbs.showConstants": false,
+  "breadcrumbs.showConstructors": false,
+  "breadcrumbs.showEnumMembers": false,
+
+  //  JS & TS
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.quoteStyle": "double",
+  "javascript.preferences.quoteStyle": "double",
+  "javascript.format.semicolons": "insert",
+  "typescript.format.semicolons": "insert",
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  "typescript.validate.enable": true,
+  "javascript.validate.enable": true,
+
+  //  cSpell checker
+  "cSpell.language": "en,ru,ru-RU",
+  "cSpell.userWords": [
+    "cuid",
+    "datasource",
+    "lucide",
+    "singlequotes",
+    "tailwindcss"
+  ],
+  "cSpell.enabled": true,
+  "cSpell.enableFiletypes": ["blade", "jsx", "tsx", "ts", "js", "scss", "sass"],
+
+  "editor.unicodeHighlight.allowedCharacters": {
+    "а": true,
+    "с": true,
+    "Т": true,
+    "б": true,
+    "е": true
+  },
+  "editor.hideCursorInOverviewRuler": true,
+  "git.enableSmartCommit": true,
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.expo": true,
+    "**/.expo-shared": true,
+    "**/.idea": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/*-lock.json": true
+  },
+
+  //  Other settings
+  "files.defaultLanguage": "plaintext",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "window.confirmBeforeClose": "keyboardOnly",
+  "git.openRepositoryInParentFolders": "never",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "workbench.editor.empty.hint": "hidden",
+  "git.path": "C:/Program Files/Git/cmd/git.exe",
+
+  // "editor.fontFamily": "ubuntu, Consolas, 'Courier New', monospace"
+
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "git.autofetch": true,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "google-translate.firstLanguage": "uk",
+  "git.confirmSync": false
+}

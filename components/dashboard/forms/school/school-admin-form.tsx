@@ -18,7 +18,13 @@ export type SchoolProps = {
   logo: string;
 };
 
-export default function SchoolAdminForm({ schoolId, schoolName }: { schoolId: string; schoolName: string }) {
+export default function SchoolAdminForm({
+  schoolId,
+  schoolName,
+}: {
+  schoolId: string;
+  schoolName: string;
+}) {
   const {
     register,
     handleSubmit,
@@ -46,7 +52,7 @@ export default function SchoolAdminForm({ schoolId, schoolName }: { schoolId: st
       const res = await createUser(data);
       console.log(res);
       setLoading(false);
-      toast.success("Successfully Created!");
+      toast.success("Admin Successfully Created!");
       reset();
       router.push("/dashboard");
     } catch (error) {
@@ -58,22 +64,50 @@ export default function SchoolAdminForm({ schoolId, schoolName }: { schoolId: st
   return (
     <form className="" onSubmit={handleSubmit(saveStudent)}>
       <div className="text-center">
-        <h2 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">Welcome to {schoolName}</h2>
+        <h2 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">
+          Welcome to {schoolName}
+        </h2>
 
-        <p className="leading-7 [&:not(:first-child)]:mt-2">Create the Admin for this School</p>
+        <p className="leading-7 [&:not(:first-child)]:mt-2">
+          Create the Admin for this School
+        </p>
       </div>
 
       <div className="grid grid-cols-12 gap-6 py-6">
         <div className="lg:col-span-12 col-span-full space-y-3">
           <div className="grid gap-6">
             <div className="grid md:grid-cols-2 gap-3">
-              <TextInput register={register} errors={errors} label="Admin Name" name="name" icon={User} />
-              <TextInput register={register} errors={errors} label="Admin Email" name="email" icon={Mail} />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Admin Name"
+                name="name"
+                icon={User}
+              />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Admin Email"
+                name="email"
+                icon={Mail}
+              />
             </div>
 
             <div className="grid md:grid-cols-2 gap-3">
-              <TextInput register={register} errors={errors} label="Admin Phone" name="phone" icon={Phone} />
-              <PasswordInput register={register} errors={errors} label="Admin Password" name="password" icon={Lock} />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Admin Phone"
+                name="phone"
+                icon={Phone}
+              />
+              <PasswordInput
+                register={register}
+                errors={errors}
+                label="Admin Password"
+                name="password"
+                icon={Lock}
+              />
             </div>
           </div>
         </div>

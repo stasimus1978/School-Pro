@@ -1,14 +1,14 @@
 "use client";
 
+import { createSchool } from "@/actions/school";
+import ImageInput from "@/components/FormInputs/ImageInput";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextInput from "@/components/FormInputs/TextInput";
+import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import ImageInput from "@/components/FormInputs/ImageInput";
-import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
-import { Send } from "lucide-react";
-import { createSchool } from "@/actions/school";
 
 export type SchoolProps = {
   name: string;
@@ -53,7 +53,9 @@ export default function SchoolOnboardingForm() {
   return (
     <form className="" onSubmit={handleSubmit(saveStudent)}>
       <div className="text-center">
-        <h2 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">Welcome to School Pro,</h2>
+        <h2 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">
+          Welcome to School Pro,
+        </h2>
 
         <p className="leading-7 [&:not(:first-child)]:mt-2">
           Complete your school's profile to get started with SchoolPro.
@@ -64,12 +66,17 @@ export default function SchoolOnboardingForm() {
         <div className="lg:col-span-12 col-span-full space-y-3">
           <div className="grid gap-6">
             <div className="grid gap-3">
-              <TextInput register={register} errors={errors} label="School Name" name="name" />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="School Name"
+                name="name"
+              />
             </div>
 
             <div className="grid">
               <ImageInput
-                title="Customize your School Logo"
+                title="Customize your School Logo (500px x 150px)"
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
                 endpoint="schoolLogo"
