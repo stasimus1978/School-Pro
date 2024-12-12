@@ -1,5 +1,5 @@
 import { getServerUser } from "@/actions/users";
-import SchoolOnboardingForm from "@/components/dashboard/forms/school/school-onboarding";
+import SchoolOnboardingForm from "@/components/dashboard/forms/school/school-onboarding-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 

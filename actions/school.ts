@@ -12,7 +12,9 @@ export async function createSchool(data: SchoolProps) {
 
     revalidatePath("/dashboard/admin/schools");
 
-    return response.data as SchoolResponse;
+    // console.log("Response: ", response.data as SchoolResponse);
+
+    return response.data.data as SchoolResponse;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Failed to create school!";
