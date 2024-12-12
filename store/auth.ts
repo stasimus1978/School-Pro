@@ -1,4 +1,4 @@
-import { logout } from "@/actions/users";
+import { logout } from "@/actions/auth";
 import { UserItem } from "@/types/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -20,10 +20,10 @@ interface UserSessionStore {
 //
 export const useUserSession = create<UserSessionStore>()(
   persist(
-    set => ({
+    (set) => ({
       user: null,
 
-      setUser: async userData => {
+      setUser: async (userData) => {
         try {
           set({ user: userData });
         } catch (error) {
@@ -47,7 +47,7 @@ export const useUserSession = create<UserSessionStore>()(
     }),
     {
       name: "user-session",
-      partialize: state => ({ user: state.user }),
+      partialize: (state) => ({ user: state.user }),
     }
   )
 );

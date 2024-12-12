@@ -1,4 +1,4 @@
-import { getServerUser } from "@/actions/users";
+import { getServerUser } from "@/actions/auth";
 import Login from "@/components/frontend/auth/login";
 import { redirect } from "next/navigation";
 

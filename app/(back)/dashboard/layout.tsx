@@ -1,15 +1,11 @@
-import { getServerUser } from "@/actions/users";
+import { getServerUser } from "@/actions/auth";
 import AppSidebar from "@/components/dashboard/sidebar/app-sidebar";
 import SidebarHeader from "@/components/dashboard/sidebar/sidebar-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
-export default async function DashboardLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const user = await getServerUser();
 
   if (!user) {

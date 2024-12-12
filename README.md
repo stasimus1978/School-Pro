@@ -50,4 +50,4 @@
 
 #### XI. [Episode 11: Deploying API | Creating Admin User | School Management system with Next Js | Typescript](https://www.youtube.com/watch?v=yOSO3V_GqXM)
 
-1.
+1. 1:32:29 / 3:01:29

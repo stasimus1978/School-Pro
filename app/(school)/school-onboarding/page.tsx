@@ -1,4 +1,4 @@
-import { getServerUser } from "@/actions/users";
+import { getServerUser } from "@/actions/auth";
 import SchoolOnboardingForm from "@/components/dashboard/forms/school/school-onboarding-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { redirect } from "next/navigation";

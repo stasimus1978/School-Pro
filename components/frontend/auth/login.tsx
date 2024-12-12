@@ -1,5 +1,5 @@
 "use client";
-import { loginUser } from "@/actions/users";
+import { loginUser } from "@/actions/auth";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInput from "@/components/FormInputs/TextInput";
 import CustomCarousel from "@/components/frontend/custom-carousel";
