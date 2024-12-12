@@ -1,13 +1,14 @@
-"use client";
-
 import * as React from "react";
 import { ArrowRight, DollarSign, LayoutDashboard, Package, ShoppingCart } from "lucide-react";
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+// import { Bar, BarChart, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WelcomeBanner } from "@/components/dashboard/welcome-message";
+import { getServerUser } from "@/actions/auth";
+import { redirect } from "next/navigation";
 
 const salesData = [
   { name: "Sun", value: 0 },
@@ -71,9 +72,17 @@ const recentOrders = [
   },
 ];
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const user = await getServerUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <div className="flex-1 space-y-4 p-4">
+      <WelcomeBanner userName={user?.name} userRole={user.role} userSchool={user?.schoolName ?? ""} />
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -137,7 +146,7 @@ export default function DashboardPage() {
             </Button>
           </CardHeader>
           <CardContent>
-            <div className="h-[200px]">
+            {/* <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={salesData}>
                   <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
@@ -145,7 +154,7 @@ export default function DashboardPage() {
                   <Line type="monotone" dataKey="value" stroke="#f97316" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </div> */}
             <div className="text-sm text-muted-foreground">
               The day with highest sales is <span className="font-medium">with 0 sales</span>
             </div>
@@ -160,7 +169,7 @@ export default function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-[200px]">
+            {/* <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={revenueData}>
                   <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
@@ -168,7 +177,7 @@ export default function DashboardPage() {
                   <Bar dataKey="value" fill="#f97316" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
+            </div> */}
             <div className="text-sm text-muted-foreground">Leading Month is July and leading Category is Computers</div>
             <div className="text-xs text-muted-foreground">Showing total revenue for the past 6 months</div>
           </CardContent>
