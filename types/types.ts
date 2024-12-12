@@ -14,14 +14,22 @@ import { Option } from "react-tailwindcss-select/dist/components/type";
 
 // Base type
 export type ContactItem = Contact;
-export type ClassItem = Prisma.ClassGetPayload<{ include: { streams: true; students: true } }>;
-export type StreamItem = Prisma.StreamGetPayload<{ include: { class: true; students: true } }>;
+export type ClassItem = Prisma.ClassGetPayload<{
+  include: { streams: true; students: true };
+}>;
+export type StreamItem = Prisma.StreamGetPayload<{
+  include: { class: true; students: true };
+}>;
 export type ParentItem = Parent;
 export type StudentItem = Student;
 export type SchoolItem = School;
 // export type DepartmentItem = Department;
-export type DepartmentItem = Prisma.DepartmentGetPayload<{ include: { teachers: true; subjects: true } }>;
-export type SubjectItem = Prisma.SubjectGetPayload<{ include: { department: true } }>;
+export type DepartmentItem = Prisma.DepartmentGetPayload<{
+  include: { teachers: true; subjects: true };
+}>;
+export type SubjectItem = Prisma.SubjectGetPayload<{
+  include: { department: true };
+}>;
 export type SubjectCategoryEnum = SubjectCategory;
 export type SubjectTypeEnum = SubjectType;
 export type GenderEnum = Gender;
@@ -43,12 +51,22 @@ export type StudentCreateProps = Omit<StudentItem, "id"> & {
 export type DepartmentCreateProps = Omit<DepartmentItem, "id">;
 export type SubjectCreateProps = Pick<
   SubjectItem,
-  "name" | "code" | "shortName" | "category" | "type" | "departmentId" | "departmentName" | "slug"
+  | "name"
+  | "code"
+  | "shortName"
+  | "category"
+  | "type"
+  | "departmentId"
+  | "departmentName"
+  | "slug"
 >;
 
 export type TeacherCreateProps = Omit<TeacherItem, "id">;
 
-export type UserCreateProps = Omit<UserItem, "id" | "createdAt" | "updatedAt" | "teacherId" | "studentId" | "parentId">;
+export type UserCreateProps = Omit<
+  UserItem,
+  "id" | "createdAt" | "updatedAt" | "teacherId" | "studentId" | "parentId"
+>;
 export type UserLoginProps = Pick<UserItem, "email" | "password">;
 
 // Update types (all fields optional except ID)

@@ -1,11 +1,13 @@
 "use client";
 import { loginUser } from "@/actions/auth";
+import { getSchoolById } from "@/actions/school";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInput from "@/components/FormInputs/TextInput";
 import CustomCarousel from "@/components/frontend/custom-carousel";
 import Logo from "@/components/logo";
 import { useUserSession } from "@/store/auth";
-import { UserItem, UserLoginProps } from "@/types/types";
+import useSchoolStore from "@/store/school";
+import { SchoolItem, UserItem, UserLoginProps } from "@/types/types";
 import { LogIn, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +22,7 @@ export default function Login() {
     formState: { errors },
   } = useForm<UserLoginProps>();
   const { setUser } = useUserSession();
+  const { setSchool } = useSchoolStore();
 
   const router = useRouter();
 
@@ -27,9 +30,13 @@ export default function Login() {
     try {
       setIsLoading(true);
       const sessionData = await loginUser(data);
+      const role = sessionData?.user.role;
+      // Fetch the school data
+      const school = await getSchoolById(sessionData?.user.schoolId);
+      // Save the school data in Zustand
+      setSchool(school as SchoolItem);
       // Save the Data in Zustand
       setUser(sessionData?.user as UserItem);
-      const role = sessionData?.user.role;
       // Route to the User account to the role
       setIsLoading(false);
       if (role === "SUPER_ADMIN") {
