@@ -1,7 +1,11 @@
-import { createUser } from "@/actions/users";
 import { convertDateToISO } from "@/lib/convertDateToISO";
 import prisma from "@/lib/prisma";
-import { StudentCreateProps, TypedRequestBody, UserCreateProps } from "@/types/types";
+import {
+  StudentCreateProps,
+  TypedRequestBody,
+  UserCreateProps,
+} from "@/types/types";
+import { hash } from "bcryptjs";
 import { NextRequest } from "next/server";
 
 // Create
@@ -31,31 +35,55 @@ export async function POST(request: TypedRequestBody<StudentCreateProps>) {
     });
 
     if (exitingBCN) {
-      return new Response(JSON.stringify({ error: "Student with BCN already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Student with BCN already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (exitingEmail) {
-      return new Response(JSON.stringify({ error: "Student with Email already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Student with Email already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (exitingRegNo) {
-      return new Response(JSON.stringify({ error: "Student with RegNo already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Student with RegNo already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (exitingRollNo) {
-      return new Response(JSON.stringify({ error: "Student with RollNo already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Student with RollNo already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Create a student as a user
@@ -70,12 +98,16 @@ export async function POST(request: TypedRequestBody<StudentCreateProps>) {
       schoolName: data.schoolName,
     };
 
-    const user = await createUser(userData);
+    const user = await createUserService(userData);
+
+    data.userId = user.id;
     const newStudent = await prisma.student.create({
       data,
     });
 
-    console.log(`Student created successfully: ${newStudent.firstName} (${newStudent.id})`);
+    console.log(
+      `Student created successfully: ${newStudent.firstName} (${newStudent.id})`
+    );
 
     return new Response(JSON.stringify({ data: newStudent, error: null }), {
       status: 201,
@@ -83,10 +115,13 @@ export async function POST(request: TypedRequestBody<StudentCreateProps>) {
     });
   } catch (error) {
     console.log(error);
-    return new Response(JSON.stringify({ error: "Something went wrong", data: null }), {
-      status: 500,
-      // headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Something went wrong", data: null }),
+      {
+        status: 500,
+        // headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
 
@@ -102,4 +137,26 @@ export async function GET(request: NextRequest) {
       // headers: { "Content-Type": "application/json" },
     });
   } catch (error) {}
+}
+export async function createUserService(data: UserCreateProps) {
+  // Check if a user with this email already exists
+  const existingEmail = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
+
+  if (existingEmail) {
+    throw new Error("User with this email already exists");
+  }
+
+  // Hash the password
+  const hashedPassword = await hash(data.password, 10);
+  const userData = { ...data, password: hashedPassword };
+
+  // Create a user
+  const newUser = await prisma.user.create({
+    data: userData,
+  });
+
+  console.log(`User created successfully: ${newUser.email} (${newUser.id})`);
+  return newUser;
 }
