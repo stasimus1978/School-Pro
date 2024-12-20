@@ -1,6 +1,7 @@
+import { createUser } from "@/actions/users";
 import { convertDateToISO } from "@/lib/convertDateToISO";
 import prisma from "@/lib/prisma";
-import { StudentCreateProps, TypedRequestBody } from "@/types/types";
+import { StudentCreateProps, TypedRequestBody, UserCreateProps } from "@/types/types";
 import { NextRequest } from "next/server";
 
 // Create
@@ -57,6 +58,19 @@ export async function POST(request: TypedRequestBody<StudentCreateProps>) {
       });
     }
 
+    // Create a student as a user
+    const userData: UserCreateProps = {
+      email: data.email,
+      password: data.password,
+      role: "STUDENT",
+      name: data.name,
+      phone: data.phone,
+      image: data.imageUrl,
+      schoolId: data.schoolId,
+      schoolName: data.schoolName,
+    };
+
+    const user = await createUser(userData);
     const newStudent = await prisma.student.create({
       data,
     });

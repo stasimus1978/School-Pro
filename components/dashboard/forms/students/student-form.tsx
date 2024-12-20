@@ -1,22 +1,23 @@
 "use client";
 
+import { createStudent } from "@/actions/students";
+import FormSelectInput from "@/components/FormInputs/FormSelectInput";
+import ImageInput from "@/components/FormInputs/ImageInput";
+import PasswordInput from "@/components/FormInputs/PasswordInput";
+import RadioInput from "@/components/FormInputs/RadioInput";
+import TextArea from "@/components/FormInputs/TextAreaInput";
+import TextInput from "@/components/FormInputs/TextInput";
+import { countries } from "@/lib/countries";
+import { generateRegistrationNumber } from "@/lib/generateRegNo";
+import { generateRollNumber } from "@/lib/generateRollNo";
+import useSchoolStore from "@/store/school";
+import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import FormHeader from "../FormHeader";
-import FormFooter from "../FormFooter";
-import ImageInput from "@/components/FormInputs/ImageInput";
-import TextArea from "@/components/FormInputs/TextAreaInput";
-import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
-import PasswordInput from "@/components/FormInputs/PasswordInput";
-import FormSelectInput from "@/components/FormInputs/FormSelectInput";
-import { countries } from "@/lib/countries";
-import { ClassItem, ParentItem, SelectOptionProps, StudentCreateProps } from "@/types/types";
-import { createStudent } from "@/actions/students";
-import RadioInput from "@/components/FormInputs/RadioInput";
-import { generateRegistrationNumber } from "@/lib/generateRegNo";
-import { generateRollNumber } from "@/lib/generateRollNo";
+import FormFooter from "../FormFooter";
+import FormHeader from "../FormHeader";
 
 type SingleStudentFormProps = {
   classes: ClassItem[];
@@ -34,7 +35,7 @@ export default function SingleStudentForm({
   initialData,
 }: SingleStudentFormProps) {
   // Parents Options
-  const parentOptions = parents.map((parent) => {
+  const parentOptions = parents.map(parent => {
     return {
       label: `${parent.firstName} ${parent.lastName}`,
       value: parent.id,
@@ -43,7 +44,7 @@ export default function SingleStudentForm({
   const [selectedParent, setSelectedParent] = useState<SelectOptionProps | null>(null);
 
   // Class Options
-  const classOptions = classes.map((item) => {
+  const classOptions = classes.map(item => {
     return {
       label: item.title,
       value: item.id,
@@ -53,8 +54,8 @@ export default function SingleStudentForm({
 
   // Stream Options
   const classId = selectedClass.value ?? "";
-  const streams = classes.find((item) => item.id === classId)?.streams || [];
-  const streamOptions = streams.map((item) => {
+  const streams = classes.find(item => item.id === classId)?.streams || [];
+  const streamOptions = streams.map(item => {
     return {
       label: item.title,
       value: item.id,
@@ -71,7 +72,7 @@ export default function SingleStudentForm({
 
   // Nationality
   const initialCountryCode = "UA";
-  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode);
+  const initialCountry = countries.find(country => country.countryCode === initialCountryCode);
   const [selectedNationality, setSelectedNationality] = useState<any>(initialCountry);
 
   // Religion
@@ -105,9 +106,13 @@ export default function SingleStudentForm({
     { label: "Sponsored Student", id: "SS" },
   ];
 
+  const { school } = useSchoolStore();
+
   async function saveStudent(data: StudentCreateProps) {
     try {
       setLoading(true);
+      data.schoolId = school?.id ?? "";
+      data.schoolName = school?.name ?? "";
       data.imageUrl = imageUrl;
       data.name = `${data.firstName} ${data.lastName}`;
       data.parentId = selectedParent?.value;

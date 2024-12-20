@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import { createStream } from "@/actions/streams";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextInput from "@/components/FormInputs/TextInput";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import useSchoolStore from "@/store/school";
+import { StreamCreateProps } from "@/types/types";
 import { Check, Pencil, Plus } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import TextInput from "@/components/FormInputs/TextInput";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
-import { StreamCreateProps } from "@/types/types";
-import { createStream } from "@/actions/streams";
 
 interface StreamFormProps {
   classId: string;
@@ -31,8 +32,11 @@ export default function StreamForm({ classId, initialContent, editingId }: Strea
 
   const [loading, setLoading] = useState(false);
 
+  const { school } = useSchoolStore();
+
   async function saveStream(data: StreamCreateProps) {
     data.classId = classId;
+    data.schoolId = school?.id ?? "";
 
     console.log(data);
 

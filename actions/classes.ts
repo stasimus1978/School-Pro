@@ -1,7 +1,7 @@
 "use server";
 
 import api from "@/lib/api";
-import { ClassCreateProps, ClassItem, ClassWithCountAndStreams } from "@/types/types";
+import { ClassCreateProps, ClassWithCountAndStreams } from "@/types/types";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 

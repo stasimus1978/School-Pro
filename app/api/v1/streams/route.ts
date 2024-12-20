@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
         title: data.title,
         slug: slug,
         classId: data.classId,
+        schoolId: data.schoolId,
       },
     });
 

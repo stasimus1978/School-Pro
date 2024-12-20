@@ -1,24 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
+import { createClass } from "@/actions/classes";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextInput from "@/components/FormInputs/TextInput";
+import { Button } from "@/components/ui/button";
+import useSchoolStore from "@/store/school";
+import { ClassCreateProps } from "@/types/types";
 import { Check, Pencil, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import TextInput from "@/components/FormInputs/TextInput";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
-import { ClassCreateProps } from "@/types/types";
-import { createClass } from "@/actions/classes";
 
 export type ClassProps = {
-  userId?: string;
+  // userId?: string;
   initialContent?: string;
   editingId?: string;
 };
 
-export default function ClassForm({ userId, initialContent, editingId }: ClassProps) {
+export default function ClassForm({ initialContent, editingId }: ClassProps) {
   const {
     register,
     handleSubmit,
@@ -32,8 +33,11 @@ export default function ClassForm({ userId, initialContent, editingId }: ClassPr
 
   const [loading, setLoading] = useState(false);
 
+  const { school } = useSchoolStore();
+
   async function saveClass(data: ClassCreateProps) {
     // data.userId = userId;
+    data.schoolId = school?.id ?? "";
     try {
       setLoading(true);
       if (editingId) {
@@ -41,6 +45,8 @@ export default function ClassForm({ userId, initialContent, editingId }: ClassPr
         // setLoading(false);
         // toast.success("Updated Successfully!");
       } else {
+        console.log("data", data);
+
         const res = await createClass(data);
         setLoading(false);
         toast.success("Successfully Created!");

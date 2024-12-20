@@ -53,3 +53,9 @@
 1. 1:32:29 / 3:01:29
 2. 1:43:48 / 3:01:29
 3. 1:54:37 / 3:01:29
+
+#### XII. [Ep 12: Multi-School Support & Complete Resource Mgt | School Mgt system with Next Js | Typescript](https://www.youtube.com/watch?v=kbzzgJkIJ6g)
+
+1. 11:40 / 3:40:16
+2. 20:32 / 3:40:16
+3. 1:03:32 / 3:40:16

@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
       data: {
         title: data.title,
         slug: slug,
+        schoolId: data.schoolId,
       },
     });
 

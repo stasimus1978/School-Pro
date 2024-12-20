@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
+import { createDepartment } from "@/actions/departments";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextInput from "@/components/FormInputs/TextInput";
+import { Button } from "@/components/ui/button";
+import useSchoolStore from "@/store/school";
+import { DepartmentCreateProps } from "@/types/types";
 import { Check, Pencil, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import TextInput from "@/components/FormInputs/TextInput";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
-import { DepartmentCreateProps } from "@/types/types";
-import { createDepartment } from "@/actions/departments";
 
 export type DepartmentProps = {
-  userId?: string;
   initialContent?: string;
   editingId?: string;
 };
 
-export default function DepartmentForm({ userId, initialContent, editingId }: DepartmentProps) {
+export default function DepartmentForm({ initialContent, editingId }: DepartmentProps) {
   const {
     register,
     handleSubmit,
@@ -32,8 +32,11 @@ export default function DepartmentForm({ userId, initialContent, editingId }: De
 
   const [loading, setLoading] = useState(false);
 
+  const { school } = useSchoolStore();
+
   async function saveDepartment(data: DepartmentCreateProps) {
     // data.userId = userId;
+    data.schoolId = school?.id ?? "";
     try {
       setLoading(true);
       if (editingId) {

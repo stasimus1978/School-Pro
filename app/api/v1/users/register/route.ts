@@ -2,7 +2,6 @@
 import prisma from "@/lib/prisma";
 import { TypedRequestBody, UserCreateProps } from "@/types/types";
 import bcrypt from "bcryptjs";
-import { NextRequest } from "next/server";
 
 // Create
 export async function POST(request: TypedRequestBody<UserCreateProps>) {
