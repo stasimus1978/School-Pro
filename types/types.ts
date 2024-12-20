@@ -41,23 +41,42 @@ export type BriefSubjectItem = Pick<SubjectItem, "id" | "name">;
 
 // Create types
 export type ClassCreateProps = Pick<ClassItem, "title" | "schoolId">;
-export type StreamCreateProps = Pick<StreamItem, "title" | "slug" | "classId" | "schoolId">;
-export type ParentCreateProps = Omit<ParentItem, "id">; //& { profileImage: string;};
+export type StreamCreateProps = Pick<
+  StreamItem,
+  "title" | "slug" | "classId" | "schoolId"
+>;
+export type ParentCreateProps = Omit<ParentItem, "id"> & {
+  schoolName: string;
+};
 export type StudentCreateProps = Omit<StudentItem, "id"> & {
   schoolName: string;
   // parentName?: string;
   // classTitle?: string;
   // streamTitle?: string;
 };
-export type DepartmentCreateProps = Required<Pick<DepartmentItem, "name" | "schoolId">>;
+export type DepartmentCreateProps = Required<
+  Pick<DepartmentItem, "name" | "schoolId">
+>;
 export type SubjectCreateProps = Pick<
   SubjectItem,
-  "name" | "code" | "shortName" | "category" | "type" | "departmentId" | "departmentName" | "slug"
+  | "name"
+  | "code"
+  | "shortName"
+  | "category"
+  | "type"
+  | "departmentId"
+  | "departmentName"
+  | "slug"
 >;
 
-export type TeacherCreateProps = Omit<TeacherItem, "id">;
+export type TeacherCreateProps = Omit<TeacherItem, "id"> & {
+  schoolName: string;
+};
 
-export type UserCreateProps = Omit<UserItem, "id" | "createdAt" | "updatedAt" | "teacherId" | "studentId" | "parentId">;
+export type UserCreateProps = Omit<
+  UserItem,
+  "id" | "createdAt" | "updatedAt" | "teacherId" | "studentId" | "parentId"
+>;
 export type UserLoginProps = Pick<UserItem, "email" | "password">;
 
 // Update types (all fields optional except ID)

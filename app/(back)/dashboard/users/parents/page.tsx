@@ -1,7 +1,7 @@
-import { columns } from "./columns";
+import { getAllParents } from "@/actions/parents";
 import TableHeader from "@/components/dashboard/Tables/TableHeader";
 import DataTable from "@/components/DataTableComponents/DataTable";
-import { getAllParents } from "@/actions/parents";
+import { columns } from "./columns";
 
 export default async function ParentsPage() {
   const parents = (await getAllParents()) || [];
@@ -13,7 +13,7 @@ export default async function ParentsPage() {
       <TableHeader
         title="Parents"
         linkTitle="Add Parent"
-        href="/dashboard/users/parent/new"
+        href="/dashboard/users/parents/new"
         data={parents}
         model="parent"
       />

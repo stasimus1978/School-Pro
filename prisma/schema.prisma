@@ -148,9 +148,10 @@ model Parent {
   updatedAt     DateTime @updatedAt
 
   // Relationships
-  schoolId String
-  school   School    @relation(fields: [schoolId], references: [id])
-  students Student[]
+  schoolId   String
+  schoolName String
+  school     School    @relation(fields: [schoolId], references: [id])
+  students   Student[]
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

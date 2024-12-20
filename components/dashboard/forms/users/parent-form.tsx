@@ -1,19 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { set, useForm } from "react-hook-form";
-import FormHeader from "../FormHeader";
-import FormFooter from "../FormFooter";
+import { createParent } from "@/actions/parents";
+import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import ImageInput from "@/components/FormInputs/ImageInput";
+import PasswordInput from "@/components/FormInputs/PasswordInput";
 import TextArea from "@/components/FormInputs/TextAreaInput";
 import TextInput from "@/components/FormInputs/TextInput";
-import toast from "react-hot-toast";
-import PasswordInput from "@/components/FormInputs/PasswordInput";
-import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { countries, Country } from "@/lib/countries";
+import useSchoolStore from "@/store/school";
 import { ParentCreateProps } from "@/types/types";
-import { createParent } from "@/actions/parents";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import FormFooter from "../FormFooter";
+import FormHeader from "../FormHeader";
 
 export type SelectOptionProps = {
   label: string;
@@ -24,7 +25,10 @@ type SingleStudentFormProps = {
   initialData?: any | undefined | null;
 };
 
-export default function ParentForm({ editingId, initialData }: SingleStudentFormProps) {
+export default function ParentForm({
+  editingId,
+  initialData,
+}: SingleStudentFormProps) {
   // Parents
   const relationships = [
     { label: "Mother", value: "Mother" },
@@ -32,7 +36,8 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Guardian", value: "Guardian" },
     { label: "Other", value: "Other" },
   ];
-  const [selectedRelationship, setSelectedRelationship] = useState<SelectOptionProps>(relationships[0]);
+  const [selectedRelationship, setSelectedRelationship] =
+    useState<SelectOptionProps>(relationships[0]);
 
   // Titles
   const titles = [
@@ -42,7 +47,9 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Dr.", value: "Dr" },
     { label: "Prof.", value: "Prof." },
   ];
-  const [selectedTitle, setSelectedTitle] = useState<SelectOptionProps>(titles[0]);
+  const [selectedTitle, setSelectedTitle] = useState<SelectOptionProps>(
+    titles[0]
+  );
 
   // Contact Method
   const contactMethod = [
@@ -50,7 +57,8 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "Email", value: "Email" },
     { label: "Whatsap", value: "Whatsap" },
   ];
-  const [selectedContactMethod, setSelectedContactMethod] = useState<SelectOptionProps>(contactMethod[0]);
+  const [selectedContactMethod, setSelectedContactMethod] =
+    useState<SelectOptionProps>(contactMethod[0]);
 
   // Sections/Streams
   const streams = [
@@ -59,19 +67,26 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
     { label: "S2A", value: "1233778" },
     { label: "S2b", value: "1233778" },
   ];
-  const [selectedStream, setSelectedStream] = useState<SelectOptionProps>(streams[0]);
+  const [selectedStream, setSelectedStream] = useState<SelectOptionProps>(
+    streams[0]
+  );
 
   // Gender
   const genders = [
     { label: "MALE", value: "MALE" },
     { label: "FEMALE", value: "FEMALE" },
   ];
-  const [selectedGender, setSelectedGender] = useState<SelectOptionProps>(genders[0]);
+  const [selectedGender, setSelectedGender] = useState<SelectOptionProps>(
+    genders[0]
+  );
 
   // Nationality
   const initialCountryCode = "UA";
-  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode) || countries[0];
-  const [selectedNationality, setSelectedNationality] = useState<Country>(initialCountry);
+  const initialCountry =
+    countries.find(country => country.countryCode === initialCountryCode) ||
+    countries[0];
+  const [selectedNationality, setSelectedNationality] =
+    useState<Country>(initialCountry);
 
   const {
     register,
@@ -90,9 +105,13 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
+  const { school } = useSchoolStore();
+
   async function saveParent(data: ParentCreateProps) {
     try {
       setLoading(true);
+      data.schoolId = school?.id ?? "";
+      data.schoolName = school?.name ?? "";
       data.imageUrl = imageUrl;
       data.title = selectedTitle.value;
       data.relationship = selectedRelationship.value;
@@ -125,7 +144,13 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
 
   return (
     <form className="" onSubmit={handleSubmit(saveParent)}>
-      <FormHeader href="/parents" parent="users" title="Parents" editingId={editingId} loading={loading} />
+      <FormHeader
+        href="/parents"
+        parent="users"
+        title="Parents"
+        editingId={editingId}
+        loading={loading}
+      />
 
       <div className="grid grid-cols-12 gap-6 py-8">
         <div className="lg:col-span-12 col-span-full space-y-3">
@@ -139,8 +164,18 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
                 isSearchable={false}
               />
 
-              <TextInput register={register} errors={errors} label="First Name" name="firstName" />
-              <TextInput register={register} errors={errors} label="Last Name" name="lastName" />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="First Name"
+                name="firstName"
+              />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Last Name"
+                name="lastName"
+              />
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -152,7 +187,12 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
                 isSearchable={false}
               />
 
-              <TextInput register={register} errors={errors} label="National ID/Passport" name="NIN" />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="National ID/Passport"
+                name="NIN"
+              />
 
               <FormSelectInput
                 label="Gender"
@@ -164,8 +204,20 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <TextInput register={register} errors={errors} label="Date of Birth" name="dob" type="date" />
-              <TextInput register={register} errors={errors} label="Phone" name="phone" type="tel" />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Date of Birth"
+                name="dob"
+                type="date"
+              />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Phone"
+                name="phone"
+                type="tel"
+              />
 
               <FormSelectInput
                 label="Nationality"
@@ -178,9 +230,21 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-3">
               {/* <TextInput register={register} errors={errors} label="Phone" name="phone" type="tel" /> */}
 
-              <TextInput register={register} errors={errors} label="Email" name="email" type="email" />
+              <TextInput
+                register={register}
+                errors={errors}
+                label="Email"
+                name="email"
+                type="email"
+              />
 
-              <TextInput register={register} errors={errors} type="tel" label="Whatsap No." name="whatsapNo" />
+              <TextInput
+                register={register}
+                errors={errors}
+                type="tel"
+                label="Whatsap No."
+                name="whatsapNo"
+              />
             </div>
 
             <div className="grid md:grid-cols-2 gap-3">
@@ -194,14 +258,29 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
                     isSearchable={false}
                   />
 
-                  <TextInput register={register} errors={errors} label="Occupation" name="occupation" />
+                  <TextInput
+                    register={register}
+                    errors={errors}
+                    label="Occupation"
+                    name="occupation"
+                  />
                 </div>
 
                 <div className="grid gap-3">
-                  <TextArea register={register} errors={errors} label="Address" name="address" />
+                  <TextArea
+                    register={register}
+                    errors={errors}
+                    label="Address"
+                    name="address"
+                  />
                 </div>
                 <div className="grid">
-                  <PasswordInput register={register} errors={errors} label="Parent Portal Password" name="password" />
+                  <PasswordInput
+                    register={register}
+                    errors={errors}
+                    label="Parent Portal Password"
+                    name="password"
+                  />
                 </div>
               </div>
 
@@ -219,7 +298,13 @@ export default function ParentForm({ editingId, initialData }: SingleStudentForm
         </div>
       </div>
 
-      <FormFooter href="/parents" editingId={editingId} loading={loading} title="Parents" parent="users" />
+      <FormFooter
+        href="/parents"
+        editingId={editingId}
+        loading={loading}
+        title="Parents"
+        parent="users"
+      />
     </form>
   );
 }

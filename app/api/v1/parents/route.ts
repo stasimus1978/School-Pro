@@ -1,7 +1,12 @@
 // import { convertDateToISO } from "@/lib/convertDateToIso";
 import prisma from "@/lib/prisma";
-import { ParentCreateProps, TypedRequestBody } from "@/types/types";
+import {
+  ParentCreateProps,
+  TypedRequestBody,
+  UserCreateProps,
+} from "@/types/types";
 import { NextRequest } from "next/server";
+import { createUserService } from "../students/route";
 
 function convertDateToISO(dateStr: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
@@ -35,31 +40,64 @@ export async function POST(request: TypedRequestBody<ParentCreateProps>) {
     });
 
     if (exitingNIN) {
-      return new Response(JSON.stringify({ error: "Parent with NIN already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Parent with NIN already exists", data: null }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (exitingEmail) {
-      return new Response(JSON.stringify({ error: "Parent with Email already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Parent with Email already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (exitingPhone) {
-      return new Response(JSON.stringify({ error: "Parent with Phone already exists", data: null }), {
-        status: 409,
-        // headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Parent with Phone already exists",
+          data: null,
+        }),
+        {
+          status: 409,
+          // headers: { "Content-Type": "application/json" },
+        }
+      );
     }
+
+    // Create a student as a user
+    const userData: UserCreateProps = {
+      email: data.email,
+      password: data.password,
+      role: "PARENT",
+      name: `${data.firstName} ${data.lastName}`,
+      phone: data.phone,
+      image: data.imageUrl,
+      schoolId: data.schoolId,
+      schoolName: data.schoolName,
+    };
+
+    const user = await createUserService(userData);
+
+    data.userId = user.id;
 
     const newParent = await prisma.parent.create({
       data,
     });
 
-    console.log(`Parent created successfully: ${newParent.firstName} (${newParent.id})`);
+    console.log(
+      `Parent created successfully: ${newParent.firstName} (${newParent.id})`
+    );
 
     return new Response(JSON.stringify({ data: newParent, error: null }), {
       status: 201,
@@ -67,10 +105,13 @@ export async function POST(request: TypedRequestBody<ParentCreateProps>) {
     });
   } catch (error) {
     console.log(error);
-    return new Response(JSON.stringify({ error: "Something went wrong", data: null }), {
-      status: 500,
-      // headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Something went wrong", data: null }),
+      {
+        status: 500,
+        // headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
 
