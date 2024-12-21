@@ -1,10 +1,6 @@
 // import { convertDateToISO } from "@/lib/convertDateToIso";
 import prisma from "@/lib/prisma";
-import {
-  TeacherCreateProps,
-  TypedRequestBody,
-  UserCreateProps,
-} from "@/types/types";
+import { TeacherCreateProps, TypedRequestBody, UserCreateProps } from "@/types/types";
 import { NextRequest } from "next/server";
 import { createUserService } from "../students/route";
 
@@ -96,14 +92,14 @@ export async function POST(request: TypedRequestBody<TeacherCreateProps>) {
     const user = await createUserService(userData);
 
     data.userId = user.id;
+    console.log("user: ", user);
+    console.log("data: ", data);
 
     const newTeacher = await prisma.teacher.create({
       data,
     });
 
-    console.log(
-      `Teacher created successfully: ${newTeacher.firstName} (${newTeacher.id})`
-    );
+    console.log(`Teacher created successfully: ${newTeacher.firstName} (${newTeacher.id})`);
 
     return new Response(JSON.stringify({ data: newTeacher, error: null }), {
       status: 201,
@@ -111,13 +107,10 @@ export async function POST(request: TypedRequestBody<TeacherCreateProps>) {
     });
   } catch (error) {
     console.log(error);
-    return new Response(
-      JSON.stringify({ error: "Something went wrong", data: null }),
-      {
-        status: 500,
-        // headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Something went wrong", data: null }), {
+      status: 500,
+      // headers: { "Content-Type": "application/json" },
+    });
   }
 }
 

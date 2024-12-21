@@ -1,21 +1,22 @@
 "use client";
 
+import { createTeacher } from "@/actions/teachers";
+import FormMultipleSelectInput from "@/components/FormInputs/FormMultipleSelectInput";
+import FormSelectInput from "@/components/FormInputs/FormSelectInput";
+import ImageInput from "@/components/FormInputs/ImageInput";
+import PasswordInput from "@/components/FormInputs/PasswordInput";
+import TextArea from "@/components/FormInputs/TextAreaInput";
+import TextInput from "@/components/FormInputs/TextInput";
+import { countries, Country } from "@/lib/countries";
+import { generateRollNumber } from "@/lib/generateRollNo";
+import useSchoolStore from "@/store/school";
+import { GenderEnum, TeacherCreateProps } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import FormHeader from "../FormHeader";
-import FormFooter from "../FormFooter";
-import ImageInput from "@/components/FormInputs/ImageInput";
-import TextArea from "@/components/FormInputs/TextAreaInput";
-import TextInput from "@/components/FormInputs/TextInput";
 import toast from "react-hot-toast";
-import PasswordInput from "@/components/FormInputs/PasswordInput";
-import FormSelectInput from "@/components/FormInputs/FormSelectInput";
-import { countries, Country } from "@/lib/countries";
-import { GenderEnum, TeacherCreateProps } from "@/types/types";
-import { createTeacher } from "@/actions/teachers";
-import FormMultipleSelectInput from "@/components/FormInputs/FormMultipleSelectInput";
-import { generateRollNumber } from "@/lib/generateRollNo";
+import FormFooter from "../FormFooter";
+import FormHeader from "../FormHeader";
 
 export type SelectOptionProps = {
   label: string;
@@ -98,7 +99,7 @@ export default function TeacherForm({
 
   // Nationality
   const initialCountryCode = "UA";
-  const initialCountry = countries.find((country) => country.countryCode === initialCountryCode) || countries[0];
+  const initialCountry = countries.find(country => country.countryCode === initialCountryCode) || countries[0];
   const [selectedNationality, setSelectedNationality] = useState<Country>(initialCountry);
 
   const {
@@ -118,9 +119,13 @@ export default function TeacherForm({
   const initialImage = initialData?.imageUrl || "/images/student.png";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
+  const { school } = useSchoolStore();
+
   async function saveTeacher(data: TeacherCreateProps) {
     try {
       setLoading(true);
+      data.schoolId = school?.id ?? "";
+      data.schoolName = school?.name ?? "";
       data.employeeId = generateRollNumber();
       data.imageUrl = imageUrl;
       data.title = selectedTitle.value;
@@ -132,9 +137,9 @@ export default function TeacherForm({
       data.qualification = qualification.value;
       data.mainSubject = mainSubject.label;
       data.mainSubjectId = mainSubject.value;
-      data.subjects = selectedSubjects.map((item) => item.label);
-      data.classesIds = selectedClasses.map((item) => item.value);
-      data.classes = selectedClasses.map((item) => item.label);
+      data.subjects = selectedSubjects.map(item => item.label);
+      data.classesIds = selectedClasses.map(item => item.value);
+      data.classes = selectedClasses.map(item => item.label);
       data.experience = Number(data.experience);
 
       if (editingId) {

@@ -1,10 +1,6 @@
 // import { convertDateToISO } from "@/lib/convertDateToIso";
 import prisma from "@/lib/prisma";
-import {
-  ParentCreateProps,
-  TypedRequestBody,
-  UserCreateProps,
-} from "@/types/types";
+import { ParentCreateProps, TypedRequestBody, UserCreateProps } from "@/types/types";
 import { NextRequest } from "next/server";
 import { createUserService } from "../students/route";
 
@@ -40,13 +36,10 @@ export async function POST(request: TypedRequestBody<ParentCreateProps>) {
     });
 
     if (exitingNIN) {
-      return new Response(
-        JSON.stringify({ error: "Parent with NIN already exists", data: null }),
-        {
-          status: 409,
-          // headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Parent with NIN already exists", data: null }), {
+        status: 409,
+        // headers: { "Content-Type": "application/json" },
+      });
     }
 
     if (exitingEmail) {
@@ -91,13 +84,14 @@ export async function POST(request: TypedRequestBody<ParentCreateProps>) {
 
     data.userId = user.id;
 
+    // console.log("user: ", user);
+    // console.log("data: ", data);
+
     const newParent = await prisma.parent.create({
       data,
     });
 
-    console.log(
-      `Parent created successfully: ${newParent.firstName} (${newParent.id})`
-    );
+    console.log(`Parent created successfully: ${newParent.firstName} (${newParent.id})`);
 
     return new Response(JSON.stringify({ data: newParent, error: null }), {
       status: 201,
@@ -105,13 +99,10 @@ export async function POST(request: TypedRequestBody<ParentCreateProps>) {
     });
   } catch (error) {
     console.log(error);
-    return new Response(
-      JSON.stringify({ error: "Something went wrong", data: null }),
-      {
-        status: 500,
-        // headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Something went wrong", data: null }), {
+      status: 500,
+      // headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
