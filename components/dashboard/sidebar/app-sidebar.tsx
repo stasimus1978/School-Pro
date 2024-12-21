@@ -14,11 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import Logo from "@/components/logo";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   BarChart2,
   BookOpen,
@@ -43,7 +39,7 @@ export default function AppSidebar() {
       url: "/dashboard",
       icon: LayoutDashboard,
       isActive: true,
-      items: [{ title: "Overview", url: "/dashboard/overview" }],
+      items: [{ title: "Overview", url: "/dashboard" }],
     },
     {
       // Student Management
@@ -189,12 +185,7 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             {sidebarLinks.map(item => (
-              <Collapsible
-                key={item.title}
-                asChild
-                defaultOpen={item.isActive}
-                className="group/collapsible"
-              >
+              <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
