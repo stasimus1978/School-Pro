@@ -3,13 +3,10 @@
 // TODO: Rename file to auth.ts
 import api from "@/lib/api";
 import { SessionData } from "@/store/auth";
-import {
-  UserItem,
-  type UserCreateProps,
-  type UserLoginProps,
-} from "@/types/types";
+import { SchoolItem, UserItem, type UserCreateProps, type UserLoginProps } from "@/types/types";
 import axios from "axios";
 import { cookies } from "next/headers";
+import { getSchoolById } from "./school";
 
 export async function createUser(data: UserCreateProps) {
   try {
@@ -40,6 +37,10 @@ export async function loginUser(data: UserLoginProps): Promise<SessionData> {
 
     await createServerSession(userData);
 
+    const school = await getSchoolById(userData?.user.schoolId);
+
+    await saveServerSchool(school as SchoolItem);
+
     console.log("Answer: ", user, accessToken, refreshToken);
 
     // revalidatePath("/dashboard/users");
@@ -56,25 +57,6 @@ export async function loginUser(data: UserLoginProps): Promise<SessionData> {
     throw error;
   }
 }
-
-// const UserSchema = z.object({
-//   id: z.string(),
-//   email: z.string().email(),
-//   role: z.enum(["SUPER_ADMIN", "ADMIN", "TEACHER", "STUDENT", "PARENT"]),
-//   name: z.string(),
-//   phone: z.string().nullable(),
-//   image: z.string().nullable(),
-//   schoolId: z.string().nullable(),
-//   schoolName: z.string().nullable(),
-//   createdAt: z.string(),
-//   updatedAt: z.string(),
-// });
-
-// const SessionDataSchema = z.object({
-//   user: UserSchema,
-//   accessToken: z.string(),
-//   refreshToken: z.string(),
-// });
 
 export async function createServerSession(data: SessionData) {
   try {
@@ -108,6 +90,23 @@ export async function createServerSession(data: SessionData) {
   }
 }
 
+export async function saveServerSchool(data: SchoolItem) {
+  try {
+    const cookieStore = await cookies();
+
+    cookieStore.set("school", JSON.stringify(data), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to create School session", error);
+    return { success: false, error: "Invalid session data" };
+  }
+}
+
 export async function logout() {
   try {
     const cookieStore = await cookies();
@@ -133,6 +132,21 @@ export async function getServerUser() {
   try {
     const user = JSON.parse(userCookie.value);
     return user as UserItem;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getServerSchool() {
+  const cookieStore = await cookies();
+
+  const schoolCookie = cookieStore.get("school");
+
+  if (!schoolCookie) return null;
+
+  try {
+    const school = JSON.parse(schoolCookie.value);
+    return school as SchoolItem;
   } catch (error) {
     return null;
   }

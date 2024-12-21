@@ -30,9 +30,9 @@ export async function deleteClass(id: string) {
   };
 }
 
-export async function getAllClasses() {
+export async function getAllClasses(schoolId: string) {
   try {
-    const response = await api.get("/classes");
+    const response = await api.get(`/classes/school/${schoolId}`);
     const classes = response.data.data;
 
     return classes as ClassWithCountAndStreams[];

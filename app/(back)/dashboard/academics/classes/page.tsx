@@ -1,8 +1,13 @@
+import { getServerSchool } from "@/actions/auth";
 import { getAllClasses } from "@/actions/classes";
 import ClassListing from "@/components/dashboard/class-listing";
 
 export default async function AcademicsClassesPage() {
-  const classes = await getAllClasses();
+  const school = await getServerSchool();
+
+  // console.log("School: ", school);
+
+  const classes = (await getAllClasses(school?.id ?? "")) || [];
 
   return (
     <div className="">

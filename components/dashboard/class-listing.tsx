@@ -1,17 +1,17 @@
 "use client";
 
-import { ChevronLeft, GraduationCap, Pencil, Plus, Trash2, User, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ClassWithCountAndStreams } from "@/types/types";
+import { ChevronLeft, GraduationCap, Pencil, Trash2, User, Users } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ClassForm from "./forms/academics/class-form";
 import StreamForm from "./forms/academics/stream-form";
-import { ClassItem, ClassWithCountAndStreams } from "@/types/types";
-import Image from "next/image";
 
 // interface ClassItem {
 //   id: number;
@@ -53,7 +53,7 @@ interface ClassListingProps {
 export default function ClassListing({ classes }: ClassListingProps) {
   const [selectedClass, setSelectedClass] = useState<string>("");
 
-  const streams = classes.find((c) => c.id === selectedClass)?.streams || [];
+  const streams = classes.find(c => c.id === selectedClass)?.streams || [];
 
   return (
     <div className="grid lg:grid-cols-[280px_1fr] h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] gap-2 p-4 pt-2">
@@ -68,71 +68,79 @@ export default function ClassListing({ classes }: ClassListingProps) {
           <ClassForm />
         </div>
 
-        <div className="px-4 py-2">
-          <Input placeholder="Search class..." className="h-9" type="search" />
-        </div>
+        {classes.length > 0 ? (
+          <>
+            <div className="px-4 py-2">
+              <Input placeholder="Search class..." className="h-9" type="search" />
+            </div>
 
-        <ScrollArea className="flex-1">
-          <div className="px-2 space-y-3">
-            {classes.map((classItem) => (
-              <div
-                key={classItem.id}
-                className={cn(
-                  "flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
-                  selectedClass === classItem.id
-                    ? "bg-accent text-accent-foreground"
-                    : "hover:bg-muted text-muted-foreground"
-                )}
-              >
-                <button
-                  onClick={() => setSelectedClass(classItem.id)}
-                  className="flex flex-col items-start gap-1 text-left"
-                >
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <span className="font-medium">{classItem.title}</span>
-                    <span className="text-xs">{classItem.streams.length} streams</span>
+            <ScrollArea className="flex-1">
+              <div className="px-2 space-y-3">
+                {classes.map(classItem => (
+                  <div
+                    key={classItem.id}
+                    className={cn(
+                      "flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
+                      selectedClass === classItem.id
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:bg-muted text-muted-foreground"
+                    )}
+                  >
+                    <button
+                      onClick={() => setSelectedClass(classItem.id)}
+                      className="flex flex-col items-start gap-1 text-left"
+                    >
+                      <div className="flex w-full items-center justify-between gap-2">
+                        <span className="font-medium">{classItem.title}</span>
+                        <span className="text-xs">{classItem.streams.length} streams</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <User className="size-3" />
+                        {classItem._count.students} students
+                      </div>
+                    </button>
+                    <div className="flex items-center gap-1">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="size-7">
+                              <Pencil className="size-3" />
+                              <span className="sr-only">Edit Class</span>
+                            </Button>
+                          </TooltipTrigger>
+
+                          <TooltipContent>
+                            <p>Edit Class</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="size-7">
+                              <Trash2 className="size-3" />
+                              <span className="sr-only">Delete Class</span>
+                            </Button>
+                          </TooltipTrigger>
+
+                          <TooltipContent>
+                            <p>Delete Class</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
                   </div>
-
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <User className="size-3" />
-                    {classItem._count.students} students
-                  </div>
-                </button>
-                <div className="flex items-center gap-1">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="size-7">
-                          <Pencil className="size-3" />
-                          <span className="sr-only">Edit Class</span>
-                        </Button>
-                      </TooltipTrigger>
-
-                      <TooltipContent>
-                        <p>Edit Class</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="size-7">
-                          <Trash2 className="size-3" />
-                          <span className="sr-only">Delete Class</span>
-                        </Button>
-                      </TooltipTrigger>
-
-                      <TooltipContent>
-                        <p>Delete Class</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
+                ))}
               </div>
-            ))}
+            </ScrollArea>
+          </>
+        ) : (
+          <div className="p-4">
+            <h2 className="">No Classes</h2>
           </div>
-        </ScrollArea>
+        )}
       </div>
 
       {/* Main Content */}
@@ -146,12 +154,12 @@ export default function ClassListing({ classes }: ClassListingProps) {
               </Button>
 
               <div>
-                <h2 className="text-lg font-semibold">{classes.find((c) => c.id === selectedClass)?.title}</h2>
+                <h2 className="text-lg font-semibold">{classes.find(c => c.id === selectedClass)?.title}</h2>
 
                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <span>Classes</span>
                   <span>/</span>
-                  <span>{classes.find((c) => c.id === selectedClass)?.title}</span>
+                  <span>{classes.find(c => c.id === selectedClass)?.title}</span>
                 </div>
               </div>
             </div>
@@ -161,7 +169,7 @@ export default function ClassListing({ classes }: ClassListingProps) {
 
           {streams?.length > 0 ? (
             <div className="p-4 grid gap-4 max-lg:grid-cols-2 lg:grid-cols-3">
-              {streams.map((section) => (
+              {streams.map(section => (
                 <Card key={section.title}>
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">

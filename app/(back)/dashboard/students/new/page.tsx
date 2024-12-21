@@ -1,3 +1,4 @@
+import { getServerSchool } from "@/actions/auth";
 import { getAllClasses } from "@/actions/classes";
 import { getAllParents } from "@/actions/parents";
 import { getStudentNextSequence } from "@/actions/students";
@@ -9,8 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserPlus, Users } from "lucide-react";
 
 export default async function AdmissionTabs() {
-  const classes = (await getAllClasses()) || [];
-  const parents = (await getAllParents()) || [];
+  const school = await getServerSchool();
+
+  const classes = (await getAllClasses(school?.id ?? "")) || [];
+  const parents = (await getAllParents(school?.id ?? "")) || [];
+
   const nextSequence = (await getStudentNextSequence()) || 0;
 
   return (
