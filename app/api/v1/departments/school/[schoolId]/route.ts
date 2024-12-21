@@ -5,18 +5,20 @@ import { NextRequest } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { schoolId: string } }) {
   // const body = await request.json();
   const { schoolId } = params;
+
+  // console.log("School ID: ", schoolId);
+
   try {
-    const lastStudent = await prisma.student.findFirst({
+    const departments = await prisma.department.findMany({
       orderBy: { createdAt: "desc" },
       where: { schoolId },
+      include: {
+        teachers: true,
+        subjects: true,
+      },
     });
 
-    //   BU/BD/2024/0001
-    const stringSeq = lastStudent?.regNo.split("/")[3];
-    const lastSeq = stringSeq ? parseInt(stringSeq) : 0;
-    const nextSeq = lastSeq + 1;
-
-    return new Response(JSON.stringify({ data: nextSeq, error: null }), {
+    return new Response(JSON.stringify({ data: departments, error: null }), {
       status: 200,
       // headers: { "Content-Type": "application/json" },
     });

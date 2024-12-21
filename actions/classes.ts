@@ -46,9 +46,9 @@ export async function getAllClasses(schoolId: string) {
   }
 }
 
-export async function getBriefClasses() {
+export async function getBriefClasses(schoolId: string) {
   try {
-    const response = await api.get("/classes/brief");
+    const response = await api.get(`/classes/brief/${schoolId}`);
     const classes = response.data.data;
 
     return classes as { id: string; title: string }[];

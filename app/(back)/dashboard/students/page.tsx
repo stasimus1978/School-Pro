@@ -1,10 +1,13 @@
+import { getServerSchool } from "@/actions/auth";
 import { getAllStudents } from "@/actions/students";
-import { columns } from "./columns";
 import TableHeader from "@/components/dashboard/Tables/TableHeader";
 import DataTable from "@/components/DataTableComponents/DataTable";
+import { columns } from "./columns";
 
 export default async function StudentsPage() {
-  const student = (await getAllStudents()) || [];
+  const school = await getServerSchool();
+
+  const student = (await getAllStudents(school?.id ?? "")) || [];
 
   console.log("Students: ", student);
 

@@ -30,9 +30,9 @@ export async function deleteDepartment(id: string) {
   };
 }
 
-export async function getAllDepartments() {
+export async function getAllDepartments(schoolId: string) {
   try {
-    const response = await api.get("/departments");
+    const response = await api.get(`/departments/school/${schoolId}`);
 
     const departments = response.data.data;
 
@@ -48,9 +48,9 @@ export async function getAllDepartments() {
 }
 
 //
-export async function getBriefDepartments() {
+export async function getBriefDepartments(schoolId: string) {
   try {
-    const response = await api.get("/departments/brief");
+    const response = await api.get(`/departments/brief/${schoolId}`);
 
     const briefDepartments = response.data.data;
 

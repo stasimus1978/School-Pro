@@ -12,18 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { schoolId
     const classes = await prisma.class.findMany({
       orderBy: { createdAt: "desc" },
       where: { schoolId },
-      include: {
-        streams: {
-          include: {
-            _count: {
-              select: { students: true },
-            },
-          },
-        },
-        _count: {
-          select: { students: true },
-        },
-      },
+      select: { id: true, title: true },
     });
 
     return new Response(JSON.stringify({ data: classes, error: null }), {

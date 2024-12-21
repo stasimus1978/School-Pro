@@ -1,3 +1,4 @@
+import { getServerSchool } from "@/actions/auth";
 import { getBriefClasses } from "@/actions/classes";
 import { getBriefDepartments } from "@/actions/departments";
 import { getBriefSubjects } from "@/actions/subjects";
@@ -5,25 +6,26 @@ import TeacherForm from "@/components/dashboard/forms/users/teacher-form";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default async function AdmissionTabs() {
+  const school = await getServerSchool();
   // Classes
-  const classesData = (await getBriefClasses()) || [];
+  const classesData = (await getBriefClasses(school?.id ?? "")) || [];
   // Subjects
-  const subjectsData = (await getBriefSubjects()) || [];
+  const subjectsData = (await getBriefSubjects(school?.id ?? "")) || [];
   // Departments
-  const departmentsData = (await getBriefDepartments()) || [];
+  const departmentsData = (await getBriefDepartments(school?.id ?? "")) || [];
 
   //
-  const classes = classesData.map((item) => {
+  const classes = classesData.map(item => {
     return { label: item.title, value: item.id };
   });
 
   //
-  const subjects = subjectsData.map((item) => {
+  const subjects = subjectsData.map(item => {
     return { label: item.name, value: item.id };
   });
 
   //
-  const departments = departmentsData.map((item) => {
+  const departments = departmentsData.map(item => {
     return { label: item.name, value: item.id };
   });
 

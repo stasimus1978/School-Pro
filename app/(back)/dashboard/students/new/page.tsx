@@ -15,7 +15,7 @@ export default async function AdmissionTabs() {
   const classes = (await getAllClasses(school?.id ?? "")) || [];
   const parents = (await getAllParents(school?.id ?? "")) || [];
 
-  const nextSequence = (await getStudentNextSequence()) || 0;
+  const nextSequence = (await getStudentNextSequence(school?.id ?? "")) || 0;
 
   return (
     <div className="w-full max-w-5xl mx-auto p-6">

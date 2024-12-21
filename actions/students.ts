@@ -30,9 +30,9 @@ export async function deleteStudent(id: string) {
   };
 }
 
-export async function getAllStudents() {
+export async function getAllStudents(schoolId: string) {
   try {
-    const response = await api.get("/students");
+    const response = await api.get(`/students/${schoolId}`);
     const students = response.data.data;
 
     return students as StudentItem[];
@@ -46,9 +46,9 @@ export async function getAllStudents() {
   }
 }
 
-export async function getStudentNextSequence() {
+export async function getStudentNextSequence(schoolId: string) {
   try {
-    const response = await api.get("/students/seq");
+    const response = await api.get(`/students/seq/${schoolId}`);
     const nextSeq = response.data.data;
 
     return nextSeq as number;

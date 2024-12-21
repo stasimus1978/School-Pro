@@ -30,9 +30,9 @@ export async function deleteSubjects(id: string) {
   };
 }
 
-export async function getAllSubjects() {
+export async function getAllSubjects(schoolId: string) {
   try {
-    const response = await api.get("/subjects");
+    const response = await api.get(`/subjects/school/${schoolId}`);
 
     const subjects = response.data.data;
 
@@ -47,9 +47,9 @@ export async function getAllSubjects() {
   }
 }
 
-export async function getBriefSubjects() {
+export async function getBriefSubjects(schoolId: string) {
   try {
-    const response = await api.get("/subjects/brief");
+    const response = await api.get(`/subjects/brief/${schoolId}`);
 
     const briefSubjects = response.data.data;
 

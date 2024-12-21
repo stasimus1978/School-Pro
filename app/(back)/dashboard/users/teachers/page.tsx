@@ -1,11 +1,12 @@
-import { columns } from "./columns";
+import { getServerSchool } from "@/actions/auth";
+import { getAllTeachers } from "@/actions/teachers";
 import TableHeader from "@/components/dashboard/Tables/TableHeader";
 import DataTable from "@/components/DataTableComponents/DataTable";
-import { getAllParents } from "@/actions/parents";
-import { getAllTeachers } from "@/actions/teachers";
+import { columns } from "./columns";
 
 export default async function TeachersPage() {
-  const teachers = (await getAllTeachers()) || [];
+  const school = await getServerSchool();
+  const teachers = (await getAllTeachers(school?.id ?? "")) || [];
 
   console.log("Teachers: ", teachers);
 

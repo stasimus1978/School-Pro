@@ -23,6 +23,7 @@ model School {
   departments Department[]
   streams     Stream[]
   teachers    Teacher[]
+  subjects    Subject[]
 
   @@map("schools")
 }
@@ -335,8 +336,8 @@ model Subject {
   department     Department @relation(fields: [departmentId], references: [id])
 
   // Relationships
-  // schoolId String
-  // school   School @relation(fields: [schoolId], references: [id])
+  schoolId String @default("cm4vctytw0004wynk77ierzvo")
+  school   School @relation(fields: [schoolId], references: [id])
 
   // Additional Settings
   isActive     Boolean @default(true)
